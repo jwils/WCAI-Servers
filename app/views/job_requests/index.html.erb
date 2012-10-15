@@ -1,0 +1,31 @@
+<h1>Listing job_requests</h1>
+
+<table>
+  <tr>
+    <th>Project</th>
+    <th>Assignee</th>
+    <th>Requester</th>
+    <th>Priority</th>
+    <th>Description</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @job_requests.each do |job_request| %>
+  <tr>
+    <td><%= job_request.project %></td>
+    <td><%= job_request.assignee %></td>
+    <td><%= job_request.requester %></td>
+    <td><%= job_request.priority %></td>
+    <td><%= job_request.description %></td>
+    <td><%= link_to 'Show', job_request %></td>
+    <td><%= link_to 'Edit', edit_job_request_path(job_request) %></td>
+    <td><%= link_to 'Destroy', job_request, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Job request', new_job_request_path %>

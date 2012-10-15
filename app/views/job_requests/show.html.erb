@@ -1,0 +1,30 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Project:</b>
+  <%= @job_request.project %>
+</p>
+
+<p>
+  <b>Assignee:</b>
+  <%= @job_request.assignee %>
+</p>
+
+<p>
+  <b>Requester:</b>
+  <%= @job_request.requester %>
+</p>
+
+<p>
+  <b>Priority:</b>
+  <%= @job_request.priority %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @job_request.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_job_request_path(@job_request) %> |
+<%= link_to 'Back', job_requests_path %>

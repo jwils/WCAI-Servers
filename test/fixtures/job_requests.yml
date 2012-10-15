@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  project: 
+  assignee: 
+  requester: 
+  priority: 
+  description: MyText
+
+two:
+  project: 
+  assignee: 
+  requester: 
+  priority: 
+  description: MyText

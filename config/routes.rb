@@ -1,4 +1,8 @@
 WCAI::Application.routes.draw do
+  resources :job_requests
+
+  resources :projects
+
   devise_for :users
 
   # The priority is based upon order of creation:
