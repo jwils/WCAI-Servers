@@ -1,6 +1,9 @@
 WCAI::Application.routes.draw do
-  resources :job_requests
+  resources :projects do
+      resources :job_requests
+  end
 
+  resources :job_requests
   resources :projects
 
   devise_for :users

@@ -4,7 +4,7 @@ class CreateJobRequests < ActiveRecord::Migration
       t.references :project
       t.references :assignee
       t.references :requester
-      t.int :priority
+      t.integer :priority
       t.text :description
 
       t.timestamps
