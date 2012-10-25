@@ -1,4 +1,6 @@
 WCAI::Application.routes.draw do
+  resources :servers
+
   resources :projects do
       resources :job_requests
   end
