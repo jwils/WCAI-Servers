@@ -2,18 +2,16 @@
 
 <table>
   <tr>
-    <th>Image</th>
-    <th></th>
-    <th></th>
+    <th>Status</th>
+    <th>Company</th>
     <th></th>
   </tr>
 
 <% @servers.each do |server| %>
   <tr>
-    <td><%= server.image_id %></td>
+    <td><%= server.status %></td>
+    <td><%= server.project.company.name %></td>
     <td><%= link_to 'Show', server %></td>
-    <td><%= link_to 'Edit', edit_server_path(server) %></td>
-    <td><%= link_to 'Destroy', server, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
