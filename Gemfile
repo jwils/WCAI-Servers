@@ -7,6 +7,7 @@ gem 'rails', '3.2.8'
 
 gem 'sqlite3'
 gem 'devise'
+gem 'simple_form'
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -18,12 +19,14 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
+  gem "twitter-bootstrap-rails"
 end
 
 gem 'jquery-rails'
 gem "rails_config"
+gem "rolify"
 gem 'fog'
-gem "twitter-bootstrap-rails"
+gem "cancan", ">= 1.6.8"
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 

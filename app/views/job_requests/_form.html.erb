@@ -1,37 +1,44 @@
-<%= form_for(@job_request) do |f| %>
-  <% if @job_request.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@job_request.errors.count, "error") %> prohibited this job_request from being saved:</h2>
-
-      <ul>
-      <% @job_request.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
+<%= form_for @job_request, :html => { :class => 'form-horizontal' } do |f| %>
+  <div class="control-group">
+    <%= f.label :project_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :project_id, :class => 'number_field' %>
     </div>
-  <% end %>
+  </div>
+  <div class="control-group">
+    <%= f.label :assignee_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :assignee_id, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :requester_id, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :requester_id, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :priority, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.number_field :priority, :class => 'number_field' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :description, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_area :description, :class => 'text_area' %>
+    </div>
+  </div>
+  <div class="control-group">
+    <%= f.label :status, :class => 'control-label' %>
+    <div class="controls">
+      <%= f.text_field :status, :class => 'text_field' %>
+    </div>
+  </div>
 
-  <div class="field">
-    <%= f.label :project %><br />
-    <%= f.text_field :project %>
-  </div>
-  <div class="field">
-    <%= f.label :assignee %><br />
-    <%= f.text_field :assignee %>
-  </div>
-  <div class="field">
-    <%= f.label :requester %><br />
-    <%= f.text_field :requester %>
-  </div>
-  <div class="field">
-    <%= f.label :priority %><br />
-    <%= f.text_field :priority %>
-  </div>
-  <div class="field">
-    <%= f.label :description %><br />
-    <%= f.text_area :description %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
+  <div class="form-actions">
+    <%= f.submit nil, :class => 'btn btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                job_requests_path, :class => 'btn' %>
   </div>
 <% end %>
