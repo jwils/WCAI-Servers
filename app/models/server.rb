@@ -2,6 +2,8 @@ class Server < ActiveRecord::Base
   attr_accessible :instance_id
   attr_accessor :instance
   belongs_to :project
+
+
   
   after_find :get_instance_object
   before_destroy :delete_instance
@@ -20,11 +22,16 @@ class Server < ActiveRecord::Base
   end
 
   def stopped?
-    self.instance.stopped?
+    self.instance.state == 'stopped'
   end
-  
+
   def state
-    self.instance
+    self.instance.state
+  end
+  alias :status :state
+
+  def ip_address
+    self.instance.ip_address
   end
 
   def connection_info
@@ -46,11 +53,15 @@ class Server < ActiveRecord::Base
   end
 
   def delete_instance
-    self.instance.destroy
+    if not self.instance.nil?
+      self.instance.destroy
+    end
   end
 
   def get_instance_object
-    self.instance = FOG_CONNECTION.servers.get(self.instance_id)
+    if self.instance.nil?
+      self.instance = FOG_CONNECTION.servers.get(self.instance_id)
+    end
   end
 end
 

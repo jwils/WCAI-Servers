@@ -16,11 +16,11 @@
   <tbody>
     <% @projects.each do |project| %>
       <tr>
-        <td><%= link_to project.company.name project_path(project)%></td>
+        <td><%= link_to project.company.name, project_path(project)%></td>
         <td><%= project.start_date %></td>
         <td><%= project.current_state %></td>
         <td><%= project.description %></td>
-        <td bgcolor=#00FF00> test </td>
+        <td><%= link_to project.server.status, server_path(project.server) %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_project_path(project), :class => 'btn btn-mini' %>

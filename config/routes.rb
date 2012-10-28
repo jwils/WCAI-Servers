@@ -12,6 +12,8 @@ WCAI::Application.routes.draw do
 
   match 'home/about' => 'home#about'
   match 'home/contact' => 'home#contact'
+  match 'server/:id/start' => 'servers#start', :as => :start_server
+  match 'server/:id/stop' => 'servers#stop', :as => :stop_server
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

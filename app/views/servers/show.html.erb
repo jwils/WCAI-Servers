@@ -9,17 +9,21 @@
   <dd><%= @server.status %></dd>
 
   <dt><strong>Project:</strong></dt>
-  <dd><%= @server.project.company.name %></dd>
+  <dd><%= link_to @server.project.company.name, project_path(@server.project) %></dd>
 
+  	<% if not @server.stopped? %>
   <dt><strong>Ip address:</strong></dt>
   <dd><%= @server.ip_address %></dd>
+  <% end %>
 </dl>
 
 
+<div class="form-actions">
 <% if @server.stopped? %>
-	<%= link_to 'Start Sever', :class => 'btn btn-mini btn-danger' %>
+	<%= link_to 'Start Sever', start_server_url(:id=> @server.id), :class => 'btn btn-mini btn-success', :remote => true%>
 <% else %>
- 	<%= link_to 'Start Sever', :class => 'btn btn-mini btn-danger' %>
+ 	<%= link_to 'Stop Sever', stop_server_url(:id => @server.id), :class => 'btn btn-mini btn-danger', :remote => true %>
 <% end %>
 
-<%= link_to 'Back', servers_path %>
+<%= link_to 'Back', servers_path, :class => 'btn btn-mini' %>
+</div>
