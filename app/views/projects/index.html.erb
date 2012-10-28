@@ -5,28 +5,22 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:user_id) %></th>
-      <th><%= model_class.human_attribute_name(:company_id) %></th>
-      <th><%= model_class.human_attribute_name(:start_date) %></th>
-      <th><%= model_class.human_attribute_name(:current_state) %></th>
-      <th><%= model_class.human_attribute_name(:description) %></th>
-      <th><%= model_class.human_attribute_name(:server_id) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
+      <th>Company</th>
+      <th>Start Date</th>
+      <th>Current State</th>
+      <th>Description</th>
+      <th>Server Status</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @projects.each do |project| %>
       <tr>
-        <td><%= link_to project.id, project_path(project) %></td>
-        <td><%= project.user_id %></td>
-        <td><%= project.company_id %></td>
+        <td><%= link_to project.company.name project_path(project)%></td>
         <td><%= project.start_date %></td>
         <td><%= project.current_state %></td>
         <td><%= project.description %></td>
-        <td><%= project.server_id %></td>
-        <td><%=l project.created_at %></td>
+        <td bgcolor=#00FF00> test </td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_project_path(project), :class => 'btn btn-mini' %>

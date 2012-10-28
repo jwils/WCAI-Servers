@@ -1,6 +1,6 @@
 class Server < ActiveRecord::Base
   attr_accessible :instance_id
-  attr_protected :server
+  attr_accessor :instance
   belongs_to :project
   
   after_find :get_instance_object
@@ -8,39 +8,45 @@ class Server < ActiveRecord::Base
   before_save :create_aws_instance
 
   def start
-    self.server.start
+    self.instance.start
   end
 
   def stop
-    self.server.stop
+    self.instance.stop
   end
 
   def ready?
-   self.server.ready? 
+   self.instance.ready? 
   end
 
   def state
-    self.state
+    self.instance
+  end
+
+  def connection_info
+    "ip address: " + self.instance.ip_address + " port: " + "12345" +
+    "db username: db password"
   end
 
   private
 
   def create_aws_instance
-    self.server = FOG_CONNECTION.servers.bootstrap(
+    self.instance = FOG_CONNECTION.servers.bootstrap(
                     :image_id => "ami-a29943cb", #change this to custom ami
-                    #:type => "whatever type we want"
+                    #:type => "whatever type we want",
+                    #:security_group => open port for sql
                     :private_key_path =>'~/.ssh/fog',
                     :public_key_path => '~/.ssh/fog.pub',
                     :username => 'ubuntu')
-    self.instance_id = self.server.id
+    self.instance_id = self.instance.id
   end
 
   def delete_instance
-    self.server.destroy
+    self.instance.destroy
   end
 
   def get_instance_object
-    self.server = FOG_CONNECTION.servers.get(self.instance_id)
+    self.instance = FOG_CONNECTION.servers.get(self.instance_id)
   end
 end
 

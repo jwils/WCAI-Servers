@@ -10,6 +10,9 @@ WCAI::Application.routes.draw do
 
   devise_for :users
 
+  match 'home/about' => 'home#about'
+  match 'home/contact' => 'home#contact'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

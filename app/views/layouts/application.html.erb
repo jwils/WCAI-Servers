@@ -44,14 +44,22 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">WCAI</a>
+          <a class="brand" href="/">WCAI</a>
           <div class="container nav-collapse">
             <ul class="nav">
-              <li><%= link_to "Link1", "/path1"  %></li>
-              <li><%= link_to "Link2", "/path2"  %></li>
-              <li><%= link_to "Link3", "/path3"  %></li>
+              <li><%= link_to "View Projects", "/projects"  %></li>
+              <li><%= link_to "About WCAI", "/home/about"  %></li>
+              <li><%= link_to "Contact Us", "/home/contact"  %></li>
+              
             </ul>
+            <% if user_signed_in? %>
+            <ul class="nav pull-right">
+              <li class="nav pull-right"><%= link_to 'Logout', destroy_user_session_path, :method => :delete %></li>
+            
+            </ul>
+            <% end %>
           </div><!--/.nav-collapse -->
+          </div>
         </div>
       </div>
     </div>
@@ -61,21 +69,32 @@
           <div class="span9">
              <%= yield %>
           </div>
+         
           <div class="span3">
             <div class="well sidebar-nav">
-              <h3>Sidebar</h3>
+              <!-- <h3>Shortcuts</h3> -->
               <ul class="nav nav-list">
-                <li class="nav-header">Sidebar</li>
-                <li><%= link_to "Link1", "/path1"  %></li>
-                <li><%= link_to "Link2", "/path2"  %></li>
-                <li><%= link_to "Link3", "/path3"  %></li>
+              <% if user_signed_in? %>
+                 <li class="nav-header">View</li>
+                <li><%= link_to "Projects", "/projects"  %></li>
+                <li><%= link_to "Job Requests", "/job_requests"  %></li>
+                <li><%= link_to "Instances", "/servers"  %></li>
+              </br>
+                <li class="nav-header">Create</li>
+                <li><%= link_to "Project", "/projects/new"  %></li>
+                <li><%= link_to "Job Request", "/job_requests/new"  %></li>
+                <% else %>
+                <li class="nav-header">Login</li>
+                <li><%= link_to "Sign Up", "/users/sign_up"  %></li>
+                <li><%= link_to "Sign In", "/users/sign_in"  %></li>
+                <% end %>
               </ul>
             </div><!--/.well -->
           </div><!--/span-->
         </div><!--/row-->
 
       <footer>
-        <p>&copy; Company 2012</p>
+        <p>&copy; WCAI 2012</p>
       </footer>
 
     </div> <!-- /container -->

@@ -2,7 +2,8 @@ class JobRequestsController < ApplicationController
   # GET /job_requests
   # GET /job_requests.json
   def index
-    @job_requests = JobRequest.all
+    project = Project.find(params[:id])
+    @job_requests = project.job_requests
 
     respond_to do |format|
       format.html # index.html.erb

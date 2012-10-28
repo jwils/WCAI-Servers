@@ -41,7 +41,9 @@ class ProjectsController < ApplicationController
   # POST /projects.json
   def create
     @project = Project.new(params[:project])
-
+    server = Server.new
+    server.project = @project
+    server.save
     respond_to do |format|
       if @project.save
         format.html { redirect_to @project, notice: 'Project was successfully created.' }
@@ -73,6 +75,10 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1.json
   def destroy
     @project = Project.find(params[:id])
+    if @project.server
+      @project.server.destroy
+    end
+
     @project.destroy
 
     respond_to do |format|
