@@ -1,9 +1,25 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Image:</b>
-  <%= @server.instance_id %>
-</p>
 
+<dl class="dl-horizontal">
+  <dt><strong>Image:</strong></dt>
+  <dd><%= @server.instance_id %></dd>
+
+  <dt><strong>Status:</strong></dt>
+  <dd><%= @server.status %></dd>
+
+  <dt><strong>Project:</strong></dt>
+  <dd><%= @server.project.company.name %></dd>
+
+  <dt><strong>Ip address:</strong></dt>
+  <dd><%= @server.ip_address %></dd>
+</dl>
+
+
+<% if @server.stopped? %>
+	<%= link_to 'Start Sever', :class => 'btn btn-mini btn-danger' %>
+<% else %>
+ 	<%= link_to 'Start Sever', :class => 'btn btn-mini btn-danger' %>
+<% end %>
 
 <%= link_to 'Back', servers_path %>

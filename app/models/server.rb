@@ -19,6 +19,10 @@ class Server < ActiveRecord::Base
    self.instance.ready? 
   end
 
+  def stopped?
+    self.instance.stopped?
+  end
+  
   def state
     self.instance
   end
