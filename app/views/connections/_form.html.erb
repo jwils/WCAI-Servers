@@ -1,16 +1,13 @@
-<%= simple_form_for(@connection) do |f| %>
-  <%= f.error_notification %>
-
-  <div class="form-inputs">
-    <%= f.input :sql_user %>
-    <%= f.input :sql_password %>
-    <%= f.input :references %>
-    <%= f.input :references %>
-    <%= f.input :connection_open %>
-    <%= f.input :connection_closed %>
-  </div>
-
+<%= simple_form_for @connection, :html => { :class => 'form-horizontal' } do |f| %>
+  <%= f.input :sql_user %>
+  <%= f.input :sql_password %>
+  <%= f.input :user_id %>
+  <%= f.input :server_id %>
+  <%= f.input :connection_open %>
+  <%= f.input :connection_closed %>
   <div class="form-actions">
-    <%= f.button :submit %>
+    <%= f.button :submit, :class => 'btn-primary' %>
+    <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                connections_path, :class => 'btn' %>
   </div>
 <% end %>
