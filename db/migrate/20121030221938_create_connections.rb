@@ -3,8 +3,8 @@ class CreateConnections < ActiveRecord::Migration
     create_table :connections do |t|
       t.string :sql_user
       t.string :sql_password
-      t.user :references
-      t.server :references
+      t.references :user
+      t.references :server
       t.datetime :connection_open
       t.datetime :connection_closed
 
