@@ -1,4 +1,6 @@
 WCAI::Application.routes.draw do
+  resources :connections
+
   resources :servers
 
   resources :projects do

@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  sql_user: MyString
+  sql_password: MyString
+  references: 
+  references: 
+  connection_open: 2012-10-30 18:19:38
+  connection_closed: 2012-10-30 18:19:38
+
+two:
+  sql_user: MyString
+  sql_password: MyString
+  references: 
+  references: 
+  connection_open: 2012-10-30 18:19:38
+  connection_closed: 2012-10-30 18:19:38

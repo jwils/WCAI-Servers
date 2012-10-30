@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Sql user:</b>
+  <%= @connection.sql_user %>
+</p>
+
+<p>
+  <b>Sql password:</b>
+  <%= @connection.sql_password %>
+</p>
+
+<p>
+  <b>References:</b>
+  <%= @connection.references %>
+</p>
+
+<p>
+  <b>References:</b>
+  <%= @connection.references %>
+</p>
+
+<p>
+  <b>Connection open:</b>
+  <%= @connection.connection_open %>
+</p>
+
+<p>
+  <b>Connection closed:</b>
+  <%= @connection.connection_closed %>
+</p>
+
+
+<%= link_to 'Edit', edit_connection_path(@connection) %> |
+<%= link_to 'Back', connections_path %>

@@ -1,0 +1,16 @@
+<%= simple_form_for(@connection) do |f| %>
+  <%= f.error_notification %>
+
+  <div class="form-inputs">
+    <%= f.input :sql_user %>
+    <%= f.input :sql_password %>
+    <%= f.input :references %>
+    <%= f.input :references %>
+    <%= f.input :connection_open %>
+    <%= f.input :connection_closed %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>
