@@ -2,7 +2,13 @@ class ConnectionsController < ApplicationController
   # GET /connections
   # GET /connections.json
   def index
-    @connections = Connection.all
+    if params[:server_id]
+      @connections = Server.find(params[:server_id]).connections
+    elsif params[:user_id]
+      @connections = User.find(params[:user_id]).connections
+    else
+      @connections = Connection.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb

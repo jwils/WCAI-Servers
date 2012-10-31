@@ -7,6 +7,14 @@ WCAI::Application.routes.draw do
       resources :job_requests
   end
 
+  resources :servers do
+    resources :connections
+  end
+
+  resources :users do
+    resources :connections
+  end
+
   resources :job_requests
   resources :projects
 
