@@ -59,9 +59,16 @@ class Server < ActiveRecord::Base
     end
   end
 
+  def ssh(commands)
+    self.instance.ssh(commands)
+  end
+
   def get_instance_object
     if self.instance.nil?
       self.instance = FOG_CONNECTION.servers.get(self.instance_id)
+      self.instance.private_key_path = '~/.ssh/fog'
+      self.instance.public_key_path = '~/.ssh/fog.pub'
+      self.instance.username = 'ubuntu'
     end
   end
 end
