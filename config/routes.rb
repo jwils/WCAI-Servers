@@ -3,9 +3,7 @@ WCAI::Application.routes.draw do
 
   resources :servers
 
-  resources :projects do
-      resources :job_requests
-  end
+  devise_for :users
 
   resources :servers do
     resources :connections
@@ -18,7 +16,7 @@ WCAI::Application.routes.draw do
   resources :job_requests
   resources :projects
 
-  devise_for :users
+
 
   match 'home/about' => 'home#about'
   match 'home/contact' => 'home#contact'
