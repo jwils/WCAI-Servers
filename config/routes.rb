@@ -1,7 +1,8 @@
 WCAI::Application.routes.draw do
   resources :connections
-
   resources :servers
+  resources :job_requests
+  resources :projects
 
   devise_for :users
 
@@ -12,9 +13,6 @@ WCAI::Application.routes.draw do
   resources :users do
     resources :connections
   end
-
-  resources :job_requests
-  resources :projects
 
 
 

@@ -27,6 +27,8 @@ gem "rails_config"
 gem "rolify"
 gem 'fog'
 gem "cancan", ">= 1.6.8"
+gem "carrierwave"
+
 #gem "eventmachine" WIll be awesome to get live status of server
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
