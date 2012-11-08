@@ -29,6 +29,11 @@ gem 'fog'
 gem "cancan", ">= 1.6.8"
 gem "carrierwave"
 
+
+
+#Not required
+gem 'whenever', :require => false
+
 #gem "eventmachine" WIll be awesome to get live status of server
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
