@@ -3,11 +3,11 @@ class ConnectionsController < ApplicationController
   # GET /connections.json
   def index
     if params[:server_id]
-      @connections = Server.find(params[:server_id]).connections
+      @connections = Server.find(params[:server_id]).connections.where(:connection_closed => nil)
     elsif params[:user_id]
-      @connections = User.find(params[:user_id]).connections
+      @connections = User.find(params[:user_id]).connections.where(:connection_closed => nil)
     else
-      @connections = Connection.all
+      @connections = Connection.where(:connection_closed => nil)
     end
 
     respond_to do |format|
@@ -27,26 +27,11 @@ class ConnectionsController < ApplicationController
     end
   end
 
-  # GET /connections/new
-  # GET /connections/new.json
-  def new
-    @connection = Connection.new
-
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @connection }
-    end
-  end
-
-  # GET /connections/1/edit
-  def edit
-    @connection = Connection.find(params[:id])
-  end
-
-  # POST /connections
-  # POST /connections.json
   def create
-    @connection = Connection.new(params[:connection])
+    @connection = Connection.new
+    @connection.user_id = current_user.id
+    @connection.server_id = params[:server_id]
+    @connection.open_connection(request.remote_ip)
 
     respond_to do |format|
       if @connection.save
@@ -56,34 +41,6 @@ class ConnectionsController < ApplicationController
         format.html { render action: "new" }
         format.json { render json: @connection.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  # PUT /connections/1
-  # PUT /connections/1.json
-  def update
-    @connection = Connection.find(params[:id])
-
-    respond_to do |format|
-      if @connection.update_attributes(params[:connection])
-        format.html { redirect_to @connection, notice: 'Connection was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @connection.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # DELETE /connections/1
-  # DELETE /connections/1.json
-  def destroy
-    @connection = Connection.find(params[:id])
-    @connection.destroy
-
-    respond_to do |format|
-      format.html { redirect_to connections_url }
-      format.json { head :no_content }
     end
   end
 end

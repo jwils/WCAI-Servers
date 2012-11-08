@@ -12,7 +12,6 @@
       <th><%= model_class.human_attribute_name(:server_id) %></th>
       <th><%= model_class.human_attribute_name(:connection_open) %></th>
       <th><%= model_class.human_attribute_name(:connection_closed) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
@@ -26,7 +25,6 @@
         <td><%= connection.server_id %></td>
         <td><%= connection.connection_open %></td>
         <td><%= connection.connection_closed %></td>
-        <td><%=l connection.created_at %></td>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_connection_path(connection), :class => 'btn btn-mini' %>
@@ -42,5 +40,6 @@
 </table>
 
 <%= link_to t('.new', :default => t("helpers.links.new")),
-            new_connection_path,
+            create_connection_path,
+            :method => 'post'
             :class => 'btn btn-primary' %>

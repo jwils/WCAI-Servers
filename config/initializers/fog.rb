@@ -14,7 +14,7 @@ CarrierWave.configure do |config|
   }
   config.fog_directory  = Settings.aws_bucket                    # required
   config.fog_public     = false     
-  config.fog_authenticated_url_expiration = 60
+  config.fog_authenticated_url_expiration = 120
   config.fog_attributes = {'Cache-Control'=>'max-age=315576000'}  # optional, defaults to {}
   #config.asset_host     = 'https://assets.example.com'            # optional, defaults to nil
   

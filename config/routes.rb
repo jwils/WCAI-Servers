@@ -5,11 +5,11 @@ WCAI::Application.routes.draw do
   devise_for :users
 
   resources :servers do
-    resources :connections
+    resources :connections, :only => [:index, :show]
   end
 
   resources :users do
-    resources :connections
+    resources :connections, :only => [:index]
   end
 
   resources :projects do
@@ -18,8 +18,8 @@ WCAI::Application.routes.draw do
 
   #Next line here for testing only
   resources :project_files
-  #We probably dont want all conection resources here. Just a way to view/delete?
-  resources :connections
+  #shows all open connections
+  match 'connection/open' => 'connection#index'
 
 
   match 'home/about' => 'home#about'
