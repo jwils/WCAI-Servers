@@ -1,9 +1,5 @@
 WCAI::Application.routes.draw do
-  resources :project_files
-
-  resources :connections
   resources :servers
-  resources :job_requests
   resources :projects
 
   devise_for :users
@@ -16,6 +12,14 @@ WCAI::Application.routes.draw do
     resources :connections
   end
 
+  resources :projects do
+    resources :project_files
+  end
+
+  #Next line here for testing only
+  resources :project_files
+  #We probably dont want all conection resources here. Just a way to view/delete?
+  resources :connections
 
 
   match 'home/about' => 'home#about'
@@ -74,8 +78,4 @@ WCAI::Application.routes.draw do
   # just remember to delete public/index.html.
   root :to => 'home#index'
   # See how all your routes lay out with "rake routes"
-
-  # This is a legacy wild controller route that's not recommended for RESTful applications.
-  # Note: This route will make all actions in every controller accessible via GET requests.
-  # match ':controller(/:action(/:id))(.:format)'
 end
