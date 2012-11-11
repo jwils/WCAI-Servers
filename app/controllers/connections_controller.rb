@@ -27,7 +27,7 @@ class ConnectionsController < ApplicationController
     end
   end
 
-  def create
+  def new
     @connection = Connection.new
     @connection.user_id = current_user.id
     @connection.server_id = params[:server_id]

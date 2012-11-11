@@ -5,7 +5,7 @@ WCAI::Application.routes.draw do
   devise_for :users
 
   resources :servers do
-    resources :connections, :only => [:index, :show]
+    resources :connections, :only => [:index, :show, :new]
   end
 
   resources :users do
@@ -19,7 +19,7 @@ WCAI::Application.routes.draw do
   #Next line here for testing only
   resources :project_files
   #shows all open connections
-  match 'connection/open' => 'connection#index'
+  #match 'connection/open' => 'connection#index'
 
 
   match 'home/about' => 'home#about'
