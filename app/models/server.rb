@@ -22,6 +22,10 @@ class Server < ActiveRecord::Base
    self.instance.ready? 
   end
 
+  def wait_for_ready
+    self.instance.wait_for { ready? }
+  end
+
   def stopped?
     self.instance.state == 'stopped'
   end
@@ -29,7 +33,12 @@ class Server < ActiveRecord::Base
   def state
     self.instance.state
   end
+
   alias :status :state
+
+  def open_connections
+    self.connections.where(:connection_closed => nil)
+  end
 
   def ip_address
     self.instance.ip_address
@@ -38,6 +47,10 @@ class Server < ActiveRecord::Base
   def connection_info
     "ip address: " + self.instance.ip_address + " port: " + "12345" +
     "db username: db password"
+  end
+
+  def ssh(commands)
+    self.instance.ssh(commands)
   end
 
   private
@@ -57,10 +70,6 @@ class Server < ActiveRecord::Base
     if not self.instance.nil?
       self.instance.destroy
     end
-  end
-
-  def ssh(commands)
-    self.instance.ssh(commands)
   end
 
   def get_instance_object
