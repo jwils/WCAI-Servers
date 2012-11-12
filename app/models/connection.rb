@@ -1,14 +1,13 @@
 class Connection < ActiveRecord::Base
-  belongs_to :user, :server
+  belongs_to :user
+  belongs_to :server
 
   attr_accessible  :user_id, :server_id
   attr_protected :sql_password, :sql_user, :connection_closed, :connection_open
 
-  before_create :open_connection
-
-  def generate_user_password
+  def generate_user_password(ip_address)
   	self.sql_user = "'#{Digest::SHA1.hexdigest("--#{Time.now.to_s}")[0,6]}'@'#{ip_address}'"
-  	self.sql_password = Digest::SHA1.hexdigest("--#{Time.now.to_s}")[0,6]
+  	self.sql_password = Digest::SHA1.hexdigest("--#{Time.now.to_s}#{ip_address}")[0,6]
   	
   end
 
@@ -16,7 +15,7 @@ class Connection < ActiveRecord::Base
     self.server.start
     self.server.wait_for_ready
 
-  	generate_user_password
+  	generate_user_password(ip_address)
 
 		privileges = "ALL PRIVILEGES" #options (CREATE DROP DELETE INSERT SELECT UPDATE)
     cmd = "GRANT #{privileges} ON *.* TO #{self.sql_user}  IDENTIFIED BY '#{self.sql_password}';"
@@ -28,13 +27,16 @@ class Connection < ActiveRecord::Base
   def close_connection
   	self.server.ssh(sql_cmd("DROP USER #{self.sql_user};")) #add save full user object
   	self.connection_closed = DateTime.now
+    self.save
+    logger.debug "Closing connection if #{self.server.open_connections.length} is 0"
     if self.server.open_connections.length == 0
+      logger.debug "stoping server"
       self.server.stop
     end
   end
 
   private
-  def sql_cmd(comamnd)
-  	'mysql -uroot -p***** -e "' + command + '"'
+  def sql_cmd(cmd)
+  	'mysql -uroot -p***** -e "' + cmd + '"'
   end
 end

@@ -41,11 +41,11 @@ class Server < ActiveRecord::Base
   end
 
   def ip_address
-    self.instance.ip_address
+    self.instance.public_ip_address
   end
 
   def connection_info
-    "ip address: " + self.instance.ip_address + " port: " + "12345" +
+    "ip address: " + self.instance.public_ip_address + " port: " + "12345" +
     "db username: db password"
   end
 

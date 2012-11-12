@@ -27,6 +27,15 @@ class ConnectionsController < ApplicationController
     end
   end
 
+  def destroy
+    @connection = Connection.find(params[:id])
+    @connection.close_connection
+    respond_to do |format|
+      format.html { redirect_to server_connection_url(@connection.server, @connection), notice: 'Connection was successfully created.' }
+      format.json { render json: @connection, status: :created, location: @connection }
+    end
+  end
+
   def new
     @connection = Connection.new
     @connection.user_id = current_user.id
@@ -35,10 +44,10 @@ class ConnectionsController < ApplicationController
 
     respond_to do |format|
       if @connection.save
-        format.html { redirect_to @connection, notice: 'Connection was successfully created.' }
+        format.html { redirect_to server_connection_url(@connection.server_id, @connection.id), notice: 'Connection was successfully created.' }
         format.json { render json: @connection, status: :created, location: @connection }
       else
-        format.html { render action: "new" }
+        format.html { render json: @connection.errors, status: :unprocessable_entity }
         format.json { render json: @connection.errors, status: :unprocessable_entity }
       end
     end

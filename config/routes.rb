@@ -5,7 +5,7 @@ WCAI::Application.routes.draw do
   devise_for :users
 
   resources :servers do
-    resources :connections, :only => [:index, :show, :new]
+    resources :connections, :only => [:index, :show, :new, :destroy]
   end
 
   resources :users do

@@ -16,6 +16,9 @@
   <dd><%= @project.description %></dd>
   <dt><strong><%= model_class.human_attribute_name(:server_id) %>:</strong></dt>
   <dd><%= link_to @project.server.state, @project.server %></dd>
+  <dt><strong>SQL Connection:</strong><dt>
+   <dd><%= link_to 'Open Connection',
+                      new_server_connection_path(@project.server), :class => 'btn btn-mini' %></dd>
 </dl>
 
 <div class="form-actions">

@@ -15,10 +15,7 @@ class ProjectFilesController < ApplicationController
   def show
     @project_file = ProjectFile.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @project_file }
-    end
+    redirect_to @project_file.file_url
   end
 
   # GET /project_files/new
