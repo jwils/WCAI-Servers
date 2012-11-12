@@ -1,10 +1,24 @@
-task :create_instance => :environment do
-  server = FOG_CONNECTION.servers.bootstrap(:image_id => "ami-a29943cb",
-                                    #:type =>
-                                     :private_key_path =>'~/.ssh/fog',
-                                     :public_key_path => '~/.ssh/fog.pub',
-                                    :username => 'ubuntu')
-  server.wait_for { ready? }
-  puts server.ssh('ls')
-  server.stop
+task :check_instance_uptime => :environment do
+  Server.all.each do |server|
+  	if not server.stopped?
+  		if server.open_connections.length == 0
+  			puts 'send email server should be shut down'
+  		end
+
+  		server.open_connections.each do |connection|
+  			if connection.connection_open + 2.hours > DateTime.now
+  				#mail me
+  				puts 'send email'
+  			end
+  		end 
+		end
+	end
+
+	 FOG_CONNECTION.servers.each do |instance|
+  	if Server.find_by_instance_id(instance.id).nil?
+  		#unassociated server send
+  		puts 'send emai unassociated instance'
+  	end
+  end
 end
+

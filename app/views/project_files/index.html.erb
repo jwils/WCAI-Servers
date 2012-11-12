@@ -2,19 +2,13 @@
 
 <table>
   <tr>
-    <th>Project</th>
     <th>File</th>
-    <th></th>
-    <th></th>
     <th></th>
   </tr>
 
 <% @project_files.each do |project_file| %>
   <tr>
-    <td><%= project_file.project %></td>
-    <td><%= project_file.file %></td>
-    <td><%= link_to 'Show', project_file %></td>
-    <td><%= link_to 'Edit', edit_project_file_path(project_file) %></td>
+    <td><%= link_to project_file.file_base_name, [project_file.project, project_file] %></td>
     <td><%= link_to 'Destroy', project_file, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
@@ -22,4 +16,4 @@
 
 <br />
 
-<%= link_to 'New Project file', new_project_file_path %>
+<%= link_to 'New Project file', new_project_project_file_path(@project) %>

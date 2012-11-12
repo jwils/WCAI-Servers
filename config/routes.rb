@@ -16,8 +16,6 @@ WCAI::Application.routes.draw do
     resources :project_files
   end
 
-  #Next line here for testing only
-  resources :project_files
   #shows all open connections
   #match 'connection/open' => 'connection#index'
 

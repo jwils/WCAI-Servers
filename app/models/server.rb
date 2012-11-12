@@ -27,11 +27,15 @@ class Server < ActiveRecord::Base
   end
 
   def stopped?
-    self.instance.state == 'stopped'
+    self.instance.state == 'stopped' || self.instance.state == 'terminated'
   end
 
   def state
-    self.instance.state
+    if self.instance.nil?
+      'Terminated'
+    else
+      self.instance.state
+    end
   end
 
   alias :status :state
@@ -73,8 +77,9 @@ class Server < ActiveRecord::Base
   end
 
   def get_instance_object
-    if self.instance.nil?
-      self.instance = FOG_CONNECTION.servers.get(self.instance_id)
+    self.instance = FOG_CONNECTION.servers.get(self.instance_id)
+    
+    if not self.instance.nil?
       self.instance.private_key_path = '~/.ssh/fog'
       self.instance.public_key_path = '~/.ssh/fog.pub'
       self.instance.username = 'ubuntu'

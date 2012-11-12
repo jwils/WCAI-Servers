@@ -28,9 +28,7 @@ class Connection < ActiveRecord::Base
   	self.server.ssh(sql_cmd("DROP USER #{self.sql_user};")) #add save full user object
   	self.connection_closed = DateTime.now
     self.save
-    logger.debug "Closing connection if #{self.server.open_connections.length} is 0"
     if self.server.open_connections.length == 0
-      logger.debug "stoping server"
       self.server.stop
     end
   end

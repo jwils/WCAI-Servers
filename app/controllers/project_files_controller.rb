@@ -2,7 +2,8 @@ class ProjectFilesController < ApplicationController
   # GET /project_files
   # GET /project_files.json
   def index
-    @project_files = ProjectFile.all
+    @project =  Project.find(params[:project_id])
+    @project_files = @project.project_files
 
     respond_to do |format|
       format.html # index.html.erb
@@ -22,6 +23,7 @@ class ProjectFilesController < ApplicationController
   # GET /project_files/new.json
   def new
     @project_file = ProjectFile.new
+    @project = Project.find(params[:project_id])
 
     respond_to do |format|
       format.html # new.html.erb
@@ -38,10 +40,11 @@ class ProjectFilesController < ApplicationController
   # POST /project_files.json
   def create
     @project_file = ProjectFile.new(params[:project_file])
+    @project_file.project_id = params[:project_id]
 
     respond_to do |format|
       if @project_file.save
-        format.html { redirect_to @project_file, notice: 'Project file was successfully created.' }
+        format.html { redirect_to project_project_files_path(@project_file.project), notice: 'Project file was successfully created.' }
         format.json { render json: @project_file, status: :created, location: @project_file }
       else
         format.html { render action: "new" }
@@ -50,21 +53,6 @@ class ProjectFilesController < ApplicationController
     end
   end
 
-  # PUT /project_files/1
-  # PUT /project_files/1.json
-  def update
-    @project_file = ProjectFile.find(params[:id])
-
-    respond_to do |format|
-      if @project_file.update_attributes(params[:project_file])
-        format.html { redirect_to @project_file, notice: 'Project file was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @project_file.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   # DELETE /project_files/1
   # DELETE /project_files/1.json
