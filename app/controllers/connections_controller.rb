@@ -31,7 +31,7 @@ class ConnectionsController < ApplicationController
     @connection = Connection.find(params[:id])
     @connection.close_connection
     respond_to do |format|
-      format.html { redirect_to server_connection_url(@connection.server, @connection), notice: 'Connection was successfully created.' }
+      format.html { redirect_to connection_url(@connection), notice: 'Connection was successfully created.' }
       format.json { render json: @connection, status: :created, location: @connection }
     end
   end
@@ -41,10 +41,11 @@ class ConnectionsController < ApplicationController
     @connection.user_id = current_user.id
     @connection.server_id = params[:server_id]
     @connection.open_connection(request.remote_ip)
+    #@connection.open_connection('68.82.13.27')
 
     respond_to do |format|
       if @connection.save
-        format.html { redirect_to server_connection_url(@connection.server_id, @connection.id), notice: 'Connection was successfully created.' }
+        format.html { redirect_to connection_url(@connection.id), notice: 'Connection was successfully created.' }
         format.json { render json: @connection, status: :created, location: @connection }
       else
         format.html { render json: @connection.errors, status: :unprocessable_entity }

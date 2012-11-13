@@ -3,6 +3,7 @@ class CreateProjects < ActiveRecord::Migration
     create_table :projects do |t|
       t.references :user
       t.references :company
+      t.string :project_name
       t.date :start_date
       t.string :current_state
       t.text :description

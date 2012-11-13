@@ -35,6 +35,6 @@ class Connection < ActiveRecord::Base
 
   private
   def sql_cmd(cmd)
-  	'mysql -uroot -p***** -e "' + cmd + '"'
+  	"mysql -uroot -p#{Settings.mysql_root_password} -e \"" + cmd + '"'
   end
 end

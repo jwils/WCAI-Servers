@@ -5,16 +5,20 @@ WCAI::Application.routes.draw do
   devise_for :users
 
   resources :servers do
-    resources :connections, :only => [:index, :show, :new, :destroy]
+    resources :connections, :only => [:index, :new, :destroy]
   end
+
+  resources :connections, :only => [:show]
 
   resources :users do
     resources :connections, :only => [:index]
   end
 
   resources :projects do
-    resources :project_files
+    resources :project_files, :only => [:index, :new, :create]
   end
+
+  resources :project_files, :only => [:show]
 
   #shows all open connections
   #match 'connection/open' => 'connection#index'

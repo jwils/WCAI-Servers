@@ -8,7 +8,7 @@ class Server < ActiveRecord::Base
   
   after_find :get_instance_object
   before_destroy :delete_instance
-  before_save :create_aws_instance
+  before_save :before_create
 
   def start
     self.instance.start
@@ -54,7 +54,9 @@ class Server < ActiveRecord::Base
   end
 
   def ssh(commands)
-    self.instance.ssh(commands)
+    get_instance_object
+    puts commands
+    puts self.instance.ssh(commands)[0].stdout
   end
 
   private
