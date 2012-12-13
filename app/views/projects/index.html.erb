@@ -20,7 +20,9 @@
         <td><%= project.start_date %></td>
         <td><%= project.current_state %></td>
         <td><%= project.description %></td>
-        <td><%= link_to project.server.status, server_path(project.server) %></td>
+        <% if not project.server.nil? %>
+          <td><%= link_to project.server.status, server_path(project.server) %></td>
+        <% end %>
         <td>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_project_path(project), :class => 'btn btn-mini' %>
