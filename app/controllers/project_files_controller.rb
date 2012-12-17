@@ -4,7 +4,7 @@ class ProjectFilesController < ApplicationController
   load_and_authorize_resource
   def index
     @project =  Project.find(params[:project_id])
-    @project_files = @project.project_files
+    @project_files = FOG_STORAGE.directories.get(Settings.aws_bucket).files
 
     respond_to do |format|
       format.html # index.html.erb

@@ -8,7 +8,7 @@
 
 <% @project_files.each do |project_file| %>
   <tr>
-    <td><%= link_to project_file.file_base_name,  project_project_files_path(@project, project_file.id) %></td>
+    <td><%= link_to project_file.key,  project_file.public_url #project_project_files_path(@project, project_file.id) %></td>
     <td><%= link_to 'Destroy', project_file, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
