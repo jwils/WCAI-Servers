@@ -2,7 +2,8 @@ WCAI::Application.routes.draw do
   resources :servers
   resources :projects
 
-  devise_for :users
+  devise_for :users, :controllers => { :registrations => "registrations" }
+  
 
   resources :servers do
     resources :connections, :only => [:index, :new, :destroy]

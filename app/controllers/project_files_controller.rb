@@ -1,6 +1,7 @@
 class ProjectFilesController < ApplicationController
   # GET /project_files
   # GET /project_files.json
+  load_and_authorize_resource
   def index
     @project =  Project.find(params[:project_id])
     @project_files = @project.project_files

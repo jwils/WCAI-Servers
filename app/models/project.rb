@@ -1,4 +1,5 @@
 class Project < ActiveRecord::Base
+  resourcify
   belongs_to :user
   belongs_to :company
   has_one :server
