@@ -8,12 +8,10 @@
 
 <% @project_files.each do |project_file| %>
   <tr>
-    <td><%= link_to project_file.key,  project_file.public_url #project_project_files_path(@project, project_file.id) %></td>
-    <td><%= link_to 'Destroy', project_file, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to project_file.key,  project_file.public_url  %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Project file', new_project_project_file_path(@project) %>
