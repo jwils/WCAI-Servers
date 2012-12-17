@@ -1,6 +1,7 @@
 class ServersController < ApplicationController
   # GET /servers
   # GET /servers.json
+  load_and_authorize_resource
   def index
     @servers = Server.all
 
