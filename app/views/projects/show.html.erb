@@ -4,6 +4,8 @@
 </div>
 
 <dl class="dl-horizontal">
+  <dt><strong>Project Files</strong><dt>
+  <dd><%= link_to "File List", project_project_files_path(@project) %></dd>
   <dt><strong><%= model_class.human_attribute_name(:user_id) %>:</strong></dt>
   <dd><%= @project.user.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:company_id) %>:</strong></dt>
@@ -20,6 +22,8 @@
     <dt><strong>SQL Connection:</strong><dt>
     <dd><%= link_to 'Open Connection',
                       new_server_connection_path(@project.server), :class => 'btn btn-mini' %></dd>
+    <% else %>
+      <dd>No Server</dd>
     <% end %>
 </dl>
 
