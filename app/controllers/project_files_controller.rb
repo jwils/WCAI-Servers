@@ -5,8 +5,9 @@ class ProjectFilesController < ApplicationController
 
   def check_auth
     project =  Project.find(params[:project_id])
-    if not (current_user.has_role? :admin or current_user.has_role? :researcher, project)
-      raise CanCan::AccessDenied
+
+    if not current_user or  not (current_user.has_role? :admin or current_user.has_role? :researcher, project)
+	redirect_to root_path
     end
   end
 

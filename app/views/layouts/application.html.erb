@@ -72,9 +72,8 @@
               <ul class="nav nav-list">
               <% if user_signed_in? %>
                  <li class="nav-header">View</li>
-                <li><%= link_to "Projects", "/projects"  %></li>
-                <li><%= link_to "Job Requests", "/job_requests"  %></li>
-                <li><%= link_to "Instances", "/servers"  %></li>
+                <li><%= link_to "Projects", projects_path  %></li>
+                <li><%= link_to "Instances", servers_path %></li>
               </br>
                 <li class="nav-header">Create</li>
                 <li><%= link_to "Project", new_project_path  %></li>
