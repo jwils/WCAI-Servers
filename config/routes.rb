@@ -24,7 +24,7 @@ WCAI::Application.routes.draw do
   #shows all open connections
   #match 'connection/open' => 'connection#index'
 
-
+  match 'home/index' => 'home#index', :as => :home_page
   match 'home/about' => 'home#about'
   match 'home/contact' => 'home#contact'
   match 'server/:id/start' => 'servers#start', :as => :start_server
@@ -80,5 +80,5 @@ WCAI::Application.routes.draw do
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
   # See how all your routes lay out with "rake routes"
-  root :to => 'home#index'
+  root :to => 'passthrough#index'
 end

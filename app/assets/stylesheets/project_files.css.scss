@@ -1,3 +1,39 @@
 // Place all the styles related to the project_files controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+ul.file_list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+li.page {
+	background-position: 0 1px;
+    background-repeat: no-repeat;
+    padding-left: 20px;
+}
+
+li.default {
+    background-image: url(page_green.png);
+    
+}
+
+li.xls {
+    background-image: url(page_excel.png);
+}
+
+li.folder {
+    background-image: url(folder.png);
+}
+
+a {
+    color: #000000;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}

@@ -8,9 +8,6 @@ class Ability
         can :manage, :all
       else
         can :read, Project, :id => Project.with_role(:researcher, user).map{ |project| project.id}
-        can :read, ProjectFile do |file|
-            u.has_role? :researcher, file.project
-        end
       end
 
     # Define abilities for the passed in user here. For example:

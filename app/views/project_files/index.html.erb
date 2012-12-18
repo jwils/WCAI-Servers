@@ -1,17 +1,7 @@
-<h1>Listing project_files</h1>
+<h1><%= @project.company.name %> Data Files</h1>
 
-<table>
-  <tr>
-    <th>File</th>
-    <th></th>
-  </tr>
-
-<% @project_files.each do |project_file| %>
-  <tr>
-    <td><%= link_to project_file.key,  project_file.public_url  %></td>
-  </tr>
-<% end %>
-</table>
-
+<ul class="file_list">
+	<%= print_directory_structure(@root, @project_files) %>
+</ul>
 <br />
 
