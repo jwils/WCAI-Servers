@@ -19,3 +19,6 @@ keypairs
 
 #ignore all settings files
 settings.yml
+
+
+/.idea
