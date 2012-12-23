@@ -20,17 +20,22 @@
         <td><%= project.start_date %></td>
         <td><%= project.current_state %></td>
         <td><%= project.description %></td>
-        <% if not project.server.nil? %>
-          <td><%= link_to project.server.status, server_path(project.server) %></td>
-        <% end %>
+        <% if project.server.nil? %>
+            <td>No server setup</td>
+        <% else %>
+            <td><%= link_to project.server.status, server_path(project.server) %></td>
+         <% end %>
         <td>
-          <%= link_to t('.edit', :default => t("helpers.links.edit")),
+          <% if current_user.is? :admin %>
+            <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_project_path(project), :class => 'btn btn-mini' %>
-          <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+            <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
                       project_path(project),
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-mini btn-danger' %>
+          <% end %>
+          <%= link_to  "Project Files", project_project_files_path(project),  :class => 'btn btn-mini' %>
         </td>
       </tr>
     <% end %>

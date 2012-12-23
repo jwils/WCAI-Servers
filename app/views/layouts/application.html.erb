@@ -14,20 +14,6 @@
 
     <%= stylesheet_link_tag "application", :media => "all" %>
 
-    <!-- For third-generation iPad with high-resolution Retina display: -->
-    <!-- Size should be 144 x 144 pixels -->
-
-    <!-- For iPhone with high-resolution Retina display: -->
-    <!-- Size should be 114 x 114 pixels -->
-
-    <!-- For first- and second-generation iPad: -->
-    <!-- Size should be 72 x 72 pixels -->
-
-    <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
-    <!-- Size should be 57 x 57 pixels -->
-
-    <!-- For all other devices -->
-    <!-- Size should be 32 x 32 pixels -->
     <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
   </head>
   <body>
@@ -40,12 +26,12 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="/">WCAI</a>
+          <%= link_to "WCAI", root_path, :class => "brand" %>
           <div class="container nav-collapse">
             <ul class="nav">
               <li><%= link_to "View Projects", projects_path  %></li>
-              <li><%= link_to "About WCAI", "/projects/home/about"  %></li>
-              <li><%= link_to "Contact Us", "/projects/home/contact"  %></li>
+              <li><%= link_to "About WCAI", about_path  %></li>
+              <li><%= link_to "Contact Us", contact_us_path  %></li>
               
             </ul>
             <% if user_signed_in? %>
@@ -71,15 +57,16 @@
               <!-- <h3>Shortcuts</h3> -->
               <ul class="nav nav-list">
               <% if user_signed_in? %>
+                    <% if current_user.is? :admin %>
                  <li class="nav-header">View</li>
                 <li><%= link_to "Projects", projects_path  %></li>
                 <li><%= link_to "Instances", servers_path %></li>
               </br>
                 <li class="nav-header">Create</li>
                 <li><%= link_to "Project", new_project_path  %></li>
+                 <% end %>
                 <% else %>
                 <li class="nav-header">Login</li>
-                <li><%= link_to "Sign Up", new_user_registration_path %></li>
                 <li><%= link_to "Sign In", new_user_session_path  %></li>
                 <% end %>
               </ul>

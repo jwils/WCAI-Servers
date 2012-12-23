@@ -3,7 +3,12 @@ class ProjectsController < ApplicationController
   # GET /projects.json
   load_and_authorize_resource
   def index
-    @projects = Project.all
+    if current_user.has_role? :admin or current_user.has_role? :research_assistant
+      @projects = Project.all
+    else
+      @projects = Project.with_roles(:researcher, current_user)
+    end
+
 
     respond_to do |format|
       format.html # index.html.erb
