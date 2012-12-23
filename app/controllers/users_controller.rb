@@ -1,4 +1,4 @@
-class RegistrationsController < Devise::RegistrationsController
+class UsersController < ApplicationController
   before_filter :authenticate_user!
   def new
     # If you're not using CanCan, raise some other exception, or redirect as you please
@@ -11,10 +11,15 @@ class RegistrationsController < Devise::RegistrationsController
 
 
   def new_batch
+    @roles = Role.all
+    @projects = Project.all
+    respond_to do |format|
+      format.html # new.html.erb
+    end
 
   end
 
-  def batch_create
-
+  def batch_invite
+    redirect_to root_path, notice: "Emails invitations sent"
   end
 end
