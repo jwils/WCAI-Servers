@@ -29,8 +29,8 @@ WCAI::Application.routes.draw do
   #match 'connection/open' => 'connection#index'
 
   match 'home/index' => 'home#index', :as => :home_page
-  match 'home/about' => 'home#about'
-  match 'home/contact' => 'home#contact'
+  match 'home/about' => 'home#about', :as => :about_path
+  match 'home/contact' => 'home#contact', :as => :contact_us_path
   match 'server/:id/start' => 'servers#start', :as => :start_server
   match 'server/:id/stop' => 'servers#stop', :as => :stop_server
 

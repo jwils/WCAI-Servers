@@ -7,7 +7,7 @@ class PassthroughController < ApplicationController
 		else 
 			Project.all.each do |project|
 				if current_user.has_role? :researcher, project
-					redirect_to project_project_files_path(project)
+					redirect_to projects_path
 				end
 			end
 		end
