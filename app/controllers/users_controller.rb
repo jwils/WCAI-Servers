@@ -20,6 +20,20 @@ class UsersController < ApplicationController
   end
 
   def batch_invite
+    @role = Role.find(params[:invitations][:role])
+    @project = Project.find(params[:invitations][:project])
+
+    params[:invitations][:user_emails].split("\n").each do |email|
+      u = User.find_by_email(email)
+      if u.nil?
+        u = User.invite!(:email => email)
+      end
+      if @role.name == "researcher"
+         u.add_role(@researcher, @project)
+      else
+        u.add_role(@role)
+      end
+    end
     redirect_to root_path, notice: "Emails invitations sent"
   end
 end

@@ -2,7 +2,7 @@ WCAI::Application.routes.draw do
   resources :servers
   resources :projects
 
-  devise_for :users #, :controllers => { :users => "users" }
+  devise_for :users, :controllers => { :invitations => 'devise/invitations' }
   
 
   resources :servers do

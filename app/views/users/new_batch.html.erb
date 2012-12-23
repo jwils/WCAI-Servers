@@ -1,11 +1,11 @@
 <%= simple_form_for :invitations, {:url =>batch_invite_users_path }  do |f| %>
     <%= f.input :role do %>
-        <%= f.select :role, Role.all.map { |r| [r.name, r.id] }, :include_blank => true %>
+        <%= f.select :role, Role.all.map { |r| [r.name, r.id] }, :include_blank => false %>
     <% end %>
 
     <div class="controls" id="research-projects-list" style="display: none;">
       <%= f.input :project, :required => false do %>
-          <%= f.select :role, Project.all.map { |p| [p.company.name, p.id] }, :include_blank => false %>
+          <%= f.select :project, Project.all.map { |p| [p.company.name, p.id] }, :include_blank => false %>
       <% end %>
     </div>
     <%= f.label "Email addresses of people you'd like to add." %>
