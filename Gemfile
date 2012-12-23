@@ -7,6 +7,7 @@ gem 'rake','10.0.2'
 
 gem 'mysql2'
 gem 'devise'
+gem 'devise_invitable'
 gem 'simple_form'
 gem 'sqlite3'
 
@@ -21,6 +22,11 @@ group :assets do
 
   gem 'uglifier', '>= 1.0.3'
   gem "twitter-bootstrap-rails"
+end
+
+group :development do
+  gem "better_errors"
+  gem "binding_of_caller"
 end
 
 gem 'jquery-rails'
