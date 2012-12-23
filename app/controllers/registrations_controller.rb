@@ -4,8 +4,17 @@ class RegistrationsController < Devise::RegistrationsController
     # If you're not using CanCan, raise some other exception, or redirect as you please
     if not current_user.nil? and current_user.role? :admin
       super
-	else
-		raise CanCan::AccessDenied
-	end
+	  else
+		  raise CanCan::AccessDenied
+	  end
+  end
+
+
+  def new_batch
+
+  end
+
+  def batch_create
+
   end
 end

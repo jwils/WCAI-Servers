@@ -1,0 +1,8 @@
+<%= form_tag batch_create_users_path, :method => :post do %>
+    <div class="controls">
+      <%= f.association :roles %>
+    </div>
+    <%= label_tag "Email addresses of people you'd like to add." %>
+    <%= text_area_tag :user_emails %>
+    <%= submit_tag "Send" %>
+<% end %>
