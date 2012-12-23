@@ -10,6 +10,6 @@ class User < ActiveRecord::Base
   has_many :connections
 
   def is?(role)
-    has_role? role.to_s
+    has_role? role
   end
 end
