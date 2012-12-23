@@ -8,7 +8,7 @@
   <div class="control-group">
     <%= f.label :company_id, :class => 'control-label' %>
     <div class="controls">
-      <%= f.association :company %>
+      <%= f.text_field :company, default:  @project.company.name %>
     </div>
   </div>
   <div class="control-group">
