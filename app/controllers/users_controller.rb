@@ -1,5 +1,7 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :prepare_roles
+
   def new
     # If you're not using CanCan, raise some other exception, or redirect as you please
     if not current_user.nil? and current_user.role? :admin
@@ -11,7 +13,6 @@ class UsersController < ApplicationController
 
 
   def new_batch
-    @roles = Role.all
     @projects = Project.all
     respond_to do |format|
       format.html # new.html.erb
@@ -20,7 +21,7 @@ class UsersController < ApplicationController
   end
 
   def batch_invite
-    @role = Role.find(params[:invitations][:role])
+    @role = @roles[params[:invitations][:role].to_i - 1][0]
     @project = Project.find(params[:invitations][:project])
 
     params[:invitations][:user_emails].split("\n").each do |email|
@@ -28,12 +29,18 @@ class UsersController < ApplicationController
       if u.nil?
         u = User.invite!(:email => email)
       end
-      if @role.name == "researcher"
+      if @role == "researcher"
          u.add_role(:researcher, @project)
       else
-        u.add_role(@role.name)
+        u.add_role(@role)
       end
     end
     redirect_to root_path, notice: "Emails invitations sent"
+  end
+
+  protected
+
+  def prepare_roles
+    @roles = [["admin", 1], ["research_assistant", 2], ["researcher", 3]]
   end
 end
