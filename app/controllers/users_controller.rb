@@ -29,9 +29,9 @@ class UsersController < ApplicationController
         u = User.invite!(:email => email)
       end
       if @role.name == "researcher"
-         u.add_role(@researcher, @project)
+         u.add_role(:researcher, @project)
       else
-        u.add_role(@role)
+        u.add_role(@role.name)
       end
     end
     redirect_to root_path, notice: "Emails invitations sent"
