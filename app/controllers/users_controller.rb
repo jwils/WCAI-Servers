@@ -42,7 +42,7 @@ class UsersController < ApplicationController
   end
 
   def check_admin
-    unless current_user and current_user.role? :admin
+    unless current_user and current_user.is? :admin
       raise CanCan::AccessDenied
     end
   end
