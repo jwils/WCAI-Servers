@@ -35,7 +35,7 @@ class UsersController < ApplicationController
         u.add_role(@role)
       end
     end
-    redirect_to root_path, notice: "Emails invitations sent"
+      redirect_to root_path, :notice => 'Email invitations sent'
   end
 
   protected
