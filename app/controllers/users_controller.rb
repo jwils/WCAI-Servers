@@ -1,14 +1,11 @@
 class UsersController < ApplicationController
   before_filter :authenticate_user!
   before_filter :prepare_roles
+  before_filter :check_admin
 
   def new
     # If you're not using CanCan, raise some other exception, or redirect as you please
-    if not current_user.nil? and current_user.role? :admin
-      super
-	  else
-		  raise CanCan::AccessDenied
-	  end
+    super
   end
 
 
@@ -42,5 +39,11 @@ class UsersController < ApplicationController
 
   def prepare_roles
     @roles = [["admin", 1], ["research_assistant", 2], ["researcher", 3]]
+  end
+
+  def check_admin
+    unless current_user and current_user.role? :admin
+      raise CanCan::AccessDenied
+    end
   end
 end
