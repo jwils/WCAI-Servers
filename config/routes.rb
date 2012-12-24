@@ -14,7 +14,7 @@ WCAI::Application.routes.draw do
   resources :users do
     collection do
       post 'batch_invite'
-      get 'new_batch'
+      get 'new_batch', :as => :new_batch
     end
     resources :connections, :only => [:index]
   end
