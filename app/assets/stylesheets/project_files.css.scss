@@ -29,9 +29,13 @@ li.folder {
 }
 
 a {
-    color: #000000;
+
     cursor: pointer;
     text-decoration: none;
+}
+
+li.large_file {
+  color: #FF0000;
 }
 
 a:hover {

@@ -3,6 +3,7 @@ module ProjectFilesHelper
     expiration = Time.now + 60.seconds
     root = aws_root.key
     response_string = "<li class=\"page"
+
     if not values[root].nil?
       response_string += "\">\n"
       name = root
@@ -13,6 +14,10 @@ module ProjectFilesHelper
       end
       response_string += "</ul>"
     else
+      if aws_root.content_length > 1000
+        response_string += " large_file"
+      end
+
       if root.end_with? '.xls' or root.end_with? '.xlsx'
         response_string += " xls\">\n"
       else
