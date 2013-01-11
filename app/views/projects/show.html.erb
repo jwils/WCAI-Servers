@@ -40,3 +40,5 @@
     <%end%>
     <%= link_to "File List", project_project_files_path(@project), :class => 'btn btn-info' %>
 </div>
+
+<%=  render 'users/index', :users => @users %>

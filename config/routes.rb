@@ -15,6 +15,11 @@ WCAI::Application.routes.draw do
       get 'new_batch'
       get 'index'
     end
+
+    member do
+      get 'toggle_lock'
+    end
+
     resources :connections, :only => [:index]
   end
 

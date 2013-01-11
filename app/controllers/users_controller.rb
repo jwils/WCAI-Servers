@@ -52,4 +52,17 @@ class UsersController < ApplicationController
       raise CanCan::AccessDenied
     end
   end
+
+  def toggle_lock
+    @u = User.find(params[:user_id])
+    if @u.access_locked?
+      @u.unlock_access!
+    else
+      @u.lock_access!
+    end
+    respond_to do |format|
+      format.html { redirect_to users_url }
+      format.json { head :no_content }
+    end
+  end
 end
