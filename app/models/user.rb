@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   rolify
 
-  devise :invitable, :database_authenticatable, #:registerable,
+  devise :invitable, :database_authenticatable, :lockable, #:registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model

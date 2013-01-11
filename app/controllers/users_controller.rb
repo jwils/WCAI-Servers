@@ -41,6 +41,19 @@ class UsersController < ApplicationController
       redirect_to root_path, :notice => 'Email invitations sent'
   end
 
+  def toggle_lock
+    @u = User.find(params[:id])
+    if @u.access_locked?
+      @u.unlock_access!
+    else
+      @u.lock_access!
+    end
+    respond_to do |format|
+      format.html { redirect_to redirect_to(:back)}
+      format.json { head :no_content }
+    end
+  end
+
   protected
 
   def prepare_roles
@@ -50,19 +63,6 @@ class UsersController < ApplicationController
   def check_admin
     unless current_user and current_user.is? :admin
       raise CanCan::AccessDenied
-    end
-  end
-
-  def toggle_lock
-    @u = User.find(params[:user_id])
-    if @u.access_locked?
-      @u.unlock_access!
-    else
-      @u.lock_access!
-    end
-    respond_to do |format|
-      format.html { redirect_to users_url }
-      format.json { head :no_content }
     end
   end
 end
