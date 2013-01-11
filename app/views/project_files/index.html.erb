@@ -1,7 +1,14 @@
+<%= link_to "Return To Project", @project, :class => 'btn' %>
 <h1><%= @project.company.name %> Data Files</h1>
 
+Notice: The files in red are larger than 1GB, and may take a long time to download.
+
 <ul class="file_list">
+<% if @root.nil? %>
+	<h2> No Files </h2>
+<% else %>
 	<%= print_directory_structure(@root, @project_files) %>
+<% end %>
 </ul>
 <br />
 

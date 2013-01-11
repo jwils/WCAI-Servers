@@ -13,10 +13,12 @@ class ProjectFilesController < ApplicationController
 
   def index
     @project =  Project.find(params[:project_id])
-    @root, @project_files = ProjectFile.find_by_project_name('PGandE')
-
-
-
+    if @project.folder_name.nil?
+       @root = nil
+       @project_files = nil
+    else
+       @root, @project_files = ProjectFile.find_by_project_name(@project.folder_name + "/")
+    end
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @project_files }

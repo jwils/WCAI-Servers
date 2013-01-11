@@ -34,8 +34,8 @@ a {
     text-decoration: none;
 }
 
-li.large_file {
-  color: #FF0000;
+li.large_file a {
+  background-color: #FF0000;
 }
 
 a:hover {

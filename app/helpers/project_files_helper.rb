@@ -1,6 +1,6 @@
 module ProjectFilesHelper
   def print_directory_structure(aws_root, values)
-    expiration = Time.now + 60.seconds
+    expiration = Time.now + 100000.seconds
     root = aws_root.key
     response_string = "<li class=\"page"
 
@@ -14,7 +14,7 @@ module ProjectFilesHelper
       end
       response_string += "</ul>"
     else
-      if aws_root.content_length > 1000
+      if aws_root.content_length > 1024 * 1024 * 1024
         response_string += " large_file"
       end
 
@@ -31,9 +31,19 @@ module ProjectFilesHelper
       else
         name = root[parent_index +1..-1]
       end
-      response_string += name + "</a>\n"
+      response_string += name + " (" + file_size(aws_root.content_length) + ") </a>\n"
     end
     response_string += "</li>\n"
     response_string.html_safe
+  end
+
+  def file_size(size)
+    if size > 1024 * 1024 * 1024
+      "%0.0f GB" % (size / (1024 * 1024 * 1024))
+    elsif size > 1024 * 1024
+      "%0.0f MB" % (size / (1024 * 1024 ))
+    else
+      "%0.0f KB" % (size / 1024)
+    end
   end
 end

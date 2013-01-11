@@ -3,8 +3,6 @@ WCAI::Application.routes.draw do
   resources :projects
 
   devise_for :users, :controllers => { :invitations => 'devise/invitations' }
-  
-
   resources :servers do
     resources :connections, :only => [:index, :new, :destroy]
   end
@@ -15,6 +13,7 @@ WCAI::Application.routes.draw do
     collection do
       post 'batch_invite'
       get 'new_batch'
+      get 'index'
     end
     resources :connections, :only => [:index]
   end
