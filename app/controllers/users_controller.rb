@@ -31,6 +31,8 @@ class UsersController < ApplicationController
       u = User.find_by_email(email)
       if u.nil?
         u = User.invite!(:email => email)
+      else
+        #SEND EMAIL
       end
       if @role == "researcher"
          u.add_role(:researcher, @project)
@@ -38,15 +40,20 @@ class UsersController < ApplicationController
         u.add_role(@role)
       end
     end
+      #SHOULD REDIRECT TO PAGE WE GOT HERE FROM
       redirect_to root_path, :notice => 'Email invitations sent'
   end
 
+  def show
+     @user = User.find(params[:id])
+  end
+
   def toggle_lock
-    @u = User.find(params[:id])
-    if @u.access_locked?
-      @u.unlock_access!
+    @user = User.find(params[:id])
+    if @user.access_locked?
+      @user.unlock_access!
     else
-      @u.lock_access!
+      @user.lock_access!
     end
     respond_to do |format|
       format.html { redirect_to redirect_to(:back)}

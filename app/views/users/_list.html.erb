@@ -11,7 +11,7 @@
  <tbody>
   <% @users.each do |user| %>
     <tr>
-      <td><%= user.name %></td>
+      <td><%=  link_to (if user.name then user.name else "Unregistered" end), user_path(user) %></td>
       <td><%= user.email %></td>
       <% if current_user.is? :admin %>
           <% if user.access_locked? %>

@@ -1,0 +1,34 @@
+<%- model_class = User -%>
+<div class="page-header">
+  <h1><%= @user.name %></h1>
+</div>
+<%= simple_form_for :abilities, {:url =>'' }  do |f| %>
+<dl class="dl-horizontal">
+  <dt><strong>Email:</strong></dt>
+  <dd><%= @user.email %></dd>
+
+  <dt><strong><h3>Abilities:</h3></strong></dt>
+  <dt><strong>Admin:</strong></dt>
+  <dd><%= f.input :admin, :as => :boolean, :input_html => { :checked =>  @user.is?(:admin), :disabled => (not current_user.is?(:admin))}, :label => false %></dd>
+  <dt><strong><h5>Projects:</h5></strong></dt>
+  <% Project.all.each do |project| %>
+          <dt><i><%= project.company.name %></i></dt>
+          <dd><%= f.input project.id, :as => :boolean, :label => false, :input_html => { :checked => @user.has_role?(:researcher, project), :disabled => (not current_user.is?(:admin))} %></dd>
+  <% end %>
+
+</dl>
+
+<div class="form-actions">
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              users_path, :class => 'btn'  %>
+  <% if current_user.is? :admin %>
+      <% if @user.access_locked? %>
+          <td><%= link_to  "Unlock User", toggle_lock_user_path(@user), :class => 'btn btn-primary', :remote => true %></td>
+      <% else %>
+          <td><%= link_to  "Lock User", toggle_lock_user_path(@user), :class => 'btn btn-primary btn-danger', :remote => true %></td>
+      <% end %>
+  <% end %>
+  <%= f.submit "Update Abilities", :class => 'btn btn-primary' %>
+
+</div>
+<% end %>
