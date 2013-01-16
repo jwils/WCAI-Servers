@@ -3,6 +3,7 @@
     <tr>
       <th>Name</th>
       <th>Email</th>
+      <th>Institution</th>
       <% if current_user.is? :admin %>
         <th>Toggle Lock</th>
       <% end %>
@@ -13,6 +14,7 @@
     <tr>
       <td><%=  link_to (if user.name then user.name else "Unregistered" end), user_path(user) %></td>
       <td><%= user.email %></td>
+      <td><%= user.institution %></td>
       <% if current_user.is? :admin %>
           <% if user.access_locked? %>
             <td><%= link_to  "Unlock User", toggle_lock_user_path(user), :class => 'btn btn-mini', :remote => true %></td>
