@@ -9,7 +9,7 @@
       <th>Start Date</th>
       <th>Current State</th>
       <th>Description</th>
-      <% if current_user.is? :admin or current_user.is :research_assistant%>
+      <% if current_user.is? :admin or current_user.is? :research_assistant%>
        <th>Server Status</th>
       <% end %>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -22,7 +22,7 @@
         <td><%= project.start_date %></td>
         <td><%= project.current_state %></td>
         <td><%= project.description %></td>
-	<% if current_user.is? :admin or current_user.is :research_assistant%>
+	<% if current_user.is? :admin or current_user.is? :research_assistant%>
         <% if project.server.nil? %>
             <td>No server setup</td>
         <% else %>
