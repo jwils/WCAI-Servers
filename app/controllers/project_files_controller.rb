@@ -7,7 +7,7 @@ class ProjectFilesController < ApplicationController
     project =  Project.find(params[:project_id])
 
     if not current_user or  not (current_user.has_role? :admin or current_user.has_role? :researcher, project)
-	redirect_to root_path
+	    redirect_to root_path
     end
   end
 
@@ -28,8 +28,8 @@ class ProjectFilesController < ApplicationController
   # GET /project_files/1
   # GET /project_files/1.json
   def show
-    @project_file = ProjectFile.find(params[:id])
+    @project_file = ProjectFile.find_by_name(params[:name])
 
-    redirect_to @project_file.file_url
+    redirect_to @project_file.link
   end
 end

@@ -31,6 +31,13 @@ class ProjectFile
     return root, output_files
   end
 
+  def self.find_by_name(name)
+    fog_file = FOG_STORAGE.directories.get(Settings.aws_bucket).files.get(name)
+    file = ProjectFile.new
+    file.size = fog_file.content_length
+    file.path = name
+  end
+
 
   def link
     fog_file = FOG_STORAGE.directories.get(Settings.aws_bucket).files.get(self.path)
