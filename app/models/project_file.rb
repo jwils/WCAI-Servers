@@ -2,10 +2,13 @@ class ProjectFile
   attr_accessor :children, :size, :path
 
   EXT_MAP =  {
-      'xls' => :xls,
+      'xls'  => :xls,
       'xlsx' => :xls,
-      'doc' => :doc,
+      'doc'  => :doc,
       'docx' => :doc,
+      'zip'  => :zip,
+      'txt'  => :txt,
+      'pdf'  => :pdf,
   }
 
   def self.find_by_project_name(name)
@@ -52,6 +55,12 @@ class ProjectFile
   def extension_css
     if extension == :xls
       "xls"
+    elsif extension == :zip
+      "zip"
+    elsif extension == :pdf
+      "pdf"
+    elsif extension == :doc
+      "doc"
     else
       "default"
     end
