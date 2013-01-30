@@ -9,6 +9,7 @@ class ProjectFile
       'zip'  => :zip,
       'txt'  => :txt,
       'pdf'  => :pdf,
+      'sql'  => :sql,
   }
 
   def self.find_by_project_name(name)
@@ -61,6 +62,12 @@ class ProjectFile
       "pdf"
     elsif extension == :doc
       "doc"
+    elsif extension == :code
+      "code"
+    elsif extension == :txt
+      "txt"
+    elsif extension == :sql
+      "sql"
     else
       "default"
     end
