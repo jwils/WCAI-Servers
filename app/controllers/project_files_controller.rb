@@ -1,7 +1,7 @@
 class ProjectFilesController < ApplicationController
   # GET /project_files
   # GET /project_files.json
-  before_filter :check_auth
+  before_filter :check_auth,  :except => :show
 
   def check_auth
     project =  Project.find(params[:project_id])
@@ -15,9 +15,8 @@ class ProjectFilesController < ApplicationController
     @project =  Project.find(params[:project_id])
     if @project.folder_name.nil?
        @root = nil
-       @project_files = nil
     else
-       @root, @project_files = ProjectFile.find_by_project_name(@project.folder_name + "/")
+       @root = ProjectFile.find_by_project_name(@project.folder_name + "/")
     end
     respond_to do |format|
       format.html # index.html.erb
@@ -28,8 +27,8 @@ class ProjectFilesController < ApplicationController
   # GET /project_files/1
   # GET /project_files/1.json
   def show
-    @project_file = ProjectFile.find_by_name(params[:name])
-
-    redirect_to @project_file.link
+    @file_name = CGI::unescape(params[:id]).sub("^",".")
+    @project_file = ProjectFile.find_link_by_name(@file_name)
+    redirect_to @project_file
   end
 end
