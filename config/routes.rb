@@ -7,7 +7,7 @@ WCAI::Application.routes.draw do
     resources :connections, :only => [:index, :new, :destroy]
   end
 
-  resources :connections, :only => [:show]
+  resources :connections, :only => [:show, :index]
 
   resources :users do
     collection do
@@ -20,16 +20,15 @@ WCAI::Application.routes.draw do
       get 'toggle_lock'
     end
 
-    resources :connections, :only => [:index]
   end
 
   resources :projects do
     resources :project_files, :only => [:index, :new, :create]
   end
 
-  resources :project_files, :only => [:show]
 
-  #shows all open connections
+  match "/project_files/:id" => 'project_files#show', :id => /.*/, :as => 'project_file'
+  #
   #match 'connection/open' => 'connection#index'
 
   match 'home/index' => 'home#index', :as => :home_page
