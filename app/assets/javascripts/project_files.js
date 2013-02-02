@@ -1,4 +1,3 @@
-
 $(function() {
     // Find list items representing folders and
     // style them accordingly.  Also, turn them

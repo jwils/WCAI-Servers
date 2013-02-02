@@ -27,7 +27,7 @@ class ProjectFilesController < ApplicationController
   # GET /project_files/1
   # GET /project_files/1.json
   def show
-    @file_name = CGI::unescape(params[:id]).sub("^",".")
+    @file_name = CGI::unescape(params[:id]).gsub("%20"," ").gsub("%2F","/")
     @project_file = ProjectFile.find_link_by_name(@file_name)
     redirect_to @project_file
   end
