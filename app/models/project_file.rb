@@ -54,20 +54,8 @@ class ProjectFile
   end
 
   def extension_css
-    if extension == :xls
-      "xls"
-    elsif extension == :zip
-      "zip"
-    elsif extension == :pdf
-      "pdf"
-    elsif extension == :doc
-      "doc"
-    elsif extension == :code
-      "code"
-    elsif extension == :txt
-      "txt"
-    elsif extension == :sql
-      "sql"
+    unless extension.nil?
+      extension.to_s
     else
       "default"
     end

@@ -2,6 +2,15 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   load_and_authorize_resource
+  before_filter :check_logged_in
+
+  def check_logged_in
+    if not current_user
+      flash[:notice] = "Please login first"
+      redirect_to root_path
+    end
+  end
+
   def index
     if current_user.has_role? :admin or current_user.has_role? :research_assistant
       @projects = Project.all
