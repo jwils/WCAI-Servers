@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Date:</b>
+  <%= @time_entry.date %>
+</p>
+
+<p>
+  <b>Start time:</b>
+  <%= @time_entry.start_time %>
+</p>
+
+<p>
+  <b>End time:</b>
+  <%= @time_entry.end_time %>
+</p>
+
+<p>
+  <b>Timesheet:</b>
+  <%= @time_entry.timesheet %>
+</p>
+
+<p>
+  <b>Project:</b>
+  <%= @time_entry.project %>
+</p>
+
+<p>
+  <b>Comment:</b>
+  <%= @time_entry.comment %>
+</p>
+
+
+<%= link_to 'Edit', edit_time_entry_path(@time_entry) %> |
+<%= link_to 'Back', time_entries_path %>
