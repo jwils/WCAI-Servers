@@ -35,7 +35,7 @@ class ProjectFile
   end
 
   def self.find_link_by_name(name)
-    fog_file = FOG_STORAGE.directories.get(Settings.aws_bucket).files.get(name)
+    fog_file = FOG_STORAGE.directories.get(Settings.aws_bucket).files.head(name)
     expiration = Time.now + 60.seconds
     fog_file.url(expiration)
   end
