@@ -51,14 +51,13 @@ class UsersController < ApplicationController
   def toggle_lock
     @user = User.find(params[:id])
     if @user.access_locked?
+      @response = "unlocked"
       @user.unlock_access!
     else
+      @response = "locked"
       @user.lock_access!
     end
-    respond_to do |format|
-      format.html { redirect_to redirect_to(:back)}
-      format.json { head :no_content }
-    end
+    render 'toggle_lock', :formats => [:js]
   end
 
   protected

@@ -1,4 +1,10 @@
 WCAI::Application.routes.draw do
+  resources :time_entries
+
+
+  resources :timesheets
+
+
   resources :servers
   resources :projects
 
@@ -17,23 +23,27 @@ WCAI::Application.routes.draw do
     end
 
     member do
-      get 'toggle_lock'
+      put 'toggle_lock'
     end
 
   end
 
   resources :projects do
-    resources :project_files, :only => [:index, :new, :create]
+    resources :project_files, :except => :show
+    match "/project_files/:file" => 'project_files#show', :file => /.+/, :as => 'project_file'
   end
 
 
-  match "/project_files/:id" => 'project_files#show', :id => /.*/, :as => 'project_file'
   #
   #match 'connection/open' => 'connection#index'
 
   match 'home/index' => 'home#index', :as => :home_page
   match 'home/about' => 'home#about', :as => :about
   match 'home/contact' => 'home#contact', :as => :contact_us
+  match 'how_to/create_users' => 'home#create_users', :as => how_to_create_users
+  match 'how_to/create_projects' => 'home#create_projects', :as => how_to_create_projects
+  match 'how_to/upload_files' => 'home#upload_files', :as => how_to_upload_files
+
   match 'server/:id/start' => 'servers#start', :as => :start_server
   match 'server/:id/stop' => 'servers#stop', :as => :stop_server
 
