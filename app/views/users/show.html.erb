@@ -23,14 +23,11 @@
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               users_path, :class => 'btn'  %>
-  <% if current_user.is? :admin %>
-      <% if @user.access_locked? %>
-          <td><%= link_to  "Unlock User", toggle_lock_user_path(@user), :class => 'btn btn-primary', :remote => true %></td>
-      <% else %>
-          <td><%= link_to  "Lock User", toggle_lock_user_path(@user), :class => 'btn btn-primary btn-danger', :remote => true %></td>
-      <% end %>
-  <% end %>
   <%= f.submit "Update Abilities", :class => 'btn btn-primary' %>
 
 </div>
 <% end %>
+
+  <% if current_user.is? :admin and current_user != @user %>
+FIX POS: Also does not refresh on click.	<%= render 'lock_unlock_form', :user => @user %>
+  <% end %>
