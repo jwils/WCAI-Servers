@@ -33,13 +33,14 @@ WCAI::Application.routes.draw do
     match "/project_files/:file" => 'project_files#show', :file => /.+/, :as => 'project_file'
   end
 
+  match 'contact' => 'messages#new', :as => 'contact_us', :via => :get
+  match 'contact' => 'messages#create', :as => 'contact_us', :via => :post
 
   #
   #match 'connection/open' => 'connection#index'
 
   match 'home/index' => 'home#index', :as => :home_page
   match 'home/about' => 'home#about', :as => :about
-  match 'home/contact' => 'home#contact', :as => :contact_us
   match 'how_to/create_users' => 'home#create_users', :as => :how_to_create_users
   match 'how_to/create_projects' => 'home#create_projects', :as => :how_to_create_projects
   match 'how_to/upload_files' => 'home#upload_files', :as => :how_to_upload_files
