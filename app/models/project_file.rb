@@ -13,7 +13,7 @@ class ProjectFile
   }
 
   def self.find_by_project_name(name)
-    project_files = FOG_STORAGE.directories.get(Settings.aws_bucket).files.all({:prefix => name})
+    project_files = self.files.all({:prefix => name})
     output_files = Hash.new
     file_lookup = Hash.new 
     root = nil
@@ -35,7 +35,7 @@ class ProjectFile
   end
 
   def self.find_link_by_name(name)
-    fog_file = FOG_STORAGE.directories.get(Settings.aws_bucket).files.head(name)
+    fog_file = self.files.head(name)
     expiration = Time.now + 60.seconds
     fog_file.url(expiration)
   end
@@ -46,6 +46,10 @@ class ProjectFile
     file.path = fog_file.key
     file.children = nil
     return file
+  end
+
+  def self.files
+    FOG_STORAGE.directories.get(Settings.aws_bucket).files
   end
 
   def extension

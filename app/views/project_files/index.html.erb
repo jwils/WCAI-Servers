@@ -7,7 +7,7 @@ Notice: The files in red are larger than 1GB, and may take a long time to downlo
 <% if @root.nil? %>
 	<h2> No Files </h2>
 <% else %>
-	<%= print_directory_structure(@root) %>
+	<%= print_directory_structure(@project, @root) %>
 <% end %>
 </ul>
 <br />

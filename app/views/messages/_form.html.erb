@@ -1,0 +1,15 @@
+<%= simple_form_for @message, :url => contact_us_path do |form| %>
+    <fieldset class="fields">
+      <%= form.input :project_id, :label => "Regarding?",
+                        :collection => [["Site design", 0]] + @projects.collect! { |p| ["The " + p.company.name + " project", p.id]  }%>
+
+      <div class="field">
+        <%= form.label :body %>
+        <%= form.text_area :content %>
+      </div>
+    </fieldset>
+
+    <fieldset class="actions">
+      <%= form.submit "Send" %>
+    </fieldset>
+<% end %>
