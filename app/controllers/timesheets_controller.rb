@@ -26,6 +26,7 @@ class TimesheetsController < ApplicationController
   def new
     @timesheet = Timesheet.new
     7.times {@timesheet.time_entries.build}
+    @days = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @timesheet }

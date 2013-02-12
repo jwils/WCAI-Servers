@@ -1,5 +1,5 @@
 <%= simple_form_for @timesheet do |f| %>
-  <%= f.input :user_id %>
+  <%= f.association :user %>
   <%= f.input :start_date %>
 <table class="table table-striped">
     <thead>
@@ -14,7 +14,7 @@
         <tbody>
     <%= f.fields_for :time_entries do |builder| %>
             <tr>
-              <td><%= "date"%></td>
+              <td><p><%= @days.shift %></p></td>
               <td> <%= builder.input :hours_spent, label: false, input_html: {min: 0, max: 24, style:"width: 40px;" } %></td>
               <td><%= builder.association :project, label: false, :collection => Project.all().each() %></td>
               <td><%= builder.input :comment, label: false, input_html: {rows: 1} %></td>
