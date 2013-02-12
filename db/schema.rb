@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130113235258) do
+ActiveRecord::Schema.define(:version => 20130211082417) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -77,6 +77,31 @@ ActiveRecord::Schema.define(:version => 20130113235258) do
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
   end
+
+  create_table "time_entries", :force => true do |t|
+    t.date     "date"
+    t.decimal  "hours_spent"
+    t.integer  "timesheet_id"
+    t.integer  "project_id"
+    t.text     "comment"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "time_entries", ["project_id"], :name => "index_time_entries_on_project_id"
+  add_index "time_entries", ["timesheet_id"], :name => "index_time_entries_on_timesheet_id"
+
+  create_table "timesheets", :force => true do |t|
+    t.integer  "user_id"
+    t.date     "start_date"
+    t.boolean  "submitted"
+    t.integer  "approver_id"
+    t.datetime "created_at",  :null => false
+    t.datetime "updated_at",  :null => false
+  end
+
+  add_index "timesheets", ["approver_id"], :name => "index_timesheets_on_approver_id"
+  add_index "timesheets", ["user_id"], :name => "index_timesheets_on_user_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                :default => "", :null => false

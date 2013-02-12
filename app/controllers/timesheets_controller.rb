@@ -25,7 +25,7 @@ class TimesheetsController < ApplicationController
   # GET /timesheets/new.json
   def new
     @timesheet = Timesheet.new
-
+    7.times {@timesheet.time_entries.build}
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @timesheet }

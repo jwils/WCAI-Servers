@@ -3,7 +3,7 @@ class CreateTimeEntries < ActiveRecord::Migration
     create_table :time_entries do |t|
       t.date :date
       t.decimal :hours_spent
-      t.references :timesheets
+      t.references :timesheet
       t.references :project
       t.text :comment
 

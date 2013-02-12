@@ -7,4 +7,8 @@ class Project < ActiveRecord::Base
   has_many :job_requests
   has_many :connections, :through => :server
   has_many :project_files
+
+  def name
+    self.company.name
+  end
 end
