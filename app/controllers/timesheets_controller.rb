@@ -40,7 +40,7 @@ class TimesheetsController < ApplicationController
   # POST /timesheets
   # POST /timesheets.json
   def create
-    @timesheet = Timesheet.new(params[:timesheet])
+    @timesheet = Timesheet.new(params[:timesheets])
 
     respond_to do |format|
       if @timesheet.save
@@ -59,7 +59,7 @@ class TimesheetsController < ApplicationController
     @timesheet = Timesheet.find(params[:id])
 
     respond_to do |format|
-      if @timesheet.update_attributes(params[:timesheet])
+      if @timesheet.update_attributes(params[:timesheets])
         format.html { redirect_to @timesheet, notice: 'Timesheet was successfully updated.' }
         format.json { head :no_content }
       else

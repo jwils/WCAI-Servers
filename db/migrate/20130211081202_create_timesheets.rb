@@ -4,10 +4,11 @@ class CreateTimesheets < ActiveRecord::Migration
       t.references :user
       t.date :start_date
       t.boolean :submitted
-      t.boolean :approved
+      t.references :approver
 
       t.timestamps
     end
     add_index :timesheets, :user_id
+    add_index :timesheets, :approver_id
   end
 end

@@ -16,15 +16,15 @@ class TimesheetsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should create timesheet" do
+  test "should create timesheets" do
     assert_difference('Timesheet.count') do
-      post :create, timesheet: { start_date: @timesheet.start_date }
+      post :create, timesheets: { start_date: @timesheet.start_date }
     end
 
-    assert_redirected_to timesheet_path(assigns(:timesheet))
+    assert_redirected_to timesheet_path(assigns(:timesheets))
   end
 
-  test "should show timesheet" do
+  test "should show timesheets" do
     get :show, id: @timesheet
     assert_response :success
   end
@@ -34,12 +34,12 @@ class TimesheetsControllerTest < ActionController::TestCase
     assert_response :success
   end
 
-  test "should update timesheet" do
-    put :update, id: @timesheet, timesheet: { start_date: @timesheet.start_date }
-    assert_redirected_to timesheet_path(assigns(:timesheet))
+  test "should update timesheets" do
+    put :update, id: @timesheet, timesheets: { start_date: @timesheet.start_date }
+    assert_redirected_to timesheet_path(assigns(:timesheets))
   end
 
-  test "should destroy timesheet" do
+  test "should destroy timesheets" do
     assert_difference('Timesheet.count', -1) do
       delete :destroy, id: @timesheet
     end

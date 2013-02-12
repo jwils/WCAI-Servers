@@ -8,6 +8,8 @@ class User < ActiveRecord::Base
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :institution
   # attr_accessible :title, :body
   has_many :connections
+  has_many :timesheets
+  has_many :time_entries, :through => 'timesheets'
 
   def is?(role)
     has_role? role
