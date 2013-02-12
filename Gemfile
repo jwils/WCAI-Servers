@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.11'
-gem 'rake','10.0.2'
+gem 'rails', '3.2.12'
+gem 'rake','10.0.3'
 
 gem 'mysql2'
 gem 'devise'
