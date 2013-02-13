@@ -1,6 +1,6 @@
 <%= simple_form_for @timesheet do |f| %>
   <%= f.association :user %>
-  <%= f.input :start_date %>
+  <%= f.input :start_date, :as => :datepicker %>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -15,14 +15,14 @@
     <%= f.fields_for :time_entries do |builder| %>
             <tr>
               <td><p><%= @days.shift %></p></td>
-              <td> <%= builder.input :hours_spent, label: false, input_html: {min: 0, max: 24, style:"width: 40px;" } %></td>
+              <td> <%= builder.input :hours_spent, label: false, input_html: {min: 0, max: 24, style:'width: 50px;', class:'hour-num-field', step:0.25} %></td>
               <td><%= builder.association :project, label: false, :collection => Project.all().each() %></td>
               <td><%= builder.input :comment, label: false, input_html: {rows: 1} %></td>
             </tr>
         <% end %>
         </tbody>
 </table>
-
+    <p><label>&nbsp;&nbsp;&nbsp;Total:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="ts-total" step="any" style="width: 40px;" disabled="true"/></label></p>
         <div class="form-actions">
     <%= f.button :submit, :class => 'btn-primary' %>
     <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
