@@ -25,6 +25,7 @@ class TimesheetsController < ApplicationController
   # GET /timesheets/new.json
   def new
     @timesheet = Timesheet.new
+    @timesheet.start_date = Date.parse('Monday')
     7.times {@timesheet.time_entries.build}
     @days = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
     respond_to do |format|
