@@ -12,7 +12,9 @@
       <% end %>
     </div>
   </div>
-  <%= f.input :start_date, :as => :datepicker, :class => 'date_select' %>
+  <%= f.input :start_date, :as => :datepicker,
+              :class => 'date_select',
+              :input_html => {value: if @project then @project.start_date.strftime("%m/%d/%Y") end} %>
   <div class="control-group">
     <%= f.label :folder_name, :class => 'control-label' %>
     <div class="controls">

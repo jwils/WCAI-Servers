@@ -1,6 +1,8 @@
 <%= simple_form_for @timesheet do |f| %>
   <%= f.association :user %>
-  <%= f.input :start_date, :as => :datepicker, input_html: {class: 'only_mondays'} %>
+  <%= f.input :start_date, :as => :datepicker,
+              input_html: {class: 'only_mondays',
+                           value: if @timesheet then @timesheet.start_date.strftime("%m/%d/%Y") end} %>
 <table class="table table-striped">
     <thead>
         <tr>
