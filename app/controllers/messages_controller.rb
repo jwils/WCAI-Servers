@@ -1,7 +1,11 @@
 class MessagesController < ApplicationController
   def new
     @message = Message.new
-    @projects = Project.all.select {|p| current_user.has_role? :researcher, p}
+    if current_user.has_role? :admin
+      @projects = Project.all
+    else
+      @projects = Project.all.select {|p| current_user.has_role? :researcher, p}
+    end
   end
 
   def create
