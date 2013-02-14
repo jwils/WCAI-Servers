@@ -20,6 +20,7 @@ keypairs
 #ignore all settings files
 settings.yml
 
+/public/assets/
 
 /.idea
 .rvmrc

@@ -1,6 +1,6 @@
 <%= simple_form_for @project, :html => { :class => 'form-horizontal' } do |f| %>
   <div class="control-group">
-      <%= f.association :user, :label => "Project Manager", :collection => User.with_role(:admin).where('"users"."name" is not NULL').order('"users"."name"') %>
+      <%= f.association :user, :label => "Project Manager", :collection => User.with_role(:admin).where('`users`.`name` is not NULL').order('`users`.`name`') %>
   </div>
   <div class="control-group">
     <%= f.label :company_id, :class => 'control-label', :label => "Project Name" %>

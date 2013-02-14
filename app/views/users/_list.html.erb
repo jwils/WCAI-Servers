@@ -19,7 +19,7 @@
           <% if current_user == user %>
               <td>Can't Lock yourself.</td>
            <%else%>
-                <td id="lock_<%=user.id%>"><%= render 'lock_unlock_form', :user => user %></td>
+                <td id="lock_<%=user.id%>"><%= render 'users/lock_unlock_form', :user => user %></td>
            <%end%>
       <% end %>
     </tr>
