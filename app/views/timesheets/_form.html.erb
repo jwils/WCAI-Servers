@@ -14,7 +14,7 @@
         </tr>
         </thead>
         <tbody>
-    <%= f.fields_for :time_entries do |builder| %>
+    <%= f.fields_for :time_entries, @time_entries do |builder| %>
             <tr>
               <td><p><%= @days.shift %></p></td>
               <td> <%= builder.input :hours_spent, label: false, input_html: {min: 0, max: 24, style:'width: 50px;', class:'hour-num-field', step:0.25} %></td>

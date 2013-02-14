@@ -27,6 +27,7 @@ class TimesheetsController < ApplicationController
     @timesheet = Timesheet.new
     @timesheet.start_date = Date.parse('Monday')
     7.times {@timesheet.time_entries.build}
+
     @days = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
     respond_to do |format|
       format.html # new.html.erb
@@ -36,13 +37,16 @@ class TimesheetsController < ApplicationController
 
   # GET /timesheets/1/edit
   def edit
+    @days = %w[Monday Tuesday Wednesday Thursday Friday Saturday Sunday]
     @timesheet = Timesheet.find(params[:id])
+    (7 - @timesheet.time_entries.count()).times {@timesheet.time_entries.build}
+    @time_entries = @timesheet.time_entries
   end
 
   # POST /timesheets
   # POST /timesheets.json
   def create
-    @timesheet = Timesheet.new(params[:timesheets])
+    @timesheet = Timesheet.new(params[:timesheet])
 
     respond_to do |format|
       if @timesheet.save
@@ -61,7 +65,7 @@ class TimesheetsController < ApplicationController
     @timesheet = Timesheet.find(params[:id])
 
     respond_to do |format|
-      if @timesheet.update_attributes(params[:timesheets])
+      if @timesheet.update_attributes(params[:timesheet])
         format.html { redirect_to @timesheet, notice: 'Timesheet was successfully updated.' }
         format.json { head :no_content }
       else
