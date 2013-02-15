@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130211082417) do
+ActiveRecord::Schema.define(:version => 20130215104133) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -29,6 +29,16 @@ ActiveRecord::Schema.define(:version => 20130211082417) do
     t.datetime "created_at",        :null => false
     t.datetime "updated_at",        :null => false
   end
+
+  create_table "downloads_trackers", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "file_name"
+    t.integer  "file_size"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "downloads_trackers", ["user_id"], :name => "index_downloads_trackers_on_user_id"
 
   create_table "institutions", :force => true do |t|
     t.string   "name"

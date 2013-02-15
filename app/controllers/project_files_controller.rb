@@ -28,7 +28,12 @@ class ProjectFilesController < ApplicationController
   # GET /project_files/1.json
   def show
     @file_name = CGI::unescape(params[:file]).gsub("%20"," ").gsub("%2F","/")
-    @project_file = ProjectFile.find_link_by_name(@file_name)
+    @project_file, file_size = ProjectFile.find_link_by_name(@file_name)
+    tracker_file = DownloadsTracker.create(:file_name => params[:file],
+                                           :file_size => file_size)
+    tracker_file.user = current_user
+    tracker_file.save
+
     redirect_to @project_file
   end
 end

@@ -36,7 +36,7 @@ class ProjectFile
   def self.find_link_by_name(name)
     fog_file = self.files.head(name)
     expiration = Time.now + 60.seconds
-    fog_file.url(expiration)
+    return fog_file.url(expiration), fog_file.content_length
   end
 
   def self.convert(fog_file)
