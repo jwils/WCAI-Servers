@@ -1,8 +1,7 @@
 <%= simple_form_for @timesheet do |f| %>
   <%= f.association :user %>
   <%= f.input :start_date, :as => :datepicker,
-              input_html: {class: 'only_mondays',
-                           value: if @timesheet then @timesheet.start_date.strftime("%m/%d/%Y") end} %>
+              input_html: {class: 'only_mondays'} %>
 <table class="table table-striped">
     <thead>
         <tr>
@@ -16,7 +15,8 @@
         <tbody>
     <%= f.fields_for :time_entries, @time_entries do |builder| %>
             <tr>
-              <td><p><%= @days.shift %></p></td>
+              <%=  builder.input :day, :as => :hidden %>
+              <td><p><%= builder.label builder.object.day_of_week %></p></td>
               <td> <%= builder.input :hours_spent, label: false, input_html: {min: 0, max: 24, style:'width: 50px;', class:'hour-num-field', step:0.25} %></td>
               <td><%= builder.association :project, label: false, :collection => Project.all().each() %></td>
               <td><%= builder.input :comment, label: false, input_html: {rows: 1} %></td>

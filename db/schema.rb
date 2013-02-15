@@ -79,7 +79,7 @@ ActiveRecord::Schema.define(:version => 20130211082417) do
   end
 
   create_table "time_entries", :force => true do |t|
-    t.date     "date"
+    t.integer  "day"
     t.decimal  "hours_spent"
     t.integer  "timesheet_id"
     t.integer  "project_id"

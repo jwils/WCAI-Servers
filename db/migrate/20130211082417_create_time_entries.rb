@@ -1,7 +1,7 @@
 class CreateTimeEntries < ActiveRecord::Migration
   def change
     create_table :time_entries do |t|
-      t.date :date
+      t.integer :day
       t.decimal :hours_spent
       t.references :timesheet
       t.references :project
