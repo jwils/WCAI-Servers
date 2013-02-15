@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
   before_filter :check_logged_in
 
   def check_logged_in
-    if not current_user
+    if current_user.nil?
       flash[:notice] = "Please login first"
       redirect_to root_path
     end

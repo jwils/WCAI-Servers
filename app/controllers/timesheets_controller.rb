@@ -2,7 +2,12 @@ class TimesheetsController < ApplicationController
   # GET /timesheets
   # GET /timesheets.json
   def index
-    @timesheets = Timesheet.all
+    if params[:user_id]
+      @timesheets = Timesheet.find(params[:user_id])
+    else
+      @timesheets = Timesheet.all
+    end
+
 
     respond_to do |format|
       format.html # index.html.erb

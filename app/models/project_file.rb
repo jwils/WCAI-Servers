@@ -14,7 +14,6 @@ class ProjectFile
 
   def self.find_by_project_name(name)
     project_files = self.files.all({:prefix => name})
-    output_files = Hash.new
     file_lookup = Hash.new 
     root = nil
 
