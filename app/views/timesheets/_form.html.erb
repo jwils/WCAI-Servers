@@ -25,9 +25,11 @@
         </tbody>
 </table>
     <p><label>&nbsp;&nbsp;&nbsp;Total:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input id="ts-total" step="any" style="width: 40px;" disabled="true"/></label></p>
-        <div class="form-actions">
-    <%= f.button :submit, :class => 'btn-primary' %>
-    <%= link_to t('.cancel', :default => t('helpers.links.cancel')),
-                timesheets_path, :class => 'btn' %>
-  </div>
+    <div class="form-actions">
+      <%= f.button :submit, :class => 'btn-primary' %>
+      <%= f.button :submit, "Save As Draft", :class => 'btn' %>
+      <%= link_to t('.cancel', :default => t('helpers.links.cancel')),
+                  timesheets_path, :class => 'btn' %>
+
+    </div>
 <% end %>

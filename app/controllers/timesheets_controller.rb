@@ -3,7 +3,7 @@ class TimesheetsController < ApplicationController
   # GET /timesheets.json
   def index
     if params[:user_id]
-      @timesheets = Timesheet.find(params[:user_id])
+      @timesheets = User.find(params[:user_id]).timesheets
     else
       @timesheets = Timesheet.all
     end
