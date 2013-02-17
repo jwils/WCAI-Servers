@@ -7,7 +7,7 @@
             <li><%= link_to "Users", users_path  %></li>
         <% if current_user.is? :admin %>
             <li><%= link_to "Instances", servers_path %></li>
-            </br>
+            <br />
             <li class="nav-header">Create</li>
             <li><%= link_to "Project", new_project_path  %></li>
             <li><%= link_to "Users", new_batch_users_path  %></li>

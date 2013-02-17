@@ -5,7 +5,7 @@ class ProjectsController < ApplicationController
   before_filter :check_logged_in
 
   def check_logged_in
-    if not current_user
+    if current_user.nil?
       flash[:notice] = "Please login first"
       redirect_to root_path
     end
@@ -29,7 +29,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1.json
   def show
     @project = Project.find(params[:id])
-    @users = User.with_role :researcher, @project
+    @users = User.with_role(:researcher, @project).where('users.name is not NULL')
 
     respond_to do |format|
       format.html # show.html.erb

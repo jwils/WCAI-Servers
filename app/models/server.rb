@@ -73,7 +73,7 @@ class Server < ActiveRecord::Base
   end
 
   def delete_instance
-    if not self.instance.nil?
+    unless self.instance.nil?
       self.instance.destroy
     end
   end
@@ -81,7 +81,7 @@ class Server < ActiveRecord::Base
   def get_instance_object
     self.instance = FOG_CONNECTION.servers.get(self.instance_id)
     
-    if not self.instance.nil?
+    unless self.instance.nil?
       self.instance.private_key_path = '~/.ssh/fog'
       self.instance.public_key_path = '~/.ssh/fog.pub'
       self.instance.username = 'ubuntu'

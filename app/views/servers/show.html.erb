@@ -11,7 +11,7 @@
   <dt><strong>Project:</strong></dt>
   <dd><%= link_to @server.project.company.name, project_path(@server.project) %></dd>
 
-  	<% if not @server.stopped? %>
+  	<% unless @server.stopped? %>
   <dt><strong>Ip address:</strong></dt>
   <dd><%= @server.ip_address %></dd>
   <% end %>
