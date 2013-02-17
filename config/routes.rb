@@ -11,7 +11,7 @@ WCAI::Application.routes.draw do
     end
 
     member do
-      put 'toggle_lock', :as => :toggle_lock_user
+      put 'toggle_lock', :as => :toggle_lock
     end
 
     resources :timesheets
