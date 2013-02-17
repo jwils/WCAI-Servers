@@ -31,8 +31,11 @@ class TimesheetsController < ApplicationController
   def new
     @timesheet = Timesheet.new
     @timesheet.start_date = Date.parse('Monday')
+    @timesheet.user = current_user #### unless admin
+
     7.times {@timesheet.time_entries.build}
     @time_entries = @timesheet.time_entries
+    @user_change_disabled = !params[:user_id].nil?
 
     (0..6).each do |i|
       @time_entries[i].day = i
@@ -48,6 +51,7 @@ class TimesheetsController < ApplicationController
   def edit
     @timesheet = Timesheet.find(params[:id])
     @time_entries = @timesheet.time_entries.order(:day)
+    @user_change_disabled = true  #### based of if current user is a ra or admin.
     output = []
     k = 0
     (0..6).each do |i|
