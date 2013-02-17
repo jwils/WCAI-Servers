@@ -32,7 +32,7 @@ class UsersController < ApplicationController
       if u.nil?
         u = User.invite!(:email => email)
       else
-        UserMailer.added_to_project(u, @project)
+        UserMailer.added_to_project(u, @project).deliver
       end
       if @role == "researcher"
          u.add_role(:researcher, @project)
