@@ -12,6 +12,31 @@
   <dd><%= @timesheet.status_string %></dd>
 </dl>
 
+<table class="table table-striped">
+  <thead>
+  <tr>
+    <th>Day</th>
+    <th>Hours</th>
+    <th>Project</th>
+    <th>Comments</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @timesheet.time_entries.each do |time_entry| %>
+      <tr>
+        <td><%= time_entry.day_of_week %></td>
+        <td><%= time_entry.hours_spent %></td>
+        <td><%= time_entry.project.name unless time_entry.project.nil? %></td>
+        <td><%= time_entry.comment %></td>
+      </tr>
+  <% end %>
+  <tr><td></td><td></td><td></td><td></td></tr>
+  </tbody>
+</table>
+
+<% unless @timesheet.approver.nil? %>
+    <p>Approved by <%= @timesheet.approver.name %></p>
+<% end %>
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               timesheets_path, :class => 'btn'  %>
