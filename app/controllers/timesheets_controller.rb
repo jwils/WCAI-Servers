@@ -1,11 +1,15 @@
 class TimesheetsController < ApplicationController
+  load_and_authorize_resource
+
   # GET /timesheets
   # GET /timesheets.json
   def index
     if params[:user_id]
       @timesheets = User.find(params[:user_id]).timesheets
+    elsif current_user.is? :admin
+      @timesheets = Timesheet.where(:submitted => true)
     else
-      @timesheets = Timesheet.all
+      redirect_to root_path
     end
 
 
@@ -71,6 +75,7 @@ class TimesheetsController < ApplicationController
   # POST /timesheets.json
   def create
     @timesheet = Timesheet.new(params[:timesheet])
+    @timesheet.submitted = params[:draft].nil?
 
     respond_to do |format|
       if @timesheet.save
@@ -87,6 +92,7 @@ class TimesheetsController < ApplicationController
   # PUT /timesheets/1.json
   def update
     @timesheet = Timesheet.find(params[:id])
+    @timesheet.submitted = params[:draft].nil?
 
     respond_to do |format|
       if @timesheet.update_attributes(params[:timesheet])

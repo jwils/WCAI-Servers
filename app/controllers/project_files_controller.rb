@@ -1,4 +1,5 @@
 class ProjectFilesController < ApplicationController
+  load_and_authorize_resource
   # GET /project_files
   # GET /project_files.json
   before_filter :check_auth

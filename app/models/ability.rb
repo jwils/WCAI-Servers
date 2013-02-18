@@ -6,8 +6,17 @@ class Ability
 
       if user.has_role? :admin
         can :manage, :all
+      elsif user.has_role? :research_assistant
+        can :manage, Timesheet, :id => user.timesheets.map.map{ |project| project.id}
+        can :manage, Project
+        can :manage, ProjectFile
       else
-        can :read, Project, :id => Project.with_role(:researcher, user).map{ |project| project.id}
+        authorized_projects = Project.with_role(:researcher, user)
+
+        can :read, Project, :id => authorized_projects.map{ |project| project.id}
+        if authorized_projects.count > 0
+          can :read, ProjectFile
+        end
       end
 
     # Define abilities for the passed in user here. For example:

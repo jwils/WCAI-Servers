@@ -9,6 +9,8 @@ class UserMailer < ActionMailer::Base
 
   def send_email_to_list(current_user, users, subject, text)
     @msg_body = text
-    mail(:from => current_user.email,  :to => users.map(&:email), :subject => subject)
+    to_users = users.map {|u| "#{u.name} <#{u.email}>"}.join(', ')
+    mail(:from => "#{current_user.name} <#{current_user.email}>",
+         :to => to_users, :subject => subject)
   end
 end

@@ -5,21 +5,24 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:user_id) %></th>
-      <th><%= model_class.human_attribute_name(:start_date) %></th>
-      <th><%= model_class.human_attribute_name(:created_at) %></th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
+      <th>Week of:</th>
+      <th>Timesheet for:</th>
+      <th>Status:</th>
+      <th>Hours recorded:</th>
+        <th>Actions:</th>
     </tr>
   </thead>
   <tbody>
     <% @timesheets.each do |timesheet| %>
       <tr>
-        <td><%= link_to timesheet.id, timesheet_path(timesheet) %></td>
-        <td><%= timesheet.user_id %></td>
-        <td><%= timesheet.start_date %></td>
-        <td><%=l timesheet.created_at %></td>
+        <td><%= link_to timesheet.start_date, timesheet_path(timesheet) %></td>
+        <td><%= timesheet.user.name %></td>
+        <td><%= timesheet.status_string %></td>
+        <td><%= timesheet.hours %></td>
+
         <td>
+          <%if current_user == timesheet.user%>
+          <% unless timesheet.submitted %>
           <%= link_to t('.edit', :default => t("helpers.links.edit")),
                       edit_timesheet_path(timesheet), :class => 'btn btn-mini' %>
           <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
@@ -27,7 +30,13 @@
                       :method => :delete,
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-mini btn-danger' %>
+          <% end %>
+          <%elsif current_user.is? :admin %>
+              <%= link_to 'Approve',
+                          edit_timesheet_path(timesheet), :class => 'btn btn-mini' %>
+          <%end%>
         </td>
+
       </tr>
     <% end %>
   </tbody>

@@ -88,11 +88,11 @@ class ProjectFile
 
   def str_size
       if size > 1024 * 1024 * 1024
-        "%0.0f GB" % (size / (1024 * 1024 * 1024))
+        "%0.0f GB" % (size / (1024.0 * 1024 * 1024))
       elsif size > 1024 * 1024
-        "%0.0f MB" % (size / (1024 * 1024 ))
+        "%0.0f MB" % (size / (1024.0 * 1024 ))
       else
-        "%0.0f KB" % (size / 1024)
+        "%0.0f KB" % (size / 1024.0)
       end
   end
 end

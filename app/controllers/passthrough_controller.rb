@@ -1,4 +1,5 @@
 class PassthroughController < ApplicationController
+  skip_authorization_check
 	def index
     flash.keep
 		if current_user.nil?
