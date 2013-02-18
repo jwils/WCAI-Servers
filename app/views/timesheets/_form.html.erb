@@ -1,5 +1,8 @@
 <%= simple_form_for @timesheet do |f| %>
-  <%= f.association :user, disabled:@user_change_disabled, value:@timesheet.user %>
+  <%= f.association :user,
+                    :disabled => @user_change_disabled,
+                    :value => @timesheet.user,
+                    :collection => User.with_role(:research_assistant).order(:name) %>
   <%= f.input :start_date, :as => :datepicker,
               input_html: {class: 'only_mondays'} %>
 <table class="table table-striped">

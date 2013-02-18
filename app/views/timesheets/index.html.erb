@@ -31,9 +31,9 @@
                       :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
                       :class => 'btn btn-mini btn-danger' %>
           <% end %>
-          <%elsif current_user.is? :admin %>
+          <%elsif current_user.is? :admin and timesheet.approver.nil? %>
               <%= link_to 'Approve',
-                          edit_timesheet_path(timesheet), :class => 'btn btn-mini' %>
+                          approve_timesheet_path(timesheet), :class => 'btn btn-mini' %>
           <%end%>
         </td>
 

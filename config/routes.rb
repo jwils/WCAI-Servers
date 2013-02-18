@@ -1,5 +1,6 @@
 WCAI::Application.routes.draw do
   resources :timesheets
+  match 'timesheets/:id/approve' => 'timesheets#approve', :as => :approve_timesheet
 
   devise_for :users, :controllers => { :invitations => 'devise/invitations' }
 
@@ -14,7 +15,6 @@ WCAI::Application.routes.draw do
       put 'toggle_lock', :as => :toggle_lock
     end
 
-    resources :timesheets
   end
 
   resources :servers

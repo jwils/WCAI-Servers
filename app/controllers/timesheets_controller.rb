@@ -4,14 +4,11 @@ class TimesheetsController < ApplicationController
   # GET /timesheets
   # GET /timesheets.json
   def index
-    if params[:user_id]
-      @timesheets = User.find(params[:user_id]).timesheets
-    elsif current_user.is? :admin
+    if current_user.is? :admin
       @timesheets = Timesheet.where(:submitted => true)
     else
-      redirect_to root_path
+      @timesheets = current_user.timesheets
     end
-
 
     respond_to do |format|
       format.html # index.html.erb
@@ -35,11 +32,16 @@ class TimesheetsController < ApplicationController
   def new
     @timesheet = Timesheet.new
     @timesheet.start_date = Date.parse('Monday')
-    @timesheet.user = current_user #### unless admin
+    if current_user.is? :admin
+      @user_change_disabled = false
+    else
+      @timesheet.user = current_user
+      @user_change_disabled = true
+    end
 
     7.times {@timesheet.time_entries.build}
     @time_entries = @timesheet.time_entries
-    @user_change_disabled = !params[:user_id].nil?
+
 
     (0..6).each do |i|
       @time_entries[i].day = i
@@ -76,6 +78,7 @@ class TimesheetsController < ApplicationController
   def create
     @timesheet = Timesheet.new(params[:timesheet])
     @timesheet.submitted = params[:draft].nil?
+    @timesheet.user ||= current_user
 
     respond_to do |format|
       if @timesheet.save
@@ -115,5 +118,12 @@ class TimesheetsController < ApplicationController
       format.html { redirect_to timesheets_url }
       format.json { head :no_content }
     end
+  end
+
+  def approve
+    @timesheet = Timesheet.find(params[:id])
+    @timesheet.approver = current_user
+    @timesheet.save
+    redirect_to timesheets_path
   end
 end

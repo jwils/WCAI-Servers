@@ -5,7 +5,7 @@ class Timesheet < ActiveRecord::Base
   has_many :time_entries, :dependent => :destroy
   accepts_nested_attributes_for :time_entries, :reject_if => lambda { |a| a[:hours_spent].blank? or a[:hours_spent] == 0}, :allow_destroy => true
 
-  attr_accessible :start_date, :submitted, :user_id, :time_entries_attributes
+  attr_accessible :start_date, :submitted, :user, :time_entries_attributes
 
 
   def status_string
