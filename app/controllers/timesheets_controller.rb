@@ -5,7 +5,7 @@ class TimesheetsController < ApplicationController
   # GET /timesheets.json
   def index
     if current_user.is? :admin
-      @timesheets = Timesheet.where(:submitted => true)  + current_user.timesheets
+      @timesheets = current_user.timesheets.where(:submitted => :false) + Timesheet.where(:submitted => true)
     else
       @timesheets = current_user.timesheets
     end
