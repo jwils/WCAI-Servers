@@ -11,8 +11,10 @@ class Ability
         can :create, Timesheet
         can :manage, Project
         can :manage, ProjectFile
+        can :manage, Message
       else
         authorized_projects = Project.with_role(:researcher, user)
+        can :manage, Message
         can :read, Project, :id => authorized_projects.map{ |project| project.id}
         can :read, ProjectFile
       end

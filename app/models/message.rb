@@ -23,12 +23,12 @@ class Message
       UserMailer.send_email_to_list(from_user,
                                     User.with_role(:admin),
                                     "WCAI contact form for site design" ,
-                                    content)
+                                    content).deliver
     else
       UserMailer.send_email_to_list(from_user,
                                     [project.user],
                                     "WCAI contact form for #{project.company.name} project",
-                                    content)
+                                    content).deliver
     end
   end
 
