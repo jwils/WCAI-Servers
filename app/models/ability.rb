@@ -12,9 +12,11 @@ class Ability
         can :manage, Project
         can :manage, ProjectFile
         can :manage, Message
+        can :read, User
       else
         authorized_projects = Project.with_role(:researcher, user)
         can :manage, Message
+        can :read, User
         can :read, Project, :id => authorized_projects.map{ |project| project.id}
         can :read, ProjectFile
       end

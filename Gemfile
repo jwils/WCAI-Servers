@@ -38,6 +38,7 @@ gem "rolify"
 gem 'fog'
 gem "cancan", ">= 1.6.8"
 gem "carrierwave"
+gem 'wicked_pdf'
 
 
 
