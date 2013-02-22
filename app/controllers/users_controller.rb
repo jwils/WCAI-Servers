@@ -31,6 +31,7 @@ class UsersController < ApplicationController
       u = User.find_by_email(email)
       if u.nil?
         u = User.invite!(:email => email)
+        u.add_role(:researcher, @project)
       else
         if @role == "researcher"
         UserMailer.added_to_project(u, @project).deliver
