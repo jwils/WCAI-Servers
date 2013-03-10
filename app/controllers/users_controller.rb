@@ -34,7 +34,7 @@ class UsersController < ApplicationController
         u.add_role(:researcher, @project)
       else
         if @role == "researcher"
-        UserMailer.added_to_project(u, @project).deliver
+         UserMailer.added_to_project(u, @project).deliver
          u.add_role(:researcher, @project)
         else
           u.add_role(@role)
