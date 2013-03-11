@@ -23,6 +23,20 @@ class UsersController < ApplicationController
 
   end
 
+  def update
+    @user = User.find(params[:id])
+
+    respond_to do |format|
+      if @user.update_attributes(params[:user])
+        format.html { redirect_to @user, notice: 'Server was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def batch_invite
     @role = @roles[params[:invitations][:role].to_i - 1][0]
     @project = Project.find(params[:invitations][:project])
@@ -34,7 +48,7 @@ class UsersController < ApplicationController
         u.add_role(:researcher, @project)
       else
         if @role == "researcher"
-        UserMailer.added_to_project(u, @project).deliver
+         UserMailer.added_to_project(u, @project).deliver
          u.add_role(:researcher, @project)
         else
           u.add_role(@role)

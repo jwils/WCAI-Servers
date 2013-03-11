@@ -5756,7 +5756,8 @@ $.widget( "ui.accordion", {
 
 		// Work around for rendering bug in IE (#5421)
 		if ( toHide.length ) {
-			toHide.parent()[0].className = toHide.parent()[0].className;
+            //noinspection SillyAssignmentJS,SillyAssignmentJS,SillyAssignmentJS,SillyAssignmentJS
+            toHide.parent()[0].className = toHide.parent()[0].className;
 		}
 
 		this._trigger( "activate", null, data );

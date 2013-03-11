@@ -3,4 +3,8 @@ class Role < ActiveRecord::Base
   belongs_to :resource, :polymorphic => true
   
   scopify
+
+  def readable
+    resource.nil? ? name : "#{name} : #{resource.name}"
+  end
 end

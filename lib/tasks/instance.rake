@@ -1,6 +1,6 @@
 task :check_instance_uptime => :environment do
   Server.all.each do |server|
-  	if not server.stopped?
+  	unless server.stopped?
   		if server.open_connections.length == 0
   			puts 'send email server should be shut down'
   		end

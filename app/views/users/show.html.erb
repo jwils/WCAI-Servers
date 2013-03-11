@@ -2,7 +2,7 @@
 <div class="page-header">
   <h1><%= @user.name %></h1>
 </div>
-<%= simple_form_for :abilities, {:url =>'' }  do |f| %>
+<%= simple_form_for @user  do |f| %>
 <dl class="dl-horizontal">
   <dt><strong>Email:</strong></dt>
   <dd><%= @user.email %></dd>
@@ -10,13 +10,7 @@
   <dd><%= @user.institution %></dd>
 
   <dt><strong>Abilities:</strong></dt>
-  <dt><strong>Admin:</strong></dt>
-  <dd><%= f.input :admin, :as => :boolean, :input_html => { :checked =>  @user.is?(:admin), :disabled => (not current_user.is?(:admin))}, :label => false %></dd>
-  <dt><strong>Projects:</strong></dt>
-  <% Project.all.each do |project| %>
-          <dt><i><%= project.company.name %></i></dt>
-          <dd><%= f.input project.id, :as => :boolean, :label => false, :input_html => { :checked => @user.has_role?(:researcher, project), :disabled => (not current_user.is?(:admin))} %></dd>
-  <% end %>
+  <%=  f.association :roles,   as: :check_boxes, label_method: :readable %>
 
 </dl>
 
