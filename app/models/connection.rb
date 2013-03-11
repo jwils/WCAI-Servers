@@ -11,6 +11,10 @@ class Connection < ActiveRecord::Base
   	
   end
 
+  def access_cmd
+    "mysql --host=#{server.ip_address} --user='#{self.sql_user.split("''")[0]}' -p"
+  end
+
   def open_connection(ip_address)
     self.server.start
     self.server.wait_for_ready
