@@ -8,7 +8,6 @@ class Server < ActiveRecord::Base
   
   after_find :get_instance_object
   before_destroy :delete_instance
-  before_save :before_create
 
   def start
     self.instance.start
@@ -66,8 +65,8 @@ class Server < ActiveRecord::Base
                     :image_id => "ami-a29943cb", #change this to custom ami
                     #:type => "whatever type we want",
                     #:security_group => open port for sql
-                    :private_key_path =>'~/.ssh/fog',
-                    :public_key_path => '~/.ssh/fog.pub',
+                    :private_key_path =>'/var/www/projects/keypairs/fog',
+                    :public_key_path => '/var/www/projects/keypairs/fog.pub',
                     :username => 'ubuntu')
     self.instance_id = self.instance.id
   end
@@ -82,8 +81,8 @@ class Server < ActiveRecord::Base
     self.instance = FOG_CONNECTION.servers.get(self.instance_id)
     
     unless self.instance.nil?
-      self.instance.private_key_path = '~/.ssh/fog'
-      self.instance.public_key_path = '~/.ssh/fog.pub'
+      self.instance.private_key_path = '/var/www/projects/keypairs/fog'
+      self.instance.public_key_path = '/var/www/projects/keypairs/fog.pub'
       self.instance.username = 'ubuntu'
     end
   end
