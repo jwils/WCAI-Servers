@@ -1,7 +1,14 @@
 source 'https://rubygems.org'
 
+
+######
+# Please install the following two gems. Remove the older versions of rails and rake.
+# Thanks.
+######
+
 #gem 'rails', '3.2.12'
 #gem 'rake','10.0.3'
+#
 
 gem 'rails', '3.2.11'
 gem 'rake','10.0.2'
@@ -38,7 +45,7 @@ gem "rolify"
 gem 'fog'
 gem "cancan", ">= 1.6.8"
 gem "carrierwave"
-gem 'wicked_pdf'
+#gem 'wicked_pdf'
 
 
 

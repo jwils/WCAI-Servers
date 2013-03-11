@@ -8,7 +8,6 @@ class Server < ActiveRecord::Base
   
   after_find :get_instance_object
   before_destroy :delete_instance
-  before_save :before_create
 
   def start
     self.instance.start
