@@ -6,7 +6,7 @@ class Connection < ActiveRecord::Base
   attr_protected :sql_password, :sql_user, :connection_closed, :connection_open
 
   def generate_user_password(ip_address)
-    self.sql_user = "'#{Digest::SHA1.hexdigest("--#{Time.now.to_s}")[0,6]}'@*"  ##{ip_address}'
+    self.sql_user = "'#{Digest::SHA1.hexdigest("--#{Time.now.to_s}")[0,6]}'@'#{ip_address}'"
   	self.sql_password = Digest::SHA1.hexdigest("--#{Time.now.to_s}#{ip_address}")[0,6]
   	
   end

@@ -1,7 +1,17 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.12'
-gem 'rake','10.0.3'
+
+######
+# Please install the following two gems. Remove the older versions of rails and rake.
+# Thanks.
+######
+
+#gem 'rails', '3.2.12'
+#gem 'rake','10.0.3'
+#
+
+gem 'rails', '3.2.11'
+gem 'rake','10.0.2'
 
 gem 'mysql2'
 gem 'devise'
@@ -24,9 +34,9 @@ group :assets do
 end
 
 group :development do
-  gem "better_errors"
-  gem "binding_of_caller"
-  gem 'sqlite3'
+#  gem "better_errors"
+#  gem "binding_of_caller"
+##  gem 'sqlite3'
 end
 
 gem 'jquery-rails'
@@ -35,7 +45,7 @@ gem "rolify"
 gem 'fog'
 gem "cancan", ">= 1.6.8"
 gem "carrierwave"
-gem 'wicked_pdf'
+#gem 'wicked_pdf'
 
 
 
