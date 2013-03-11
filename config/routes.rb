@@ -23,8 +23,8 @@ WCAI::Application.routes.draw do
     resources :connections, :only => [:index, :new, :destroy]
 
     member do
-      get 'start', :as => :start_server
-      get 'stop', :as => :stop_server
+      get 'start', :as => :start
+      get 'stop', :as => :stop
     end
   end
 
