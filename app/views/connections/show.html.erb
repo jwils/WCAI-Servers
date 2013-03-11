@@ -8,14 +8,13 @@
   <dd><%= @connection.sql_user %></dd>
   <dt><strong><%= model_class.human_attribute_name(:sql_password) %>:</strong></dt>
   <dd><%= @connection.sql_password %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:user) %>:</strong></dt>
-  <dd><%= @connection.user_id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:server) %>:</strong></dt>
-  <dd><%= @connection.server_id %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:connection_open) %>:</strong></dt>
-  <dd><%= @connection.connection_open %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:connection_closed) %>:</strong></dt>
-  <dd><%= @connection.connection_closed %></dd>
+  <dt><strong>User:</strong></dt>
+  <dd><%= @connection.user.name %></dd>
+  <dt><strong>Server IP:</strong></dt>
+  <dd><%= @connection.server.ip_address %></dd>
+  <dd><%= @connection.connection_closed %></dd>  access_cmd
+  <dt><strong>Access Command:</strong></dt>
+  <dd><%= @connection.access_cmd %></dd>
 </dl>
 
 <div class="form-actions">
