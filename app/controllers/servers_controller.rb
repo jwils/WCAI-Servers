@@ -74,11 +74,19 @@ class ServersController < ApplicationController
   def start
     @server = Server.find(params[:id])
     @server.start
+    respond_to do |format|
+      format.html { redirect_to  @server }
+      format.json { head :no_content }
+    end
   end
 
   def stop
     @server = Server.find(params[:id])
     @server.stop
+    respond_to do |format|
+      format.html { redirect_to  @server }
+      format.json { head :no_content }
+    end
   end
 
   # DELETE /servers/1
