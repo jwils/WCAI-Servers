@@ -23,6 +23,8 @@ class Server < ActiveRecord::Base
 
   def wait_for_ready
     self.instance.wait_for { ready? }
+    self.instance.wait_for { !ip_address.nil?}
+    sleep(5)
   end
 
   def stopped?
