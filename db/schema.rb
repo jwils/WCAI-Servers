@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130215104133) do
+ActiveRecord::Schema.define(:version => 20130313034852) do
 
   create_table "companies", :force => true do |t|
     t.string   "name"
@@ -39,6 +39,12 @@ ActiveRecord::Schema.define(:version => 20130215104133) do
   end
 
   add_index "downloads_trackers", ["user_id"], :name => "index_downloads_trackers_on_user_id"
+
+  create_table "institutions", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "project_files", :force => true do |t|
     t.integer  "project_id"
@@ -84,12 +90,12 @@ ActiveRecord::Schema.define(:version => 20130215104133) do
 
   create_table "time_entries", :force => true do |t|
     t.integer  "day"
-    t.decimal  "hours_spent",  :precision => 10, :scale => 0
+    t.decimal  "hours_spent"
     t.integer  "timesheet_id"
     t.integer  "project_id"
     t.text     "comment"
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
   end
 
   add_index "time_entries", ["project_id"], :name => "index_time_entries_on_project_id"
@@ -100,8 +106,11 @@ ActiveRecord::Schema.define(:version => 20130215104133) do
     t.date     "start_date"
     t.boolean  "submitted"
     t.integer  "approver_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+    t.datetime "last_printed"
+    t.datetime "submitted_date"
+    t.datetime "approved_date"
   end
 
   add_index "timesheets", ["approver_id"], :name => "index_timesheets_on_approver_id"
@@ -130,10 +139,12 @@ ActiveRecord::Schema.define(:version => 20130215104133) do
     t.integer  "failed_attempts",                      :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
+    t.integer  "institution_id"
     t.string   "institution"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+  add_index "users", ["institution_id"], :name => "index_users_on_institution_id"
   add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token"
   add_index "users", ["invited_by_id"], :name => "index_users_on_invited_by_id"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true

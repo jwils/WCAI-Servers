@@ -122,7 +122,7 @@ class TimesheetsController < ApplicationController
 
   def approve
     @timesheet = Timesheet.find(params[:id])
-    @timesheet.approver = current_user
+    @timesheet.approver= current_user
     @timesheet.save
     redirect_to timesheets_path
   end

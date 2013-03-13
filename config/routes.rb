@@ -1,6 +1,6 @@
 WCAI::Application.routes.draw do
   #Redirect since we changed server location
-  match 'projects/projects/:path' => 'passthrough#reroute_from_projects', :path => /.*/
+  match 'projects/projects' => redirect('/projects')
 
   resources :timesheets
   match 'timesheets/:id/approve' => 'timesheets#approve', :as => :approve_timesheet
