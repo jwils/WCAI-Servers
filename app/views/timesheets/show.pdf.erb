@@ -3,20 +3,8 @@
 <head>
   <%= wicked_pdf_stylesheet_link_tag  "application" %>
   <%= wicked_pdf_javascript_include_tag "application" %>
-  <script>
-      function number_pages() {
-          var vars={};
-          var x=document.location.search.substring(1).split('&');
-          for(var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
-          var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
-          for(var i in x) {
-              var y = document.getElementsByClassName(x[i]);
-              for(var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
-          }
-      }
-  </script>
 </head>
-<body onload="number_pages()">
+<body>
 <div class="page-break">asfasfasdf</div>
 
 <div class="page-break"> asfasfasdfasfasfasdf</div>
@@ -32,7 +20,8 @@
   <dt><strong>Status:</strong></dt>
   <dd><%= @timesheet.status_string %></dd>
 </dl>
-<div class="page-break"> <p>asfasfasdfasfasfasdf</p></div>
+asfasfasdfasfasfasdf
+<span class="page-break"> <p>asfasfasdfasfasfasdf</p></span>
 <table class="table table-striped">
   <thead>
   <tr>
