@@ -1,27 +1,26 @@
 <%- model_class = Timesheet -%>
-<html>
-<head>
-  <%= wicked_pdf_stylesheet_link_tag  "application" %>
-  <%= wicked_pdf_javascript_include_tag "application" %>
-</head>
-<body>
-<div class="page-break">asfasfasdf</div>
+<style>
 
-<div class="page-break"> asfasfasdfasfasfasdf</div>
-<div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
-</div>
+    .page-break { display:block; clear:both; page-break-after:always; }
+    h4 {
+        background-color: #2255FF;
+        text-align: center;
+    }
+
+    h6 {
+        background-color: #2255FF;
+        text-align: center;
+    }
+</style>
+
+<h4>University of Pennsylvania</h4>
+<h6>Time Report Form<br />To Be Used by Temporary Hourly Employees</h6>
 
 <dl class="dl-horizontal">
-  <dt><strong>Timesheet for:</strong></dt>
-  <dd><%= @timesheet.user.name%></dd>
-  <dt><strong>Week of:</strong></dt>
-  <dd><%= @timesheet.start_date %></dd>
-  <dt><strong>Status:</strong></dt>
-  <dd><%= @timesheet.status_string %></dd>
+  <p>Timesheet for <%= @timesheet.user.name %></p>
+  <p>Week of <%= @timesheet.start_date.strftime('%m/%d/%Y') %></p>
+  <p> <%= @timesheet.approver.nil? ? 'Not approved' : "Approved by #{@timesheet.approver.name}" %></p>
 </dl>
-asfasfasdfasfasfasdf
-<span class="page-break"> <p>asfasfasdfasfasfasdf</p></span>
 <table class="table table-striped">
   <thead>
   <tr>
@@ -44,5 +43,4 @@ asfasfasdfasfasfasdf
   </tbody>
 </table>
 
-</body>
-</html>
+<p><strong>Total hours:</strong> <%= @timesheet.hours %></p>
