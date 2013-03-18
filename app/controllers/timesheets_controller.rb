@@ -13,7 +13,8 @@ class TimesheetsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.pdf do
-        render :pdf => "index.pdf.erb", :header => { :right => '[page] of [topage]' }, :layout => 'pdf'
+        render :pdf => "index.pdf.erb", :header => { :right => '[page] of [topage]' },
+               :layout => 'pdf', :orientation => 'Landscape'
       end
       format.json { render json: @timesheets }
     end
@@ -27,7 +28,8 @@ class TimesheetsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.pdf do
-        render :pdf => "show.pdf.erb", :header => { :right => '[page] of [topage]' }, :layout => 'pdf'
+        render :pdf => "show.pdf.erb", :header => { :right => '[page] of [topage]' },
+               :layout => 'pdf', :orientation => 'Landscape'
       end
       format.json { render json: @timesheet }
     end

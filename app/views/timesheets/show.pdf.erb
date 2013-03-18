@@ -33,7 +33,7 @@
   <tbody>
   <% @timesheet.time_entries.each do |time_entry| %>
       <tr>
-        <td><%= time_entry.day_of_week %></td>
+        <td><%= (@timesheet.start_date + time_entry.day.days).strftime('%m/%d/%Y') %></td>
         <td><%= time_entry.hours_spent %></td>
         <td><%= time_entry.project.name unless time_entry.project.nil? %></td>
         <td><%= time_entry.comment %></td>
