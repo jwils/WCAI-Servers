@@ -4,8 +4,7 @@ class UsersController < ApplicationController
   before_filter :check_admin
 
   def new
-    # If you're not using CanCan, raise some other exception, or redirect as you please
-    super
+    raise CanCan::AccessDenied
   end
 
   def index

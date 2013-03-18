@@ -12,3 +12,5 @@
  *= require_tree .
  *= require bootstrap_and_overrides
  */
+
+.page-break { display:block; clear:both; page-break-after:always; }
