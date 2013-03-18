@@ -12,7 +12,9 @@ class TimesheetsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
-      render :pdf => "index.pdf.erb", :header => { :right => '[page] of [topage]' }
+      format.pdf do
+        render :pdf => "index.pdf.erb", :header => { :right => '[page] of [topage]' }
+      end
       format.json { render json: @timesheets }
     end
   end
