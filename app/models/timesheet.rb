@@ -6,6 +6,7 @@ class Timesheet < ActiveRecord::Base
   accepts_nested_attributes_for :time_entries, :reject_if => lambda { |a| a[:hours_spent].blank? or a[:hours_spent] == 0}, :allow_destroy => true
 
   attr_accessible :start_date, :submitted, :user, :time_entries_attributes
+  before_save :check_for_time
 
 
   def status_string
@@ -20,7 +21,16 @@ class Timesheet < ActiveRecord::Base
     end
   end
 
+  def print
+    self.last_printed = Time.now
+  end
+
+  def check_for_time
+    self.submitted_date = Time.now if submitted
+    self.approved_date = Time.now if approver
+  end
+
   def hours
-    time_entries.sum :hours_spent
+    time_entries.sum(:hours_spent)
   end
 end

@@ -8,10 +8,4 @@ class PassthroughController < ApplicationController
 			redirect_to projects_path
 		end
   end
-
-  #DELETE after people have a chance to ajust
-  def reroute_from_projects
-    flash.keep
-    redirect_to "/projects/#{params[:path]}"
-  end
 end

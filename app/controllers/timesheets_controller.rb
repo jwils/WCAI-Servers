@@ -12,6 +12,7 @@ class TimesheetsController < ApplicationController
 
     respond_to do |format|
       format.html # index.html.erb
+      render :pdf => "index.pdf.erb", :header => { :right => '[page] of [topage]' }
       format.json { render json: @timesheets }
     end
   end
@@ -23,6 +24,9 @@ class TimesheetsController < ApplicationController
 
     respond_to do |format|
       format.html # show.html.erb
+      format.pdf do
+        render :pdf => "show.pdf.erb", :header => { :right => '[page] of [topage]' }
+      end
       format.json { render json: @timesheet }
     end
   end
@@ -96,7 +100,6 @@ class TimesheetsController < ApplicationController
   def update
     @timesheet = Timesheet.find(params[:id])
     @timesheet.submitted = params[:draft].nil?
-
     respond_to do |format|
       if @timesheet.update_attributes(params[:timesheet])
         format.html { redirect_to @timesheet, notice: 'Timesheet was successfully updated.' }
@@ -122,7 +125,7 @@ class TimesheetsController < ApplicationController
 
   def approve
     @timesheet = Timesheet.find(params[:id])
-    @timesheet.approver = current_user
+    @timesheet.approver= current_user
     @timesheet.save
     redirect_to timesheets_path
   end
