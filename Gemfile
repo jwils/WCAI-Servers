@@ -1,10 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.12'
+gem 'rails', '3.2.13'
 gem 'rake','10.0.3'
 gem 'wicked_pdf'
 
-gem 'mysql2'
+#gem 'mysql2'
 gem 'devise'
 gem 'devise_invitable'
 gem 'simple_form'
@@ -24,11 +24,20 @@ group :assets do
   gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 end
 
-group :development do
-#  gem "better_errors"
-#  gem "binding_of_caller"
-##  gem 'sqlite3'
+group :test do
+  gem "factory_girl"
+  gem "capybara"
+  gem "guard-rspec"
+  gem 'rb-fsevent', '~> 0.9'
 end
+
+group :development do
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem 'sqlite3'
+end
+
+gem "rspec-rails", "~> 2.0", :group => [:test, :development]
 
 gem 'jquery-rails'
 gem "rails_config"
