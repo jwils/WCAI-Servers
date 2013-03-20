@@ -29,6 +29,9 @@ group :test do
   gem "capybara"
   gem "guard-rspec"
   gem 'rb-fsevent', '~> 0.9'
+  gem "database_cleaner"
+  gem "cucumber-rails"
+  gem "email_spec"
 end
 
 group :development do
