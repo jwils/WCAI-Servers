@@ -14,6 +14,7 @@ RSpec.configure do |config|
   config.include(MailerMacros)
   config.include(EmailSpec::Helpers)
   config.include(EmailSpec::Matchers)
+  config.include(FactoryGirl::Syntax::Methods)
 
   config.mock_with :rspec
   

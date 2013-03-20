@@ -24,14 +24,16 @@ group :assets do
   gem "less-rails" #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 end
 
+gem "rspec-rails", "~> 2.0", :group => [:test, :development]
+
 group :test do
   gem "factory_girl_rails"
   gem "capybara"
   gem "guard-rspec"
   gem 'rb-fsevent', '~> 0.9'
   gem "database_cleaner"
-#  gem "cucumber-rails", :require => false
   gem "email_spec"
+  gem "cucumber-rails", :require => false
 end
 
 group :development do
@@ -39,8 +41,6 @@ group :development do
   gem "binding_of_caller"
   gem 'sqlite3'
 end
-
-gem "rspec-rails", "~> 2.0", :group => [:test, :development]
 
 gem 'jquery-rails'
 gem "rails_config"
@@ -50,8 +50,6 @@ gem "cancan", ">= 1.6.8"
 gem "carrierwave"
 
 
-
-#Not required
 gem 'whenever', :require => false
 
 #gem "eventmachine" WIll be awesome to get live status of server
