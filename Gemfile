@@ -30,7 +30,7 @@ group :test do
   gem "guard-rspec"
   gem 'rb-fsevent', '~> 0.9'
   gem "database_cleaner"
-  gem "cucumber-rails", :require => false
+#  gem "cucumber-rails", :require => false
   gem "email_spec"
 end
 
