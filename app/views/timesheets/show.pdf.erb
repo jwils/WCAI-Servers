@@ -31,15 +31,25 @@
   </tr>
   </thead>
   <tbody>
+  <% current = 0 %>
   <% @timesheet.time_entries.each do |time_entry| %>
+      <% (time_entry.day - current).times do %>
+        <%= "<tr><td>#{(@timesheet.start_date + current.days).strftime('%m/%d/%Y')}</td><td>0</td><td></td><td></td></tr>".html_safe %>
+        <% current += 1 %>
+      <% end %>
       <tr>
         <td><%= (@timesheet.start_date + time_entry.day.days).strftime('%m/%d/%Y') %></td>
         <td><%= time_entry.hours_spent %></td>
         <td><%= time_entry.project.name unless time_entry.project.nil? %></td>
         <td><%= time_entry.comment %></td>
       </tr>
+      <% current += 1 %>
   <% end %>
-  <tr><td></td><td></td><td></td><td></td></tr>
+  <% (7 - current).times do %>
+      <%= "<tr><td>#{(@timesheet.start_date + current.days).strftime('%m/%d/%Y')}</td><td>0</td><td></td><td></td></tr>".html_safe %>
+      <% current += 1 %>
+  <% end %>
+  <tr class="success"><th>Total hours:</th><td><strong><%= @timesheet.hours %></strong></td></tr>
   </tbody>
 </table>
 
