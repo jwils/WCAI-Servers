@@ -91,6 +91,9 @@ GEM
       multi_json (~> 1.0)
     factory_girl (4.2.0)
       activesupport (>= 3.0.0)
+    factory_girl_rails (4.2.1)
+      factory_girl (~> 4.2.0)
+      railties (>= 3.0.0)
     ffi (1.4.0)
     fog (1.10.0)
       builder
@@ -258,7 +261,7 @@ DEPENDENCIES
   devise
   devise_invitable
   email_spec
-  factory_girl
+  factory_girl_rails
   fog
   guard-rspec
   jquery-rails

@@ -25,12 +25,12 @@ group :assets do
 end
 
 group :test do
-  gem "factory_girl"
+  gem "factory_girl_rails"
   gem "capybara"
   gem "guard-rspec"
   gem 'rb-fsevent', '~> 0.9'
   gem "database_cleaner"
-  gem "cucumber-rails"
+  gem "cucumber-rails", :require => false
   gem "email_spec"
 end
 
