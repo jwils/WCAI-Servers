@@ -34,6 +34,7 @@ group :test do
   gem "database_cleaner"
   gem "email_spec"
   gem "cucumber-rails", :require => false
+  gem 'guard-cucumber'
 end
 
 group :development do
