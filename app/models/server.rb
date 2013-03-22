@@ -63,7 +63,7 @@ class Server < ActiveRecord::Base
   def create_aws_instance
     self.instance = FOG_CONNECTION.servers.bootstrap(
                     :image_id => "ami-7539b41c", #change this to custom ami
-                    :type => ":m1.large",
+                    :flavor_id => ":m1.large",
                     #:security_group => open port for sql
                     :private_key_path =>'/var/www/projects/keypairs/fog',
                     :public_key_path => '/var/www/projects/keypairs/fog.pub',
@@ -76,9 +76,7 @@ class Server < ActiveRecord::Base
     self.instance.wait_for { !public_ip_address.nil?}
     sleep(10)
     self.ssh("sudo apt-get update && sudo apt-get upgrade -y")
-
-    self.ssh("export DEBIAN_FRONTEND=noninteractive; sudo apt-get -y install xfsprogs mysql-server")
-    self.ssh("mysql -uroot -e \"update user set password=PASSWORD('#{Settings.mysql_root_password}') where user='root';\"")
+    self.ssh("sudo debconf-set-selections <<< 'mysql-server-<version> mysql-server/root_password password #{Settings.mysql_root_password}'; sudo debconf-set-selections <<< 'mysql-server-<version> mysql-server/root_password_again password #{Settings.mysql_root_password}'; sudo apt-get -y install xfsprogs mysql-server")
     self.ssh("cd /etc/mysql/; sudo wget http://wcai-web.wharton.upenn.edu/my.cnf")
 
   end
