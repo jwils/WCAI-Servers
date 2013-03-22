@@ -77,7 +77,8 @@ class Server < ActiveRecord::Base
     sleep(10)
     self.ssh("sudo apt-get update && sudo apt-get upgrade -y")
     self.ssh("sudo debconf-set-selections <<< 'mysql-server-<version> mysql-server/root_password password #{Settings.mysql_root_password}'; sudo debconf-set-selections <<< 'mysql-server-<version> mysql-server/root_password_again password #{Settings.mysql_root_password}'; sudo apt-get -y install xfsprogs mysql-server")
-    self.ssh("cd /etc/mysql/; sudo wget http://wcai-web.wharton.upenn.edu/my.cnf")
+    self.ssh("cd /etc/mysql/; sudo rm my.cnf; sudo wget http://wcai-web.wharton.upenn.edu/my.cnf")
+    self.stop
 
   end
 
