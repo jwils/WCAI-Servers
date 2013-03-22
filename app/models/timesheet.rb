@@ -26,8 +26,8 @@ class Timesheet < ActiveRecord::Base
   end
 
   def check_for_time
-    self.submitted_date = Time.now if submitted
-    self.approved_date = Time.now if approver
+    #self.submitted_date = Time.now if submitted
+    #self.approved_date = Time.now if approver
   end
 
   def hours
