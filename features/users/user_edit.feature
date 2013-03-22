@@ -5,5 +5,10 @@ Feature: Edit User
 
     Scenario: I sign in and edit my account
       Given I am logged in
-      When I edit my account details
+      When I edit my name
       Then I should see an account edited message
+
+  Scenario: I sign in and edit my account
+    Given I am logged in
+    When I change my password
+    Then I should see an account edited message

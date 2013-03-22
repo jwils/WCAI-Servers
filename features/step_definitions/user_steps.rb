@@ -27,17 +27,6 @@ def delete_user
   @user.destroy unless @user.nil?
 end
 
-def sign_up
-  delete_user
-  visit '/users/sign_up'
-  fill_in "user_name", :with => @visitor[:name]
-  fill_in "user_email", :with => @visitor[:email]
-  fill_in "user_password", :with => @visitor[:password]
-  fill_in "user_password_confirmation", :with => @visitor[:password_confirmation]
-  click_button "Sign up"
-  find_user
-end
-
 def sign_in
   visit '/users/sign_in'
   fill_in "user_email", :with => @visitor[:email]
@@ -78,35 +67,6 @@ When /^I sign out$/ do
   visit '/users/sign_out'
 end
 
-When /^I sign up with valid user data$/ do
-  create_visitor
-  sign_up
-end
-
-When /^I sign up with an invalid email$/ do
-  create_visitor
-  @visitor = @visitor.merge(:email => "notanemail")
-  sign_up
-end
-
-When /^I sign up without a password confirmation$/ do
-  create_visitor
-  @visitor = @visitor.merge(:password_confirmation => "")
-  sign_up
-end
-
-When /^I sign up without a password$/ do
-  create_visitor
-  @visitor = @visitor.merge(:password => "")
-  sign_up
-end
-
-When /^I sign up with a mismatched password confirmation$/ do
-  create_visitor
-  @visitor = @visitor.merge(:password_confirmation => "changeme123")
-  sign_up
-end
-
 When /^I return to the site$/ do
   visit '/'
 end
@@ -121,40 +81,42 @@ When /^I sign in with a wrong password$/ do
   sign_in
 end
 
-When /^I edit my account details$/ do
-  click_link "Edit account"
-  fill_in "user_name", :with => "newname"
+When /^I edit my name$/ do
+  click_link "Edit your account"
+  fill_in "name", :with => "newname"
+  fill_in "user_current_password", :with => @visitor[:password]
+  click_button "Update"
+end
+
+When /^I change my password$/ do
+  click_link "Edit your account"
+  fill_in "password", :with => "newpassword"
+  fill_in "password_confirmation", :with => "newpassword"
   fill_in "user_current_password", :with => @visitor[:password]
   click_button "Update"
 end
 
 When /^I look at the list of users$/ do
-  visit '/'
+  visit '/users/'
 end
 
 ### THEN ###
 Then /^I should be signed in$/ do
   page.should have_content "Logout"
   page.should_not have_content "Sign up"
+  page.should_not have_content "Sign in"
   page.should_not have_content "Login"
 end
 
 Then /^I should be signed out$/ do
-  page.should have_content "Sign up"
-  page.should have_content "Login"
+  page.should have_content "Sign in"
+  page.should have_content "Login" #Not needed but will leave for now.
+  page.should_not have_content "Sign up" #Users should not be able to register themseleves
   page.should_not have_content "Logout"
-end
-
-Then /^I see an unconfirmed account message$/ do
-  page.should have_content "You have to confirm your account before continuing."
 end
 
 Then /^I see a successful sign in message$/ do
   page.should have_content "Signed in successfully."
-end
-
-Then /^I should see a successful sign up message$/ do
-  page.should have_content "Welcome! You have signed up successfully."
 end
 
 Then /^I should see an invalid email message$/ do
@@ -163,14 +125,6 @@ end
 
 Then /^I should see a missing password message$/ do
   page.should have_content "Password can't be blank"
-end
-
-Then /^I should see a missing password confirmation message$/ do
-  page.should have_content "Password doesn't match confirmation"
-end
-
-Then /^I should see a mismatched password message$/ do
-  page.should have_content "Password doesn't match confirmation"
 end
 
 Then /^I should see a signed out message$/ do
