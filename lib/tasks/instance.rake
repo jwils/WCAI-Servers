@@ -1,4 +1,4 @@
-task :check_instance_uptime => :environment do
+task :check_instance_up_time => :environment do
   Server.all.each do |server|
   	unless server.stopped?
   		if server.open_connections.length == 0
@@ -17,8 +17,13 @@ task :check_instance_uptime => :environment do
 	 FOG_CONNECTION.servers.each do |instance|
   	if Server.find_by_instance_id(instance.id).nil?
   		#unassociated server send
-  		puts 'send emai unassociated instance'
+  		puts 'send email unassociated instance'
   	end
   end
+end
+
+task :test_instance => :environment do
+  s = Server.new
+  s.create_aws_instance
 end
 

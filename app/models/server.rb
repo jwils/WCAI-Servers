@@ -64,13 +64,25 @@ class Server < ActiveRecord::Base
 
   def create_aws_instance
     self.instance = FOG_CONNECTION.servers.bootstrap(
-                    :image_id => "ami-a29943cb", #change this to custom ami
-                    #:type => "whatever type we want",
+                    :image_id => "ami-7539b41c", #change this to custom ami
+                    :type => ":m1.large",
                     #:security_group => open port for sql
                     :private_key_path =>'/var/www/projects/keypairs/fog',
                     :public_key_path => '/var/www/projects/keypairs/fog.pub',
                     :username => 'ubuntu')
+
     self.instance_id = self.instance.id
+    self.save
+
+    self.instance.wait_for { ready? }
+    self.instance.wait_for { !ip_address.nil?}
+    sleep(10)
+    self.ssh("sudo apt-get update && sudo apt-get upgrade -y")
+
+    self.ssh("export DEBIAN_FRONTEND=noninteractive; sudo apt-get -y install xfsprogs mysql-server")
+    self.ssh("mysql -uroot -e \"update user set password=PASSWORD('#{Settings.mysql_root_password}') where user='root';\"")
+    self.ssh("cd /etc/mysql/; sudo wget http://wcai-web.wharton.upenn.edu/my.cnf")
+
   end
 
   def delete_instance
