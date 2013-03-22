@@ -23,7 +23,7 @@ class Server < ActiveRecord::Base
 
   def wait_for_ready
     self.instance.wait_for { ready? }
-    self.instance.wait_for { !ip_address.nil?}
+    self.instance.wait_for { !public_ip_address.nil?}
     sleep(5)
   end
 
@@ -73,7 +73,7 @@ class Server < ActiveRecord::Base
     self.save
 
     self.instance.wait_for { ready? }
-    self.instance.wait_for { !ip_address.nil?}
+    self.instance.wait_for { !public_ip_address.nil?}
     sleep(10)
     self.ssh("sudo apt-get update && sudo apt-get upgrade -y")
 
