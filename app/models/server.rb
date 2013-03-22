@@ -60,8 +60,6 @@ class Server < ActiveRecord::Base
     puts self.instance.ssh(commands)[0].stdout
   end
 
-  private
-
   def create_aws_instance
     self.instance = FOG_CONNECTION.servers.bootstrap(
                     :image_id => "ami-7539b41c", #change this to custom ami
@@ -84,6 +82,8 @@ class Server < ActiveRecord::Base
     self.ssh("cd /etc/mysql/; sudo wget http://wcai-web.wharton.upenn.edu/my.cnf")
 
   end
+
+  private
 
   def delete_instance
     unless self.instance.nil?
