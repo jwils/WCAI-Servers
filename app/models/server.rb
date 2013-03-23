@@ -72,8 +72,7 @@ class Server < ActiveRecord::Base
     self.instance_id = self.instance.id
     self.save
 
-    self.instance.wait_for { ready? }
-    self.instance.wait_for { !public_ip_address.nil?}
+    self.wait_for_ready
     sleep(10)
     self.ssh("sudo apt-get update && sudo apt-get upgrade -y")
     self.ssh("sudo debconf-set-selections <<< 'mysql-server-<version> mysql-server/root_password password #{Settings.mysql_root_password}'; sudo debconf-set-selections <<< 'mysql-server-<version> mysql-server/root_password_again password #{Settings.mysql_root_password}'; sudo apt-get -y install xfsprogs mysql-server")
