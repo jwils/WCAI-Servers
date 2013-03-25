@@ -83,15 +83,15 @@ end
 
 When /^I edit my name$/ do
   click_link "Edit your account"
-  fill_in "name", :with => "newname"
+  fill_in "user_name", :with => "newname"
   fill_in "user_current_password", :with => @visitor[:password]
   click_button "Update"
 end
 
 When /^I change my password$/ do
   click_link "Edit your account"
-  fill_in "password", :with => "newpassword"
-  fill_in "password_confirmation", :with => "newpassword"
+  fill_in "user_password", :with => "newpassword"
+  fill_in "user_password_confirmation", :with => "newpassword"
   fill_in "user_current_password", :with => @visitor[:password]
   click_button "Update"
 end
