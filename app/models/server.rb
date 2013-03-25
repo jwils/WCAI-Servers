@@ -23,7 +23,7 @@ class Server < ActiveRecord::Base
 
   def wait_for_ready
     self.instance.wait_for { ready? }
-    self.instance.wait_for { !ip_address.nil?}
+    self.instance.wait_for { !public_ip_address.nil?}
     sleep(5)
   end
 
@@ -60,18 +60,28 @@ class Server < ActiveRecord::Base
     puts self.instance.ssh(commands)[0].stdout
   end
 
-  private
-
   def create_aws_instance
     self.instance = FOG_CONNECTION.servers.bootstrap(
-                    :image_id => "ami-a29943cb", #change this to custom ami
-                    #:type => "whatever type we want",
+                    :image_id => "ami-7539b41c", #change this to custom ami
+                    :flavor_id => "m1.large",
                     #:security_group => open port for sql
                     :private_key_path =>'/var/www/projects/keypairs/fog',
                     :public_key_path => '/var/www/projects/keypairs/fog.pub',
                     :username => 'ubuntu')
+
     self.instance_id = self.instance.id
+    self.save
+
+    self.wait_for_ready
+    sleep(10)
+    self.ssh("sudo apt-get update && sudo apt-get upgrade -y")
+    self.ssh("sudo debconf-set-selections <<< 'mysql-server-<version> mysql-server/root_password password #{Settings.mysql_root_password}'; sudo debconf-set-selections <<< 'mysql-server-<version> mysql-server/root_password_again password #{Settings.mysql_root_password}'; sudo apt-get -y install xfsprogs mysql-server")
+    self.ssh("cd /etc/mysql/; sudo rm my.cnf; sudo wget http://wcai-web.wharton.upenn.edu/my.cnf")
+    self.stop
+
   end
+
+  private
 
   def delete_instance
     unless self.instance.nil?

@@ -5,7 +5,11 @@ WCAI::Application.routes.draw do
   resources :timesheets
   match 'timesheets/:id/approve' => 'timesheets#approve', :as => :approve_timesheet
 
-  devise_for :users, :controllers => { :invitations => 'devise/invitations' }
+  devise_for :users, :controllers => { :invitations => 'devise/invitations' }, :skip => [:registrations]
+    as :user do
+      get 'users/edit' => 'devise/registrations#edit', :as => 'edit_user_registration'
+      put 'users' => 'devise/registrations#update', :as => 'user_registration'
+    end
 
   resources :users do
     collection do
