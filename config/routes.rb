@@ -35,8 +35,6 @@ WCAI::Application.routes.draw do
     end
   end
 
-  resources :connections, :only => [:index]
-
   resources :projects
 
   resources :projects do

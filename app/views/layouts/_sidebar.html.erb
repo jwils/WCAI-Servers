@@ -6,7 +6,6 @@
             <li><%= link_to "Projects", projects_path  %></li>
         <% if current_user.is? :admin or current_user.is? :research_assistant %>
             <li><%= link_to "Timesheets", timesheets_path  %></li>
-            <li><%= link_to "Connections", connections_path  %></li>
         <% end %>
         <% if current_user.is? :admin %>
             <li><%= link_to "Users", users_path  %></li>
