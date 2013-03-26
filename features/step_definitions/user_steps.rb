@@ -9,19 +9,17 @@ def find_user
   @user ||= User.where(:email => @visitor[:email]).first
 end
 
-def create_unconfirmed_user
+def create_user(role = "Administrator")
   create_visitor
   delete_user
-  sign_up
-  visit '/users/sign_out'
+  symbol_role = role.parameterize.underscore.to_sym
+  @user = FactoryGirl.create(:user, symbol_role, @visitor)
 end
 
-def create_user
-  create_visitor
-  delete_user
-  @user = FactoryGirl.create(:user, @visitor)
+def create_email_list(number_of_emails)
+  @email_list = []
+  number_of_emails.times { |x| @email_list << "test_user#{x}@example.com"}
 end
-
 def delete_user
   @user ||= User.where(:email => @visitor[:email]).first
   @user.destroy unless @user.nil?
@@ -39,6 +37,15 @@ Given /^I am not logged in$/ do
   visit '/users/sign_out'
 end
 
+Given /^I am an? "(.+)"/ do |role|
+  create_user(role)
+end
+
+Given /^I am logged in as an? "(.+)"/ do |role|
+  create_user(role)
+  sign_in
+end
+
 Given /^I am logged in$/ do
   create_user
   sign_in
@@ -51,10 +58,6 @@ end
 Given /^I do not exist as a user$/ do
   create_visitor
   delete_user
-end
-
-Given /^I exist as an unconfirmed user$/ do
-  create_unconfirmed_user
 end
 
 ### WHEN ###
@@ -100,6 +103,14 @@ When /^I look at the list of users$/ do
   visit '/users/'
 end
 
+When /^I invite (\d+) new administrators$/ do |count|
+  visit '/users/new_batch'
+  select "admin", from: "invitations_role"
+  create_email_list(count.to_i)
+  fill_in "invitations_user_emails", :with => @email_list.join("\n")
+  click_button "Send"
+end
+
 ### THEN ###
 Then /^I should be signed in$/ do
   page.should have_content "Logout"
@@ -113,6 +124,10 @@ Then /^I should be signed out$/ do
   page.should have_content "Login" #Not needed but will leave for now.
   page.should_not have_content "Sign up" #Users should not be able to register themseleves
   page.should_not have_content "Logout"
+end
+
+Then /^I see that the emails were sent$/ do
+  page.should have_content "Email invitations sent"
 end
 
 Then /^I see a successful sign in message$/ do
@@ -142,4 +157,10 @@ end
 Then /^I should see my name$/ do
   create_user
   page.should have_content @user[:name]
+end
+
+Then /^They should each receive an email$/ do
+  @email_list.each do |email|
+    unread_emails_for(email).size.should >= parse_email_count(1)
+  end
 end

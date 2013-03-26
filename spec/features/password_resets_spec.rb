@@ -17,7 +17,7 @@ describe "PasswordResets" do
     fill_in "Email", :with => "madeupuser@example.com"
     click_button "reset password"
     #Is this what we want?!!!
-    page.should have_content("Email not found")
+    page.should have_content("not found")
     last_email.should be_nil
   end
 end
