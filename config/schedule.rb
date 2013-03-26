@@ -10,8 +10,3 @@
 every 2.hours do
    rake "check_instance_up_time"
 end
-
-
-every 1.day, :at => '7:00 pm' do
-  rake "MyModel.task_to_run_at_four_thirty_in_the_morning"
-end

@@ -17,7 +17,8 @@
   <% end %>
 </dl>
 
-
+<p>Please do not start and stop server by hand unless there is some issue with connections. Click on open connections and
+close them all. This will automatically shut the server down.</p>
 <div class="form-actions">
 <% if @server.stopped? %>
 	<%= link_to 'Start Sever', start_server_url(:id=> @server.id), :class => 'btn btn-mini btn-success', :remote => true%>
@@ -25,6 +26,6 @@
  	<%= link_to 'Stop Sever', stop_server_url(:id => @server.id), :class => 'btn btn-mini btn-danger', :remote => true %>
 <% end %>
 
-<%=  link_to 'Open Connections', server_connection_path(@server) %>
+<%=  link_to 'Open Connections', server_connection_path(@server), :class => 'btn btn-min btn-info' %>
 <%= link_to 'Back', servers_path, :class => 'btn btn-mini' %>
 </div>
