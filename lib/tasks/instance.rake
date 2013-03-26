@@ -6,7 +6,7 @@ task :check_instance_up_time => :environment do
   		end
 
   		server.open_connections.each do |connection|
-  			if connection.connection_open + 2.hours > DateTime.now
+  			if connection.connection_open + 3.hours > DateTime.now
   				#mail me
   				puts 'send email'
   			end

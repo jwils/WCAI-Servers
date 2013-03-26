@@ -27,7 +27,7 @@ WCAI::Application.routes.draw do
   resources :servers
 
   resources :servers do
-    resources :connections, :only => [:index, :new, :destroy]
+    resources :connections
 
     member do
       get 'start', :as => :start
@@ -35,7 +35,7 @@ WCAI::Application.routes.draw do
     end
   end
 
-  resources :connections, :only => [:show, :index]
+  resources :connections, :only => [:index]
 
   resources :projects
 

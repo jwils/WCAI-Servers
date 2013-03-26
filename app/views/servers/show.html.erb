@@ -25,5 +25,6 @@
  	<%= link_to 'Stop Sever', stop_server_url(:id => @server.id), :class => 'btn btn-mini btn-danger', :remote => true %>
 <% end %>
 
+<%=  link_to 'Open Connections', server_connection_path(@server) %>
 <%= link_to 'Back', servers_path, :class => 'btn btn-mini' %>
 </div>
