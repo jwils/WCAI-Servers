@@ -6,7 +6,7 @@ class Timesheet < ActiveRecord::Base
   accepts_nested_attributes_for :time_entries, :reject_if => lambda { |a| a[:hours_spent].blank? or a[:hours_spent] == 0}, :allow_destroy => true
 
   default_scope :include => :time_entries
-  attr_accessible :start_date, :submitted, :user, :time_entries_attributes
+  attr_accessible :start_date, :submitted, :user, :time_entries_attributes, :user_id
   before_save :check_for_time
   before_save :mark_entries_for_removal
 
