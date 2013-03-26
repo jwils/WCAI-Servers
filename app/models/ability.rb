@@ -9,6 +9,8 @@ class Ability
       elsif user.has_role? :research_assistant
         can :manage, Timesheet, :id => user.timesheets.map{ |timesheet| timesheet.id}
         can :create, Timesheet
+        can :manage, Connection, :id => user.connections.map{ |connection| connection.id}
+        can :create, Connection
         can :manage, Project
         can :manage, ProjectFile
         can :manage, Message
