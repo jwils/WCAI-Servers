@@ -2,15 +2,15 @@ task :check_instance_up_time => :environment do
   Server.all.each do |server|
   	unless server.stopped?
   		if server.open_connections.length == 0
-        send_email_to_list(nil, User.with_role(:admin),"Server on without any connections",
+        UserMailer.send_email_to_list(nil, User.with_role(:admin),"Server on without any connections",
                            "There appears to be a server turned on without any open connections. Please shut it down manually.")
   			puts 'send email server should be shut down'
   		end
-      puts 'TESTING STUFF'
   		server.open_connections.each do |connection|
   			if connection.connection_open + 3.hours < DateTime.now
-          send_email_to_list(nil, User.with_role(:admin),"Server on for more than three hours",
+          UserMailer.send_email_to_list(nil, [User.find(2)],"Server on for more than three hours",
                              "A server has been on for more than three hours. Please ensure this is intentional.")
+          puts "Sent email about server up for more than 3 hours"
   			end
   		end 
 		end
