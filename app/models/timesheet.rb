@@ -10,6 +10,11 @@ class Timesheet < ActiveRecord::Base
   before_save :check_for_time
   before_save :mark_entries_for_removal
 
+  scope :not_printed, where(:last_printed => nil, :submitted => true)
+
+  scope :submitted, where(:submitted => true)
+
+  scope :not_submitted, where(:submitted => false)
 
   def status_string
     if approver.nil?
@@ -23,13 +28,13 @@ class Timesheet < ActiveRecord::Base
     end
   end
 
-  def print
-    self.last_printed = Time.now
+  def printing
+    self.last_printed = DateTime.now
   end
 
   def check_for_time
-    #self.submitted_date = Time.now if submitted
-    #self.approved_date = Time.now if approver
+    self.submitted_date = DateTime.now if submitted
+    self.approved_date = DateTime.now if approver
   end
 
   def hours
