@@ -30,6 +30,7 @@ class Timesheet < ActiveRecord::Base
 
   def printing
     self.last_printed = DateTime.now
+    save
   end
 
   def check_for_time
