@@ -26,7 +26,7 @@ close them all. This will automatically shut the server down.</p>
  	<%= link_to 'Stop Sever', stop_server_url(:id => @server.id), :class => 'btn btn-mini btn-danger', :remote => true %>
 <% end %>
 
-<%=  link_to 'Open Connections', server_connections_path(@server), :class => 'btn btn-mini btn-info' %>
+<%=  link_to 'View Open Connections', server_connections_path(@server), :class => 'btn btn-mini btn-info' %>
 
 <%= link_to 'Back', servers_path, :class => 'btn btn-mini' %>
 </div>
