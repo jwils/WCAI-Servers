@@ -18,7 +18,7 @@
   <tbody>
     <% @connections.each do |connection| %>
       <tr>
-        <td><%= link_to connection.id, connection_path(connection.server,connection) %></td>
+        <td><%= link_to connection.id, server_connection_path(connection.server,connection) %></td>
         <td><%= connection.sql_user %></td>
         <td><%= connection.sql_password %></td>
         <td><%= connection.user.name %></td>
