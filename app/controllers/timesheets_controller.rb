@@ -5,8 +5,12 @@ class TimesheetsController < ApplicationController
   # GET /timesheets.json
   def index
     if params[:format] == 'pdf'
-      @timesheets = Timesheet.not_printed
-      @timesheets.each {|timesheet| timesheet.printing }
+      if params[:type] == "Not Printed"
+        @timesheets = Timesheet.not_printed
+        @timesheets.each {|timesheet| timesheet.printing }
+      else
+        @timesheets = Timesheet.approved
+      end
     elsif current_user.is? :admin
       @timesheets = current_user.timesheets.not_submitted + Timesheet.submitted
     else

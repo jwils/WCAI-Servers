@@ -10,11 +10,13 @@ class Timesheet < ActiveRecord::Base
   before_save :check_for_time
   before_save :mark_entries_for_removal
 
-  scope :not_printed, where(:last_printed => nil, :submitted => true)
-
   scope :submitted, where(:submitted => true)
 
   scope :not_submitted, where(:submitted => false)
+
+  scope :approved, where('approver_id IS NOT NULL')
+
+  scope :not_printed, where(:last_printed => nil).where('approver_id IS NOT NULL')
 
   def status_string
     if approver.nil?
