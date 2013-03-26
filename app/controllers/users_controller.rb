@@ -38,23 +38,25 @@ class UsersController < ApplicationController
 
   def batch_invite
     @role = @roles[params[:invitations][:role].to_i - 1][0]
-    @project = Project.find(params[:invitations][:project])
-
+    @project = Project.find(params[:invitations][:project]) unless params[:invitations][:project].nil?
     params[:invitations][:user_emails].split("\n").each do |email|
       u = User.find_by_email(email)
       if u.nil?
         u = User.invite!(:email => email)
-        u.add_role(:researcher, @project)
+        u.save
+        email.inspect
       else
         if @role == "researcher"
-         UserMailer.added_to_project(u, @project).deliver
-         u.add_role(:researcher, @project)
-        else
-          u.add_role(@role)
+          UserMailer.added_to_project(u, @project).deliver
         end
       end
+
+      if @role == "researcher"
+        u.add_role(:researcher, @project)
+      else
+        u.add_role(@role)
+      end
     end
-      #SHOULD REDIRECT TO PAGE WE GOT HERE FROM
       redirect_to root_path, :notice => 'Email invitations sent'
   end
 

@@ -40,12 +40,6 @@ ActiveRecord::Schema.define(:version => 20130313034852) do
 
   add_index "downloads_trackers", ["user_id"], :name => "index_downloads_trackers_on_user_id"
 
-  create_table "institutions", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
   create_table "project_files", :force => true do |t|
     t.integer  "project_id"
     t.string   "file"
@@ -139,12 +133,10 @@ ActiveRecord::Schema.define(:version => 20130313034852) do
     t.integer  "failed_attempts",                      :default => 0
     t.string   "unlock_token"
     t.datetime "locked_at"
-    t.integer  "institution_id"
     t.string   "institution"
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
-  add_index "users", ["institution_id"], :name => "index_users_on_institution_id"
   add_index "users", ["invitation_token"], :name => "index_users_on_invitation_token"
   add_index "users", ["invited_by_id"], :name => "index_users_on_invited_by_id"
   add_index "users", ["reset_password_token"], :name => "index_users_on_reset_password_token", :unique => true
