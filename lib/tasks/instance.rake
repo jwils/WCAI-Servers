@@ -7,8 +7,7 @@ task :check_instance_up_time => :environment do
   		end
   		server.open_connections.each do |connection|
   			if connection.connection_open + 3.hours < DateTime.now
-          UserMailer.send_email_to_list(nil, User.with_role(:admin),"Server on for more than three hours",
-                             "A server has been on for more than three hours. Please ensure this is intentional.").deliver
+          UserMailer.instance_uptime_report(User.with_role(:admin), server).deliver
   			end
   		end 
 		end
