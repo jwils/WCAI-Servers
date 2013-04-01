@@ -12,7 +12,7 @@
  <tbody>
   <% @users.each do |user| %>
     <tr>
-      <td><%=  link_to (if user.name then user.name else "Unregistered" end), user_path(user) %></td>
+      <td><%= link_to_if current_user.is? :admin, (user.name ? user.name : "Unregistered" ), user_path(user) %></td>
       <td><%= user.email %></td>
       <td><%= user.institution %></td>
       <% if current_user.is? :admin %>
