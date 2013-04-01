@@ -4,16 +4,17 @@
 </div>
 
 <dl class="dl-horizontal">
-  <dt><strong><%= model_class.human_attribute_name(:sql_user) %>:</strong></dt>
-  <dd><%= @connection.sql_user %></dd>
-  <dt><strong><%= model_class.human_attribute_name(:sql_password) %>:</strong></dt>
-  <dd><%= @connection.sql_password %></dd>
-  <dt><strong>User:</strong></dt>
-  <dd><%= @connection.user.name %></dd>
-  <dt><strong>Server IP:</strong></dt>
+  <dt><strong>Project Name:</strong></dt>
+  <dd><%= @connection.project.name %></dd>
+  <dt><strong>Hostname:</strong></dt>
   <dd><%= @connection.server.ip_address %></dd>
-  <dd><%= @connection.connection_closed %></dd>
-  <dt><strong>Access Command:</strong></dt>
+  <dt><strong>Username:</strong></dt>
+  <dd><%= @connection.username %></dd>
+  <dt><strong>Password:</strong></dt>
+  <dd><%= @connection.sql_password %></dd>
+  <dt><strong>Made for:</strong></dt>
+  <dd><%= @connection.user.name %></dd>
+  <dt><strong>Commandline Access Command:</strong></dt>
   <dd><%= @connection.access_cmd %></dd>
 </dl>
 

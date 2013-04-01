@@ -12,7 +12,11 @@ class Connection < ActiveRecord::Base
   end
 
   def access_cmd
-    "mysql --host=#{server.ip_address} --user='#{self.sql_user.split("'")[1]}' -p"
+    "mysql --host=#{server.ip_address} -u#{self.sql_user.split("'")[1]} -p#{sql_password}"
+  end
+
+  def username
+    self.sql_user.split("'")[1]
   end
 
   def open_connection(ip_address)
