@@ -19,7 +19,9 @@
       <dd><%= link_to @project.server.state, @project.server %></dd>
       <dt><strong>SQL Connection:</strong><dt>
       <dd><%= link_to 'Open Connection',
-                      new_server_connection_path(@project.server), :class => 'btn btn-mini' %></dd>
+                      new_server_connection_path(@project.server), :class => 'btn btn-mini' %>
+        <%= link_to 'View Open Connections',
+                    server_connections_path(@project.server), :class => 'btn btn-mini btn-primary' unless @project.server.stopped?%></dd>
   <% else %>
       <dd>No Server</dd>
   <% end %>
