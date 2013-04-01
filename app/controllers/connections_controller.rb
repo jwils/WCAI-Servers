@@ -45,7 +45,7 @@ class ConnectionsController < ApplicationController
 
     respond_to do |format|
       if @connection.save
-        format.html { redirect_to server_connections_url(@connection.server), notice: 'Connection was successfully created.' }
+        format.html { redirect_to server_connection_url(@connection.server, @connection), notice: 'Connection was successfully created.' }
         format.json { render json: @connection, status: :created, location: @connection }
       else
         format.html { render json: @connection.errors, status: :unprocessable_entity }
