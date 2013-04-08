@@ -7,6 +7,6 @@
 #
 # set :output, "/path/to/my/cron_log.log"
 #
-every 2.hours do
+every 1.day, :at => ["4:30 pm", "5:30pm", "6:30pm"] do
    rake "check_instance_up_time"
 end
