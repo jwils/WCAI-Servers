@@ -1,5 +1,5 @@
 $ ->
-  $('#file_list li > ul').each (i) ->
+  $('.file_list li > ul').each (i) ->
     parent_li = $(this).parent('li')
     parent_li.addClass('folder')
     sub_ul = $(this).remove()
