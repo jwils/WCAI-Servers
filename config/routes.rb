@@ -38,7 +38,7 @@ WCAI::Application.routes.draw do
   resources :projects
 
   resources :projects do
-    resources :project_files, :except => :show
+    resources :s3_files, :except => :show
     match '/project_files/:file' => 'project_files#show', :file => /.+/, :as => 'project_file'
   end
 

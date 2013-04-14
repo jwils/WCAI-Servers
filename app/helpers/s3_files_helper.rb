@@ -1,4 +1,4 @@
-module ProjectFilesHelper
+module S3FilesHelper
   def print_directory_structure(project, root)
     response_string = ""
     response_string << "<li class=\"page\">\n"

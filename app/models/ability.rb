@@ -13,7 +13,7 @@ class Ability
         can :create, Connection
         can :manage, Server
         can :manage, Project
-        can :manage, ProjectFile
+        can :manage, S3File
         can :manage, Message
         can :read, User
       else
@@ -21,7 +21,7 @@ class Ability
         can :manage, Message
         can :read, User
         can :read, Project, :id => authorized_projects.map{ |project| project.id}
-        can :read, ProjectFile
+        can :read, S3File
       end
   end
 end

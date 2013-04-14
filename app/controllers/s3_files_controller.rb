@@ -1,4 +1,4 @@
-class ProjectFilesController < ApplicationController
+class S3FilesController < ApplicationController
   load_and_authorize_resource
   # GET /project_files
   # GET /project_files.json
@@ -17,7 +17,7 @@ class ProjectFilesController < ApplicationController
     if @project.folder_name.nil?
        @root = nil
     else
-       @root = ProjectFile.find_by_project_name(@project.folder_name + "/")
+       @root = S3File.find_by_project_name(@project.folder_name + "/")
     end
     respond_to do |format|
       format.html # index.html.erb
@@ -32,13 +32,13 @@ class ProjectFilesController < ApplicationController
     @project =  Project.find(params[:project_id])
 
     if @file_name.start_with? @project.folder_name
-      @project_file, file_size = ProjectFile.find_link_by_name(@file_name)
+      @project_aws_file, file_size = S3File.find_link_by_name(@file_name)
       tracker_file = DownloadsTracker.create(:file_name => params[:file],
                                            :file_size => file_size)
       tracker_file.user = current_user
       tracker_file.save
 
-      redirect_to @project_file
+      redirect_to @project_aws_file
     else
       redirect_to root_path
     end
