@@ -51,9 +51,15 @@ WCAI::Application.routes.draw do
   match 'home/index' => 'home#index', :as => :home_page
   match 'home/about' => 'home#about', :as => :about
 
-  match 'how_to/create_users' => 'home#create_users', :as => :how_to_create_users
-  match 'how_to/create_projects' => 'home#create_projects', :as => :how_to_create_projects
-  match 'how_to/upload_files' => 'home#upload_files', :as => :how_to_upload_files
+  resource :tutorial do
+    get 'create_users'
+    get 'create_projects'
+    get 'upload_files'
+    get 'disable_user'
+    get 'linking_aws_folders'
+    get 'downloading_files'
+
+  end
 
   root :to => 'passthrough#index'
 end

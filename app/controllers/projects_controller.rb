@@ -56,14 +56,12 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
+    -asdf-
     company = Company.find_or_create_by_name(params[:project][:company])
     params[:project].delete(:company)
     @project = Project.new(params[:project])
     @project.company = company
-    #for now we wont save servers
-    #server = Server.new
-    #server.project = @project
-    #server.save
+
     respond_to do |format|
       if @project.save
         format.html { redirect_to @project, notice: 'Project was successfully created.' }

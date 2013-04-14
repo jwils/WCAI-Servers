@@ -14,11 +14,16 @@
             <li class="nav-header">Create</li>
             <li><%= link_to "Project", new_project_path  %></li>
             <li><%= link_to "Users", new_batch_users_path  %></li>
-            <li class="nav-header">Documentation</li>
-            <li><%= link_to "Creating a Project", how_to_create_projects_path  %></li>
-            <li><%= link_to "Creating Users", how_to_create_users_path  %></li>
-            <li><%= link_to "Uploading Project Files", how_to_upload_files_path  %></li>
         <% end %>
+        <li class="nav-header">Documentation</li>
+        <% if current_user.is? :admin %>
+            <li><%= link_to "Creating a Project", create_projects_tutorial_path  %></li>
+            <li><%= link_to "Creating Users", create_users_tutorial_path  %></li>
+            <li><%= link_to "Disable a User", disable_user_tutorial_path  %></li>
+            <li><%= link_to "Link AWS Folders", linking_aws_folders_tutorial_path  %></li>
+            <li><%= link_to "Uploading Project Files", upload_files_tutorial_path  %></li>
+        <% end %>
+        <li><%= link_to "Download Files", downloading_files_tutorial_path  %></li>
         <li class="nav-header">Account</li>
         <li><%= link_to "Edit your account", edit_user_registration_path  %></li>
     <% else %>

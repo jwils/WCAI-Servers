@@ -9,13 +9,4 @@ class HomeController < ApplicationController
 
   def about
   end
-
-  def create_users
-  end
-
-  def create_projects
-  end
-
-  def upload_files
-  end
 end
