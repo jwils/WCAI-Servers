@@ -17,13 +17,13 @@
         <% end %>
         <li class="nav-header">Documentation</li>
         <% if current_user.is? :admin %>
-            <li><%= link_to "Creating a Project", create_projects_tutorial_path  %></li>
-            <li><%= link_to "Creating Users", create_users_tutorial_path  %></li>
-            <li><%= link_to "Disable a User", disable_user_tutorial_path  %></li>
-            <li><%= link_to "Link AWS Folders", linking_aws_folders_tutorial_path  %></li>
-            <li><%= link_to "Uploading Project Files", upload_files_tutorial_path  %></li>
+            <li><%= link_to "Creating a Project", create_projects_tutorials_path  %></li>
+            <li><%= link_to "Creating Users", create_users_tutorials_path  %></li>
+            <li><%= link_to "Disable a User", disable_user_tutorials_path  %></li>
+            <li><%= link_to "Link AWS Folders", linking_aws_folders_tutorials_path  %></li>
+            <li><%= link_to "Uploading Project Files", upload_files_tutorials_path  %></li>
         <% end %>
-        <li><%= link_to "Download Files", downloading_files_tutorial_path  %></li>
+        <li><%= link_to "Download Files", downloading_files_tutorials_path  %></li>
         <li class="nav-header">Account</li>
         <li><%= link_to "Edit your account", edit_user_registration_path  %></li>
     <% else %>

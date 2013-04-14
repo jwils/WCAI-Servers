@@ -51,7 +51,7 @@ WCAI::Application.routes.draw do
   match 'home/index' => 'home#index', :as => :home_page
   match 'home/about' => 'home#about', :as => :about
 
-  resource :tutorial do
+  resource :tutorials do
     get 'create_users'
     get 'create_projects'
     get 'upload_files'
