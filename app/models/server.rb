@@ -54,10 +54,10 @@ class Server < ActiveRecord::Base
 
   def ssh(commands)
     get_instance_object
-    puts commands
+    logger.info "Executing command on server: " + commands
     retry_count = 0
     begin
-      puts self.instance.ssh(commands)[0].stdout
+      logger.info self.instance.ssh(commands)[0].stdout
     rescue
       sleep(5)
       retry_count += 1
@@ -66,18 +66,6 @@ class Server < ActiveRecord::Base
       logger.error "Failed to connect to server after five attempts"
     end
 
-  end
-
-  def list_files_in_directory(directory)
-    raw_files_string = self.instance.ssh("ls -l #{directory}")[0].stdout
-    raw_files_string.split("\r\n")[1..-1].collect do |file_string|
-
-      file = Ec2File.create(directory, file_string)
-      if file.is_directory?
-        file.children= list_files_in_directory(file.path)
-      end
-      file
-    end
   end
 
   def download_file(file_path)
@@ -150,9 +138,20 @@ class Server < ActiveRecord::Base
     
     unless self.instance.nil?
       self.instance.private_key_path = Settings.keypair_path + 'fog'
-
       self.instance.public_key_path = Settings.keypair_path + 'fog.pub'
       self.instance.username = 'ubuntu'
+    end
+  end
+
+  def list_files_in_directory(directory)
+    raw_files_string = self.instance.ssh("ls -l #{directory}")[0].stdout
+    raw_files_string.split("\r\n")[1..-1].collect do |file_string|
+
+      file = Ec2File.create(directory, file_string)
+      if file.is_directory?
+        file.children= list_files_in_directory(file.path)
+      end
+      file
     end
   end
 end
