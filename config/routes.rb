@@ -48,6 +48,7 @@ WCAI::Application.routes.draw do
   match 'home/about' => 'home#about', :as => :about
   match 'contact' => 'messages#new', :as => 'contact_us', :via => :get
   match 'contact' => 'messages#create', :as => 'contact_us', :via => :post
+  match 'send_timesheet_reminder' => 'messages#send_timesheet_reminder', :as => 'send_timesheet_reminder'
 
   resource :tutorials do
     get 'create_users'

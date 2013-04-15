@@ -35,6 +35,10 @@ class Timesheet < ActiveRecord::Base
     save
   end
 
+  def self.last_printed_date
+    minimum(:last_printed)
+  end
+
   def check_for_time
     self.submitted_date = DateTime.now if submitted and self.submitted_date.nil?
     self.approved_date = DateTime.now if approver and self.approved_date.nil?

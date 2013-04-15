@@ -19,4 +19,14 @@ class MessagesController < ApplicationController
       render action: 'new'
     end
   end
+
+
+  def send_timesheet_reminder
+    if current_user.is? :admin
+      UserMailer.timesheet_reminder.deliver
+      redirect_to root_url, notice: "Reminder Sent"
+    else
+      redirect_to root_url, notice: "Unauthorized"
+    end
+  end
 end

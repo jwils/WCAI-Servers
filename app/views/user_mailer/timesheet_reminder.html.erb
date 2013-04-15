@@ -1,0 +1,9 @@
+All,
+
+<p>This is a reminder that your timesheets for week ending <%= @week_ending %> are due <%= Date.parse("Monday") == Date.today ? "<b>Today</b> #{Date.parse("Monday")}" : "<b>MONDAY</b> #{Date.parse("Monday")}" %>.</p>
+
+<p>You can fill them out at <%= link_to "wcai-web.wharton.upenn.edu/timesheets", "wcai-web.wharton.upenn.edu/timesheets" %>.</p>
+
+<p>Let me know if you have any questions.</p>
+
+@users_name

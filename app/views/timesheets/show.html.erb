@@ -6,8 +6,8 @@
 <dl class="dl-horizontal">
   <dt><strong>Timesheet for:</strong></dt>
   <dd><%= @timesheet.user.name%></dd>
-  <dt><strong>Week of:</strong></dt>
-  <dd><%= @timesheet.start_date %></dd>
+  <dt><strong>Week Ending:</strong></dt>
+  <dd><%= @timesheet.start_date + 6.days %></dd>
   <dt><strong>Status:</strong></dt>
   <dd><%= @timesheet.status_string %></dd>
 </dl>

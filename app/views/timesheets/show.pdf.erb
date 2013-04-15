@@ -3,7 +3,7 @@
 
 <dl class="dl-horizontal">
   <p>Timesheet for <%= @timesheet.user.name %></p>
-  <p>Week of <%= @timesheet.start_date.strftime('%m/%d/%Y') %></p>
+  <p>Week ending <%= (@timesheet.start_date + 6.days).strftime('%m/%d/%Y') %></p>
   <p> <%= @timesheet.approver.nil? ? 'Not approved' : "Approved by #{@timesheet.approver.name}" %></p>
 </dl>
 <table class="table table-striped table-bordered">

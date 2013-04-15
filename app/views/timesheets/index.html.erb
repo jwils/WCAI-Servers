@@ -5,7 +5,7 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Week of:</th>
+      <th>Week ending:</th>
       <th>Timesheet for:</th>
       <th>Status:</th>
       <th>Hours recorded:</th>
@@ -15,7 +15,7 @@
   <tbody>
     <% @timesheets.each do |timesheet| %>
       <tr>
-        <td><%= link_to timesheet.start_date, timesheet_path(timesheet) %></td>
+        <td><%= link_to timesheet.start_date + 6.days, timesheet_path(timesheet) %></td>
         <td><%= timesheet.user.name %></td>
         <td><%= timesheet.status_string %></td>
         <td><%= timesheet.hours %></td>
@@ -45,7 +45,10 @@
 <% if current_user.is? :admin %>
     <%= link_to "Print New Timesheets", timesheets_path(:type => "Not Printed", :format => 'pdf'), :class => 'btn btn-info' %>
     <%= link_to "Print All Timesheets",timesheets_path(:type => "All", :format => 'pdf'), :class => 'btn btn-info'  %>
+    <%= link_to "Send Email Reminder", send_timesheet_reminder_path, :class => 'btn btn-info'  %>
 <% end %>
 <%= link_to t('.new', :default => t("helpers.links.new")),
             new_timesheet_path,
             :class => 'btn btn-primary' %>
+
+<p>Timesheets were last printed on <%= Timesheet.last_printed_date %></p>
