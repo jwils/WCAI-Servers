@@ -64,4 +64,8 @@ class WCAIFile
   def self.decode(encoded_string)
     CGI::unescape(encoded_string).gsub("%20"," ").gsub("%2F","/")
   end
+
+  def persisted?
+    false
+  end
 end
