@@ -4,10 +4,10 @@
 Notice: The files in red are larger than 1GB, and may take a long time to download.
 
 <ul class="file_list">
-<% if @root.nil? %>
+<% if @project.s3_files.nil? %>
 	<h2> No Files </h2>
 <% else %>
-    <%= render 'files/list', :file =>  @root, :project => @project %>
+    <%= render 'files/list', :file =>  @project.s3_files, :project => @project %>
 <% end %>
 </ul>
 <br />

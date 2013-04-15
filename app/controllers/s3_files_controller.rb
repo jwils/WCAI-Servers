@@ -14,33 +14,22 @@ class S3FilesController < ApplicationController
 
   def index
     @project =  Project.find(params[:project_id])
-    if @project.folder_name.nil?
-       @root = nil
-    else
-       @root = S3File.find_by_project_name(@project.folder_name + "/")
-    end
+
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: @project_files }
+      format.json { render json: @project.s3_files }
     end
   end
 
   # GET /project_files/1
   # GET /project_files/1.json
   def show
-    @file_name = CGI::unescape(params[:file]).gsub("%20"," ").gsub("%2F","/")
-    @project =  Project.find(params[:project_id])
-
-    if @file_name.start_with? @project.folder_name
-      @project_aws_file, file_size = S3File.find_link_by_name(@file_name)
-      tracker_file = DownloadsTracker.create(:file_name => params[:file],
-                                           :file_size => file_size)
-      tracker_file.user = current_user
-      tracker_file.save
-
-      redirect_to @project_aws_file
+    @file = Project.find(params[:project_id]).find_encoded_s3_file(params[:file])
+    unless @file.nil?
+      DownloadsTracker.track(current_user, @file)
+      redirect_to @file.url
     else
-      redirect_to root_path
+      redirect_to root_path, :alert => "Unknown or unauthorized file."
     end
   end
 end

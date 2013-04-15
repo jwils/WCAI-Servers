@@ -1,4 +1,6 @@
 class S3File < WCAIFile
+  attr_accessor :fog_file
+
   def self.find_by_project_name(name)
     project_files = self.files.all({:prefix => name})
     file_lookup = Hash.new 
@@ -20,10 +22,9 @@ class S3File < WCAIFile
     return root
   end
 
-  def self.find_link_by_name(name)
+  def self.find_by_file_name(name)
     fog_file = self.files.head(name)
-    expiration = Time.now + 60.seconds
-    return fog_file.url(expiration), fog_file.content_length
+    return self.convert(fog_file)
   end
 
   def self.convert(fog_file)
@@ -31,7 +32,13 @@ class S3File < WCAIFile
     file.size = fog_file.content_length
     file.path = fog_file.key
     file.children = nil
+    file.fog_file=fog_file
     return file
+  end
+
+  def url
+    expiration = Time.now + 60.seconds
+    fog_file.url(expiration)
   end
 
   def self.files

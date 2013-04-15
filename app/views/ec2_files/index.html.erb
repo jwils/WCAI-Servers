@@ -2,10 +2,10 @@
 <p>Displays files and directories located in <i>/var/files/</i></p>
 <p>Notice this is meant to contain temp files that can be deleted at any time.</p>
 <ul class="file_list">
-  <% if @root.nil? %>
+  <% if @project.ec2_files.nil? %>
       <h2>Server must be on to view files.</h2>
   <% else %>
-      <%= render 'files/list', :file =>  @root, :project => @project %>
+      <%= render 'files/list', :file => @project.ec2_files, :project => @project %>
   <% end %>
 </ul>
 <br />

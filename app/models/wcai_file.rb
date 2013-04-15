@@ -57,7 +57,11 @@ class WCAIFile
     end
   end
 
-  def to_escape_s
+  def encode
     CGI::escape(self.path.gsub(" ","%20").gsub("/","%2F"))
+  end
+
+  def self.decode(encoded_string)
+    CGI::unescape(encoded_string).gsub("%20"," ").gsub("%2F","/")
   end
 end
