@@ -56,7 +56,6 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    -asdf-
     company = Company.find_or_create_by_name(params[:project][:company])
     params[:project].delete(:company)
     @project = Project.new(params[:project])
