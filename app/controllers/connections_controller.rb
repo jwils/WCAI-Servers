@@ -32,7 +32,7 @@ class ConnectionsController < ApplicationController
     @connection = Connection.find(params[:id])
     @connection.close_connection
     respond_to do |format|
-      format.html { redirect_to server_connections_url(@connection.server), notice: 'Connection was successfully created.' }
+      format.html { redirect_to server_connections_url(@connection.server), notice: 'Connection was successfully closed.' }
       format.json { render json: @connection, status: :created, location: @connection }
     end
   end
