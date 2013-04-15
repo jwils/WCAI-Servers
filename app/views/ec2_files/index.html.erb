@@ -5,7 +5,7 @@
   <% if @root.nil? %>
       <h2>Server must be on to view files.</h2>
   <% else %>
-      <%= render 'files/list', :file =>  @root, :project => @project, :ec2 => true %>
+      <%= render 'files/list', :file =>  @root, :project => @project %>
   <% end %>
 </ul>
 <br />
