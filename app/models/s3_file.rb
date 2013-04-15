@@ -37,4 +37,8 @@ class S3File < WCAIFile
   def self.files
     FOG_STORAGE.directories.get(Settings.aws_bucket).files
   end
+
+  def local?
+    false
+  end
 end

@@ -70,12 +70,36 @@ class Server < ActiveRecord::Base
 
   end
 
+  def list_files_in_directory(directory)
+    raw_files_string = self.instance.ssh("ls -l #{directory}")[0].stdout
+    raw_files_string.split("\r\n")[1..-1].collect do |file_string|
+
+      file = Ec2File.create(directory, file_string)
+      if file.is_directory?
+        file.children= list_files_in_directory(file.path)
+      end
+      file
+    end
+  end
+
+  def download_file(file_path)
+    cmd = "scp -oStrictHostKeyChecking=no -i#{Settings.keypair_path}fog ubuntu@#{instance.public_ip_address}:#{file_path} #{Rails.root.join("public","ec2_files")}"
+    system(cmd)
+  end
+
+  def get_files(directory)
+    file = Ec2File.new
+    file.path = directory
+    file.children = list_files_in_directory(directory)
+    file
+  end
+
   def create_aws_instance
     self.instance = FOG_CONNECTION.servers.bootstrap(
                     :image_id => "ami-7539b41c",
                     :flavor_id => "m1.large",
-                    :private_key_path =>'/var/www/projects/keypairs/fog',
-                    :public_key_path => '/var/www/projects/keypairs/fog.pub',
+                    :private_key_path =>Settings.keypair_path + 'fog',
+                    :public_key_path => Settings.keypair_path + 'fog.pub',
                     :username => 'ubuntu')
 
     self.instance_id = self.instance.id
@@ -105,8 +129,9 @@ class Server < ActiveRecord::Base
     self.instance = FOG_CONNECTION.servers.get(self.instance_id)
     
     unless self.instance.nil?
-      self.instance.private_key_path = '/var/www/projects/keypairs/fog'
-      self.instance.public_key_path = '/var/www/projects/keypairs/fog.pub'
+      self.instance.private_key_path = Settings.keypair_path + 'fog'
+
+      self.instance.public_key_path = Settings.keypair_path + 'fog.pub'
       self.instance.username = 'ubuntu'
     end
   end

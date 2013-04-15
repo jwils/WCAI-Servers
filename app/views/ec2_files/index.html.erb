@@ -1,0 +1,11 @@
+<h1>Server Files</h1>
+<p>Displays files and directories located in <i>/var/files/</i></p>
+<p>Notice this is meant to contain temp files that can be deleted at any time.</p>
+<ul class="file_list">
+  <% if @root.nil? %>
+      <h2>Server must be on to view files.</h2>
+  <% else %>
+      <%= render 'files/list', :file =>  @root, :project => @project, :ec2 => true %>
+  <% end %>
+</ul>
+<br />

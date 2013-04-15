@@ -56,4 +56,8 @@ class WCAIFile
       "%0.0f KB" % (size / 1024.0)
     end
   end
+
+  def to_escape_s
+    CGI::escape(self.path.gsub(" ","%20").gsub("/","%2F"))
+  end
 end

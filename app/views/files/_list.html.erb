@@ -6,7 +6,8 @@
         <%= render 'files/list', :file => child, :project => project %>
     <% else %>
         <li class="<%= "page #{child.extension_css}  #{"large_file" if child.size > 1024 * 1024 * 1024}" %>">
-          <%=  link_to child.file_name + " (#{child.str_size})", project_s3_file_path(project, CGI::escape(child.path.gsub(" ","%20").gsub("/","%2F"))), :target => '_blank' %>
+          <% path = child.local? ? project_ec2_file_path(project, child.to_escape_s) : project_s3_file_path(project, child.to_escape_s)%>
+          <%=  link_to child.file_name + " (#{child.str_size})", path, :target => '_blank' %>
         </li>
     <% end %>
   <% end %>
