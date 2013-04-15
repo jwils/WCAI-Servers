@@ -3,4 +3,6 @@
   <h1><%=t '.title', :default => t('helpers.titles.new', :model => model_class.model_name.human,
                                    :default => "New #{model_class.model_name.human}") %></h1>
 </div>
+<p>Servers take about 15 minutes to setup. Please do not close this page while the server is provisioned.</p>
+
 <%= render :partial => 'form' %>
