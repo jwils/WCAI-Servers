@@ -25,3 +25,4 @@ settings.yml
 /.idea
 .rvmrc
 /public/ec2_files/
+/public/assets/
