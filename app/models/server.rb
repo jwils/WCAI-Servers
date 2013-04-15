@@ -96,7 +96,7 @@ class Server < ActiveRecord::Base
 
   def create_aws_instance
     self.instance = FOG_CONNECTION.servers.bootstrap(
-                    :image_id => "ami-7539b41c",
+                    :image_id => "ami-1cf79175", #"ami-7539b41c",
                     :flavor_id => "m1.large",
                     :private_key_path =>Settings.keypair_path + 'fog',
                     :public_key_path => Settings.keypair_path + 'fog.pub',
@@ -108,12 +108,12 @@ class Server < ActiveRecord::Base
     self.wait_for_ready
     sleep(10)
     self.ssh("sudo apt-get update && sudo apt-get upgrade -y")
-    self.ssh("sudo debconf-set-selections <<< 'mysql-server-<version> mysql-server/root_password password" +
-                 " #{Settings.mysql_root_password}'; sudo debconf-set-selections <<< 'mysql-server-<version>" +
-                 " mysql-server/root_password_again password #{Settings.mysql_root_password}'; "+
-                 "sudo apt-get -y install xfsprogs mysql-server")
+    #self.ssh("sudo debconf-set-selections <<< 'mysql-server-<version> mysql-server/root_password password" +
+    #             " #{Settings.mysql_root_password}'; sudo debconf-set-selections <<< 'mysql-server-<version>" +
+    #             " mysql-server/root_password_again password #{Settings.mysql_root_password}'; "+
+    #             "sudo apt-get -y install xfsprogs mysql-server")
 
-    self.ssh("cd /etc/mysql/; sudo rm my.cnf; sudo wget http://wcai-web.wharton.upenn.edu/my.cnf")
+    #self.ssh("cd /etc/mysql/; sudo rm my.cnf; sudo wget http://wcai-web.wharton.upenn.edu/my.cnf")
     self.stop
   end
 
