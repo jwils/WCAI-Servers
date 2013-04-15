@@ -4,11 +4,11 @@ class ConnectionsController < ApplicationController
   # GET /connections.json
   def index
     if params[:server_id]
-      @connections = Server.find(params[:server_id]).connections.where(:connection_closed => nil)
+      @connections = Server.find(params[:server_id]).connections.only_open
     elsif params[:user_id]
-      @connections = User.find(params[:user_id]).connections.where(:connection_closed => nil)
+      @connections = User.find(params[:user_id]).connections.only_open
     else
-      @connections = Connection.where(:connection_closed => nil)
+      @connections = Connection.only_open
     end
 
     respond_to do |format|
@@ -38,10 +38,7 @@ class ConnectionsController < ApplicationController
   end
 
   def new
-    @connection = Connection.new
-    @connection.user_id = current_user.id
-    @connection.server_id = params[:server_id]
-    @connection.open_connection(request.remote_ip)
+    @server = Server.find(params[:server_id]).open_connection(current_user, request.remote_ip)
 
     respond_to do |format|
       if @connection.save

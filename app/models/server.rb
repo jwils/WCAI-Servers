@@ -139,5 +139,9 @@ class Server < ActiveRecord::Base
       self.instance.username = 'ubuntu'
     end
   end
+
+  def open_connection(user, ip_address)
+    Connection.open_connection(user.id, id, ip_address)
+  end
 end
 
