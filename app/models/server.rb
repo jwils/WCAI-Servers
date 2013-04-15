@@ -3,8 +3,6 @@ class Server < ActiveRecord::Base
   attr_accessor :instance
   belongs_to :project
   has_many :connections
-
-
   
   after_find :get_instance_object
   before_destroy :delete_instance
@@ -42,7 +40,7 @@ class Server < ActiveRecord::Base
   alias :status :state
 
   def open_connections
-    self.connections.where(:connection_closed => nil)
+    self.connections.only_open
   end
 
   def ip_address
@@ -121,6 +119,24 @@ class Server < ActiveRecord::Base
     self.stop
   end
 
+  def open_connection(user, ip_address)
+    Connection.open_connection(user.id, id, ip_address)
+  end
+
+  def check_uptime
+    unless stopped?
+      if open_connections.length == 0
+        UserMailer.send_email_to_list(nil, User.with_role(:admin),"Server on without any connections",
+                                      "There appears to be a server turned on without any open connections. Please shut it down manually.").deliver
+      end
+      open_connections.each do |connection|
+        if connection.connection_open + 3.hours < DateTime.now
+          UserMailer.instance_uptime_report(User.with_role(:admin), server).deliver
+        end
+      end
+    end
+  end
+
   private
 
   def delete_instance
@@ -138,10 +154,6 @@ class Server < ActiveRecord::Base
       self.instance.public_key_path = Settings.keypair_path + 'fog.pub'
       self.instance.username = 'ubuntu'
     end
-  end
-
-  def open_connection(user, ip_address)
-    Connection.open_connection(user.id, id, ip_address)
   end
 end
 
