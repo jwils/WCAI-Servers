@@ -23,9 +23,10 @@ class UserMailer < ActionMailer::Base
 
   def timesheet_reminder
     to_users = User.with_role(:research_assistant).map {|u| "#{u.name} <#{u.email}>"}.join(', ')
+    from_user =  "#{current_user.name} <#{current_user.email}>"
     @week_ending = Date.parse('Monday') - 1.day
     @users_name = current_user.name
-    mail(:to => to_users, :from => "#{current_user.name} <#{current_user.email}>",
-         :subject => "REMINDER timesheets w/e #{@week_ending}")
+    mail(:to => to_users, :from => from_user,
+         :cc => from_user, :subject => "REMINDER timesheets w/e #{@week_ending}")
   end
 end
