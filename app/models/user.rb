@@ -14,4 +14,24 @@ class User < ActiveRecord::Base
   def is?(role)
     has_role? role
   end
+
+
+  def self.create_or_add_roles(email, role, project=nil)
+    u = User.find_by_email(email)
+    if u.nil?
+      u = User.invite!(:email => email)
+      u.save
+      email.inspect
+    else
+      if role == "researcher"
+        UserMailer.added_to_project(u, project).deliver
+      end
+    end
+
+    if role == "researcher" or role == :researcher
+      u.add_role(:researcher, project)
+    else
+      u.add_role(role)
+    end
+  end
 end

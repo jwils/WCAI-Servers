@@ -40,24 +40,9 @@ class UsersController < ApplicationController
     @role = @roles[params[:invitations][:role].to_i - 1][0]
     @project = Project.find(params[:invitations][:project]) unless params[:invitations][:project].nil?
     params[:invitations][:user_emails].split("\n").each do |email|
-      u = User.find_by_email(email)
-      if u.nil?
-        u = User.invite!(:email => email)
-        u.save
-        email.inspect
-      else
-        if @role == "researcher"
-          UserMailer.added_to_project(u, @project).deliver
-        end
-      end
-
-      if @role == "researcher"
-        u.add_role(:researcher, @project)
-      else
-        u.add_role(@role)
-      end
+      User.create_or_add_roles(email, @role, @project)
     end
-      redirect_to root_path, :notice => 'Email invitations sent'
+    redirect_to root_path, :notice => 'Email invitations sent'
   end
 
   def show
