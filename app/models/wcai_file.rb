@@ -13,8 +13,12 @@ class WCAIFile
   }
 
   def extension
-    ext = self.path[path.rindex(/\./) + 1..-1]
-    EXT_MAP[ext]
+    unless path.rindex(/\./).nil?
+      ext = self.path[path.rindex(/\./) + 1..-1]
+      EXT_MAP[ext]
+    else
+      "default"
+    end
   end
 
   def extension_css
