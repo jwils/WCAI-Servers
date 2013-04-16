@@ -13,7 +13,7 @@ class Server < ActiveRecord::Base
 
   def configure(schema_name)
     create_aws_instance
-    ssh("mysql -uroot -p#{Settings.mysql_root_password} -e \"" + "create SCHEMA #{schema_name}" + '"')
+    ssh("mysql -uroot -p#{Settings.mysql_root_password} -e \"" + "create SCHEMA #{schema_name};" + '"')
     stop
   end
 
