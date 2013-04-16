@@ -43,7 +43,7 @@ class ServersController < ApplicationController
   # POST /servers.json
   def create
     @server = Server.new(params[:server])
-    @server.create_aws_instance
+    @server.configure(params[:schema_name])
 
     respond_to do |format|
       if @server.save

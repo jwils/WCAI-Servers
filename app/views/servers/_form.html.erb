@@ -2,6 +2,12 @@
     <div class="control-group">
       <%= f.association :project, :label => "Project", :collection => Project.all %>
     </div>
+    <div class="control-group">
+      <label class="select optional control-label" for="server_project_id">Schema Name</label>
+      <div class="controls">
+        <%= text_field_tag 'schema_name' %>
+      </div>
+    </div>
     <div class="form-actions">
       <%= f.submit "Create Server", :class => 'btn btn-primary' %>
       <%= link_to t('.cancel', :default => t("helpers.links.cancel")),

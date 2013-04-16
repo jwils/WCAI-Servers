@@ -11,6 +11,12 @@ class Server < ActiveRecord::Base
     self.instance.start
   end
 
+  def configure(schema_name)
+    create_aws_instance
+    ssh("mysql -uroot -p#{Settings.mysql_root_password} -e \"" + "create SCHEMA #{schema_name}" + '"')
+    stop
+  end
+
   def stop
     self.instance.stop
   end
@@ -98,13 +104,6 @@ class Server < ActiveRecord::Base
     self.wait_for_ready
     sleep(10)
     self.ssh("sudo apt-get update && sudo apt-get upgrade -y")
-    #self.ssh("sudo debconf-set-selections <<< 'mysql-server-<version> mysql-server/root_password password" +
-    #             " #{Settings.mysql_root_password}'; sudo debconf-set-selections <<< 'mysql-server-<version>" +
-    #             " mysql-server/root_password_again password #{Settings.mysql_root_password}'; "+
-    #             "sudo apt-get -y install xfsprogs mysql-server")
-
-    #self.ssh("cd /etc/mysql/; sudo rm my.cnf; sudo wget http://wcai-web.wharton.upenn.edu/my.cnf")
-    self.stop
   end
 
   def open_connection(user, ip_address)
