@@ -3,12 +3,16 @@ class Project < ActiveRecord::Base
   belongs_to :user
   belongs_to :company
   has_one :server
-  attr_accessible :current_state, :description, :start_date, :user_id, :company_id, :folder_name
+  attr_accessible :current_state, :description, :start_date, :user_id, :folder_name, :company
   has_many :connections, :through => :server
   has_many :s3_files
 
   def name
     self.company.name
+  end
+
+  def company=(company)
+    super(Company.find_or_create_by_name(company))
   end
 
   def s3_files

@@ -38,7 +38,7 @@ class ConnectionsController < ApplicationController
   end
 
   def new
-    @server = Server.find(params[:server_id]).open_connection(current_user, request.remote_ip)
+    @connection = Server.find(params[:server_id]).open_connection(current_user, request.remote_ip)
 
     respond_to do |format|
       if @connection.save

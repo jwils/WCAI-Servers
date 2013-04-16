@@ -56,10 +56,7 @@ class ProjectsController < ApplicationController
   # POST /projects
   # POST /projects.json
   def create
-    company = Company.find_or_create_by_name(params[:project][:company])
-    params[:project].delete(:company)
     @project = Project.new(params[:project])
-    @project.company = company
 
     respond_to do |format|
       if @project.save
@@ -76,9 +73,7 @@ class ProjectsController < ApplicationController
   # PUT /projects/1.json
   def update
     @project = Project.find(params[:id])
-    @project.company = Company.find_or_create_by_name(params[:project][:company])
-    params[:project].delete(:company)
-    @project.save
+
     respond_to do |format|
       if @project.update_attributes(params[:project])
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }

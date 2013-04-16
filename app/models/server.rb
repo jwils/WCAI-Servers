@@ -92,7 +92,7 @@ class Server < ActiveRecord::Base
 
   def create_aws_instance
     self.instance = FOG_CONNECTION.servers.bootstrap(
-                    :image_id => "ami-1cf79175", #"ami-7539b41c",
+                    :image_id => "ami-c0ccaaa9", #"ami-7539b41c",
                     :flavor_id => "m1.large",
                     :private_key_path =>Settings.keypair_path + 'fog',
                     :public_key_path => Settings.keypair_path + 'fog.pub',

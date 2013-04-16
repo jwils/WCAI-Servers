@@ -32,6 +32,7 @@ class Connection < ActiveRecord::Base
 
 		self.server.ssh(sql_cmd(cmd))
 		self.connection_open = DateTime.now
+    self
   end
 
   def self.open_connection(user_id, server_id, ip_address)
