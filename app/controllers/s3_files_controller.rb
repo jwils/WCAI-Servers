@@ -26,7 +26,7 @@ class S3FilesController < ApplicationController
   def show
     @file = Project.find(params[:project_id]).find_encoded_s3_file(params[:file])
     unless @file.nil?
-      DownloadsTracker.track(current_user, @file)
+      DownloadsTracker.track(current_user, @file, params[:project_id])
       redirect_to @file.url
     else
       redirect_to root_path, :alert => "Unknown or unauthorized file."
