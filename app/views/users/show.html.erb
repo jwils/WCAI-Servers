@@ -10,9 +10,8 @@
   <dd><%= @user.institution %></dd>
 
   <dt><strong>Abilities:</strong></dt>
-  <%=  f.association :roles,   as: :check_boxes, label_method: :readable %>
-
 </dl>
+    <div class="roles"><%=  f.association :roles, as: :check_boxes, label: false %></div>
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
@@ -22,6 +21,6 @@
 </div>
 <% end %>
 
-  <% if current_user.is? :admin and current_user != @user %>
+  <% if can? :toggle_lock, @user %>
 FIX POS: Also does not refresh on click.	<%= render 'lock_unlock_form', :user => @user %>
   <% end %>
