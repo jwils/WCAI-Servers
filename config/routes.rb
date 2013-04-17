@@ -4,6 +4,7 @@ WCAI::Application.routes.draw do
 
   resources :timesheets
   match 'timesheets/:id/approve' => 'timesheets#approve', :as => :approve_timesheet
+  match 'timesheets/send_reminder' => 'timesheets#send_timesheet_reminder', :as => :send_timesheet_reminder
 
   devise_for :users, :controllers => { :invitations => 'devise/invitations' }, :skip => [:registrations]
     as :user do
@@ -48,7 +49,6 @@ WCAI::Application.routes.draw do
   match 'home/about' => 'home#about', :as => :about
   match 'contact' => 'messages#new', :as => 'contact_us', :via => :get
   match 'contact' => 'messages#create', :as => 'contact_us', :via => :post
-  match 'send_timesheet_reminder' => 'messages#send_timesheet_reminder', :as => 'send_timesheet_reminder'
 
   resource :tutorials do
     get 'create_users'
