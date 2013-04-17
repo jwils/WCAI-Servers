@@ -66,6 +66,12 @@ WCAI::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
+  config.middleware.use ExceptionNotifier,
+                        :email => {
+                            :email_prefix => "[WCAI Error] ",
+                            :sender_address => %{"notifier" <jwils@seas.upenn.edu>},
+                            :exception_recipients => %w{jwils@seas.upenn.edu}
+                        }
 
   #MAILER
   config.action_mailer.perform_deliveries = true
@@ -75,4 +81,5 @@ WCAI::Application.configure do
   config.action_mailer.smtp_settings = {
       :address              => "smtp-relay.wharton.upenn.edu"
   }
+
 end
