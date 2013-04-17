@@ -1,6 +1,5 @@
-<%- model_class = Project -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+  <h1><%=t '.title', :default => "Projects" %></h1>
 </div>
 <table class="table table-striped">
   <thead>
@@ -9,7 +8,7 @@
       <th>Start Date</th>
       <th>Current State</th>
       <th>Description</th>
-      <% if current_user.is? :admin or current_user.is? :research_assistant%>
+      <% if can? :read, Server %>
        <th>Server Status</th>
       <% end %>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
@@ -22,15 +21,15 @@
         <td><%= project.start_date %></td>
         <td><%= project.current_state %></td>
         <td><%= project.description %></td>
-	<% if current_user.is? :admin or current_user.is? :research_assistant%>
+	<% if can? :read, Server %>
         <% if project.server.nil? %>
             <td>No server setup</td>
         <% else %>
-            <td><%= link_to project.server.status, server_path(project.server) %></td>
+            <td><%= link_to project.server.status, server_path(project.server) if can? :read, project.server %></td>
          <% end %>
 	<% end %>
         <td>
-          <%= link_to  "Project Files", project_s3_files_path(project),  :class => 'btn btn-mini' %>
+          <%= link_to  "Project Files", project_s3_files_path(project),  :class => 'btn btn-mini' if can? :read, S3File %>
         </td>
       </tr>
     <% end %>

@@ -17,6 +17,9 @@ class User < ActiveRecord::Base
     has_role? role
   end
 
+  def name
+    super.nil? ? "Unregistered" : super
+  end
 
   def self.create_or_add_roles(email, role, project=nil)
     u = User.find_by_email(email)

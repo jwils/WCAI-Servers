@@ -1,21 +1,25 @@
 <h1>Listing servers</h1>
 
-<table>
-  <tr>
-    <th>Status</th>
-    <th>Company</th>
-    <th></th>
-  </tr>
+<table class="table table-striped">
+  <thead>
+      <tr>
+        <th>Status</th>
+        <th>Company</th>
+        <th></th>
+      </tr>
+  </thead>
 
-<% @servers.each do |server| %>
-  <tr>
-    <td><%= server.status %></td>
-    <td><%= server.project.company.name %></td>
-    <td><%= link_to 'Show', server %></td>
-  </tr>
-<% end %>
+  <tbody>
+    <% @servers.each do |server| %>
+      <tr>
+        <td><%= server.status %></td>
+        <td><%= server.project.company.name %></td>
+        <td><%= link_to 'Show', server %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
 
 <br />
 
-<%= link_to 'New Server', new_server_path %>
+<%= link_to 'New Server', new_server_path if can? :create, Server %>

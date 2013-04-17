@@ -50,7 +50,6 @@ class UsersController < ApplicationController
   end
 
   def toggle_lock
-    @user = User.find(params[:id])
     if @user.access_locked?
       @response = "unlocked"
       @user.unlock_access!

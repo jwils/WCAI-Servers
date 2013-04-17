@@ -6,12 +6,15 @@ class Ability
 
       if user.has_role? :admin
         can :manage, :all
+        cannot :approve, Timesheet, :user_id => user.id
+        cannot :toggle_lock, user
       elsif user.has_role? :research_assistant
-        can :manage, Timesheet, :id => user.timesheets.map{ |timesheet| timesheet.id}
+        can :manage, Timesheet, :user_id => user.id
         cannot :approve, Timesheet
-        can :create, Timesheet
-        can :manage, Connection
-        can :create, Connection
+        cannot :edit, Timesheet, :submitted => true
+        #can :create, Timesheet
+        can :manage, Connection, :user_id => user.id
+        #can :create, Connection
         can :manage, Server
         can :manage, Project
         can :manage, S3File

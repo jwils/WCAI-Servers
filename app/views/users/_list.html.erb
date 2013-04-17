@@ -4,7 +4,7 @@
       <th>Name</th>
       <th>Email</th>
       <th>Institution</th>
-      <% if current_user.is? :admin %>
+      <% if can? :toggle_lock, User %>
         <th>Toggle Lock</th>
       <% end %>
     </tr>
@@ -12,19 +12,13 @@
  <tbody>
   <% @users.each do |user| %>
     <tr>
-      <td><%= if current_user.is? :admin then
-                                 link_to((user.name ? user.name : "Unregistered"), user)
-                               else
-                                 user.name ? user.name : "Unregistered"
-                               end %></td>
+      <td><%= can?(:read, User) ? link_to(user.name, user) : user.name %></td>
       <td><%= user.email %></td>
       <td><%= user.institution %></td>
-      <% if current_user.is? :admin %>
-          <% if current_user == user %>
-              <td>Can't Lock yourself.</td>
-           <%else%>
-                <td id="lock_<%=user.id%>"><%= render 'users/lock_unlock_form', :user => user %></td>
-           <%end%>
+      <% if can? :toggle_lock, user %>
+          <td id="lock_<%=user.id%>"><%= render 'users/lock_unlock_form', :user => user %></td>
+      <% elsif can? :toggle_lock, User %>
+        <td></td>
       <% end %>
     </tr>
    <% end %>
