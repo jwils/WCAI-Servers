@@ -136,7 +136,7 @@ class TimesheetsController < ApplicationController
 
   def send_timesheet_reminder
     if current_user.is? :admin
-      UserMailer.timesheet_reminder(current_user).deliver
+      TimesheetMailer.timesheet_reminder(current_user).deliver
       redirect_to root_url, notice: "Reminder Sent"
     else
       redirect_to root_url, notice: "Unauthorized"

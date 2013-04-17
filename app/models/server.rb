@@ -114,7 +114,7 @@ class Server < ActiveRecord::Base
       end
       open_connections.each do |connection|
         if connection.connection_open + 3.hours < DateTime.now
-          UserMailer.instance_uptime_report(User.with_role(:admin), server).deliver
+          InstanceReportMailer.uptime_report(User.with_role(:admin), server).deliver
         end
       end
     end
