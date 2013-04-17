@@ -42,7 +42,7 @@
   </tbody>
 </table>
 
-<% if can :approve, Timesheet %>
+<% if can? :approve, Timesheet %>
     <%= link_to "Print New Timesheets", timesheets_path(:type => "Not Printed", :format => 'pdf'), :class => 'btn btn-info' %>
     <%= link_to "Print All Timesheets", timesheets_path(:type => "All", :format => 'pdf'), :class => 'btn btn-info' %>
     <%= link_to "Send Email Reminder", send_timesheet_reminder_path, :class => 'btn btn-info' %>

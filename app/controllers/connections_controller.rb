@@ -4,8 +4,6 @@ class ConnectionsController < ApplicationController
   # GET /connections
   # GET /connections.json
   def index
-    @connections = @connections.only_open
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @connections }

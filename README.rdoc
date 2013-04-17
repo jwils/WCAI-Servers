@@ -16,11 +16,11 @@ ROLES
 
 1. *Admin*: Admins are granted all permisisons
 
-2. *Research Assistant*:
+2. <b>Research Assistant</b>:
 
 3. *Researcher*:
 
-4. *PhD Student*:
+4. <b>PhD Student</b>:
 
 
 == Design Choices
