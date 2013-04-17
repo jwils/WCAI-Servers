@@ -79,10 +79,6 @@ class Server < ActiveRecord::Base
     system(cmd)
   end
 
-  def download_encoded_file(encoded_file_path)
-    download_file(Ec2File.decode(encoded_file_path))
-  end
-
   def get_files(directory)
     file = Ec2File.new
     file.path = directory
