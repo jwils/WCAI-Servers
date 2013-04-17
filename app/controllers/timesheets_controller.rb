@@ -87,7 +87,7 @@ class TimesheetsController < ApplicationController
   # POST /timesheets
   # POST /timesheets.json
   def create
-    @timesheet = Timesheet.new(params[:timesheet])
+    #@timesheet = Timesheet.new(params[:timesheet])
     @timesheet.submitted = params[:draft].nil?
     @timesheet.user ||= current_user
 
