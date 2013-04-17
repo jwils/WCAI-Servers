@@ -1,15 +1,10 @@
 class ConnectionsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :server
+  load_and_authorize_resource :connection, :through => :server
   # GET /connections
   # GET /connections.json
   def index
-    if params[:server_id]
-      @connections = Server.find(params[:server_id]).connections.only_open
-    elsif params[:user_id]
-      @connections = User.find(params[:user_id]).connections.only_open
-    else
-      @connections = Connection.only_open
-    end
+    @connections = @connections.only_open
 
     respond_to do |format|
       format.html # index.html.erb
@@ -20,8 +15,6 @@ class ConnectionsController < ApplicationController
   # GET /connections/1
   # GET /connections/1.json
   def show
-    @connection = Connection.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @connection }
@@ -29,7 +22,6 @@ class ConnectionsController < ApplicationController
   end
 
   def destroy
-    @connection = Connection.find(params[:id])
     @connection.close_connection
     respond_to do |format|
       format.html { redirect_to server_connections_url(@connection.server), notice: 'Connection was successfully closed.' }

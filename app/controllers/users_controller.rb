@@ -64,7 +64,7 @@ class UsersController < ApplicationController
   protected
 
   def prepare_roles
-    @roles = [["admin", 1], ["research_assistant", 2], ["researcher", 3]]
+    @roles = User.get_all_roles
   end
 
   def check_admin

@@ -51,6 +51,26 @@ class Connection < ActiveRecord::Base
     end
   end
 
+  def connection_open_str
+    time = connection_open
+    if time == Date.today
+      time.to_s(:time)
+    else
+       time
+    end
+  end
+
+  def connection_closed_str
+    time = connection_closed
+    if time.nil?
+      "Connection is Open"
+    elsif time == Date.today
+      time.to_s(:time)
+    else
+      time
+    end
+  end
+
   private
   def sql_cmd(cmd)
   	"mysql -uroot -p#{Settings.mysql_root_password} -e \"" + cmd + '"'

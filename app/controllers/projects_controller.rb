@@ -12,12 +12,7 @@ class ProjectsController < ApplicationController
   end
 
   def index
-    if current_user.has_role? :admin or current_user.has_role? :research_assistant
-      @projects = Project.all
-    else
-      @projects = Project.with_roles(:researcher, current_user)
-    end
-
+    # @products automatically set to by cancan
 
     respond_to do |format|
       format.html # index.html.erb
@@ -28,7 +23,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
-    @project = Project.find(params[:id])
+    #@project = Project.find(params[:id]) set by cancan
     @users = User.with_role(:researcher, @project)
 
     respond_to do |format|
@@ -90,7 +85,7 @@ class ProjectsController < ApplicationController
   def destroy
     @project = Project.find(params[:id])
     if @project.server
-      @project.server.destroy
+      #@project.server.destroy
     end
 
     @project.destroy

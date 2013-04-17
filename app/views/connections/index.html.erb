@@ -5,26 +5,24 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th><%= model_class.human_attribute_name(:id) %></th>
-      <th><%= model_class.human_attribute_name(:sql_user) %></th>
-      <th><%= model_class.human_attribute_name(:sql_password) %></th>
-      <th><%= model_class.human_attribute_name(:user_id) %></th>
-      <th><%= model_class.human_attribute_name(:server_id) %></th>
-      <th><%= model_class.human_attribute_name(:connection_open) %></th>
-      <th><%= model_class.human_attribute_name(:connection_closed) %></th>
+      <th>Username</th>
+      <th>Password</th>
+      <th>For</th>
+      <th>On server</th>
+      <th>Opened On</th>
+      <th>Closed On</th>
       <th><%=t '.actions', :default => t("helpers.actions") %></th>
     </tr>
   </thead>
   <tbody>
     <% @connections.each do |connection| %>
       <tr>
-        <td><%= link_to connection.id, server_connection_path(connection.server,connection) %></td>
-        <td><%= connection.sql_user %></td>
+        <td><%= link_to connection.username, server_connection_path(connection.server,connection)  %></td>
         <td><%= connection.sql_password %></td>
         <td><%= connection.user.name %></td>
-        <td><%= connection.server_id %></td>
-        <td><%= connection.connection_open %></td>
-        <td><%= connection.connection_closed %></td>
+        <td><%= link_to connection.server_id, server_path(connection.server_id)%></td>
+        <td><%= connection.connection_open_str %></td>
+        <td><%= connection.connection_closed_str %></td>
         <td>
           <%= link_to 'Close Connection',
                       server_connection_path(connection.server, connection),

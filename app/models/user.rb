@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  ROLES = %w[admin research_assistant researcher phd_student]
+
   rolify
 
   devise :invitable, :database_authenticatable, :lockable, #:registerable,
@@ -28,10 +30,14 @@ class User < ActiveRecord::Base
       end
     end
 
-    if role == "researcher" or role == :researcher
-      u.add_role(:researcher, project)
+    if role.to_s == "researcher" or role.to_s == "phd_student"
+      u.add_role(role, project)
     else
       u.add_role(role)
     end
+  end
+
+  def self.get_all_roles
+    [["admin", 1], ["research_assistant", 2], ["researcher", 3], ["phd_student", 4]]
   end
 end
