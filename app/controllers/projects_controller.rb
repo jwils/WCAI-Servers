@@ -2,14 +2,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   load_and_authorize_resource
-  before_filter :check_logged_in
 
-  def check_logged_in
-    if current_user.nil?
-      flash[:notice] = "Please login first"
-      redirect_to root_path
-    end
-  end
 
   def index
     # @products automatically set to by cancan
@@ -45,7 +38,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
-    @project = Project.find(params[:id])
+    #@project = Project.find(params[:id])
   end
 
   # POST /projects
@@ -67,8 +60,6 @@ class ProjectsController < ApplicationController
   # PUT /projects/1
   # PUT /projects/1.json
   def update
-    @project = Project.find(params[:id])
-
     respond_to do |format|
       if @project.update_attributes(params[:project])
         format.html { redirect_to @project, notice: 'Project was successfully updated.' }
@@ -83,7 +74,6 @@ class ProjectsController < ApplicationController
   # DELETE /projects/1
   # DELETE /projects/1.json
   def destroy
-    @project = Project.find(params[:id])
     if @project.server
       #@project.server.destroy
     end

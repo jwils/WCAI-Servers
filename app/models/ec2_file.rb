@@ -19,3 +19,15 @@ class Ec2File < WCAIFile
     true
   end
 end
+
+
+class Ec2Proc
+  def initialize(file, server)
+    @file = file
+    @server = server
+  end
+
+  def each
+    @server.download_file(@file)
+  end
+end

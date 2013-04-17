@@ -21,29 +21,8 @@ class Connection < ActiveRecord::Base
     self.sql_user.split("'")[1]
   end
 
-  def open_connection(ip_address)
-    self.server.start
-    self.server.wait_for_ready
-
-    generate_user_password(ip_address)
-
-    privileges = "ALL PRIVILEGES" #options (CREATE DROP DELETE INSERT SELECT UPDATE)
-    cmd = "GRANT #{privileges} ON *.* TO #{self.sql_user}  IDENTIFIED BY '#{self.sql_password}';"
-
-    self.server.ssh(sql_cmd(cmd))
-    self.connection_open = DateTime.now
-    self
-  end
-
-  def self.open_connection(user_id, server_id, ip_address)
-    connection = Connection.new
-    connection.user_id = user_id
-    connection.server_id = server_id
-    connection.open_connection(ip_address)
-  end
-
   def close_connection
-    self.server.ssh(sql_cmd("DROP USER #{self.sql_user};")) #add save full user object
+    self.server.exec_sql("DROP USER #{self.sql_user};") #add save full user object
     self.connection_closed = DateTime.now
     self.save
     if self.server.open_connections.length == 0
@@ -69,10 +48,5 @@ class Connection < ActiveRecord::Base
     else
       time
     end
-  end
-
-  private
-  def sql_cmd(cmd)
-    "mysql -uroot -p#{Settings.mysql_root_password} -e \"" + cmd + '"'
   end
 end

@@ -1,14 +1,13 @@
 class UsersController < ApplicationController
   load_and_authorize_resource
   before_filter :prepare_roles
-  before_filter :check_admin
 
   def new
     raise CanCan::AccessDenied
   end
 
   def index
-    @users = User.all
+    #@users = User.all
     respond_to do |format|
       format.html
     end
@@ -46,7 +45,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    #@user = User.find(params[:id])
   end
 
   def toggle_lock
@@ -64,11 +63,5 @@ class UsersController < ApplicationController
 
   def prepare_roles
     @roles = User.get_all_roles
-  end
-
-  def check_admin
-    unless current_user and current_user.is? :admin
-      raise CanCan::AccessDenied
-    end
   end
 end

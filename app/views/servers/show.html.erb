@@ -31,6 +31,6 @@
                       :data => {:confirm => 'Are you sure? Please remember the recommended way to shut down the computer is by closing the connection'} %>
       <% end %>
       <%= link_to 'View Open Connections', server_connections_path(@server), :class => 'btn btn-mini btn-info' if can? :read, Connection %>
-      <%= link_to 'View Local Files', project_ec2_files_path(@server.project), :class => 'btn btn-mini btn-primary' if can? :read, Ec2File %>
+      <%= link_to 'View Local Files', server_ec2_files_path(@server.project), :class => 'btn btn-mini btn-primary' if can? :read, Ec2File %>
   <% end %>
 </div>

@@ -13,11 +13,12 @@ class Server < ActiveRecord::Base
 
   def configure(schema_name)
     create_aws_instance
-    ssh("mysql -uroot -p#{Settings.mysql_root_password} -e \"" + "create SCHEMA #{schema_name};" + '"')
+    exec_sql("create SCHEMA #{schema_name};")
     stop
   end
 
   def stop
+    self.ssh("sudo rm -rf /var/files/*")
     self.instance.stop
   end
 
@@ -53,14 +54,11 @@ class Server < ActiveRecord::Base
     self.instance.public_ip_address
   end
 
-  def connection_info
-    "ip address: " + self.instance.public_ip_address + " port: " + "12345" +
-        "db username: db password"
-  end
-
   def ssh(commands)
-    get_instance_object
-    logger.info "Executing command on server: " + commands
+    start
+    wait_for_ready
+
+    logger.info "Executing command on server: "
     retry_count = 0
     begin
       logger.info self.instance.ssh(commands)[0].stdout
@@ -75,15 +73,19 @@ class Server < ActiveRecord::Base
   end
 
   def download_file(file_path)
-    cmd = "scp -oStrictHostKeyChecking=no -i#{Settings.keypair_path}fog ubuntu@#{instance.public_ip_address}:#{file_path} #{Rails.root.join("public", "ec2_files")}"
-    system(cmd)
+     cmd = "scp -oStrictHostKeyChecking=no -i#{Settings.keypair_path}fog ubuntu@#{instance.public_ip_address}:#{file_path} #{Rails.root.join("public", "ec2_files")}"
+     system(cmd)
   end
 
-  def get_files(directory)
+  def get_directory(directory)
     file = Ec2File.new
     file.path = directory
     file.children = list_files_in_directory(directory)
     file
+  end
+
+  def get_local_files
+    get_directory('/var/files/') if ready?
   end
 
   def create_aws_instance
@@ -97,13 +99,15 @@ class Server < ActiveRecord::Base
     self.instance_id = self.instance.id
     self.save
 
-    self.wait_for_ready
-    sleep(10)
     self.ssh("sudo apt-get update && sudo apt-get upgrade -y")
   end
 
   def open_connection(user, ip_address)
-    Connection.open_connection(user.id, id, ip_address)
+    connection = Connection.new
+    connection.user_id = user.id
+    connection.server_id = id
+    connection.save
+    create_sql_user(connection, ip_address)
   end
 
   def check_uptime
@@ -118,6 +122,10 @@ class Server < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def exec_sql(cmd)
+    ssh("mysql -uroot -p#{Settings.mysql_root_password} -e \"#{cmd}\"")
   end
 
   private
@@ -148,6 +156,24 @@ class Server < ActiveRecord::Base
       end
       file
     end
+  end
+
+  #
+  # This function is not currently used, but it might be useful to create users through
+  # a remote mysql connection instead of sshing onto the database.
+  #
+  def create_mysql_connection
+    client = Mysql2::Client.new(:host => ip_address, :username => "root", :password => Settings.mysql_root_password)
+    client.query("")
+  end
+
+  def create_sql_user(connection, ip_address)
+    connection.generate_user_password(ip_address)
+    privileges = "ALL PRIVILEGES" #options (CREATE DROP DELETE INSERT SELECT UPDATE)
+    cmd = "GRANT #{privileges} ON *.* TO #{connection.sql_user}  IDENTIFIED BY '#{connection.sql_password}';"
+    exec_sql(cmd)
+    connection.connection_open = DateTime.now
+    connection
   end
 end
 

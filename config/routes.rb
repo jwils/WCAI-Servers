@@ -29,6 +29,8 @@ WCAI::Application.routes.draw do
 
   resources :servers do
     resources :connections
+    resources :ec2_files, :only => :index
+    match '/ec2_files/:file' => 'ec2_files#show', :file => /.+/, :as => 'ec2_file'
 
     member do
       get 'start', :as => :start
@@ -41,8 +43,6 @@ WCAI::Application.routes.draw do
   resources :projects do
     resources :s3_files, :except => :show
     match '/s3_files/:file' => 's3_files#show', :file => /.+/, :as => 's3_file'
-    resources :ec2_files, :only => :index
-    match '/ec2_files/:file' => 'ec2_files#show', :file => /.+/, :as => 'ec2_file'
   end
 
   match 'home/index' => 'home#index', :as => :home_page
