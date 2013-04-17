@@ -8,6 +8,7 @@ class Ability
         can :manage, :all
       elsif user.has_role? :research_assistant
         can :manage, Timesheet, :id => user.timesheets.map{ |timesheet| timesheet.id}
+        cannot :approve, Timesheet
         can :create, Timesheet
         can :manage, Connection
         can :create, Connection
