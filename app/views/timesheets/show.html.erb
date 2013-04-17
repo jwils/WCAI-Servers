@@ -40,7 +40,7 @@
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
               timesheets_path, :class => 'btn'  %>
-  <% unless @timesheet.submitted and not current_user.is? :admin %>
+  <% if can? :edit, @timesheet %>
   <%= link_to t('.edit', :default => t("helpers.links.edit")),
               edit_timesheet_path(@timesheet), :class => 'btn' %>
   <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
