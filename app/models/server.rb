@@ -44,6 +44,10 @@ class Server < ActiveRecord::Base
     end
   end
 
+  def to_param
+    "#{id} #{project.name}".parameterize
+  end
+
   alias :status :state
 
   def open_connections

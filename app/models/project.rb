@@ -8,7 +8,11 @@ class Project < ActiveRecord::Base
   has_many :s3_files
 
   def name
-    self.company.name
+    self.company.name unless company.nil?
+  end
+
+  def to_param
+    "#{id} #{company.name}".parameterize
   end
 
   def company=(company)

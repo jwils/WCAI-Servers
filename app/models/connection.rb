@@ -1,11 +1,10 @@
 class Connection < ActiveRecord::Base
   belongs_to :user
   belongs_to :server
+  default_scope { where(:connection_closed => nil) }
 
   attr_accessible :user_id, :server_id
   attr_protected :sql_password, :sql_user, :connection_closed, :connection_open
-
-  scope :only_open, where(:connection_closed => nil)
 
   def generate_user_password(ip_address)
     self.sql_user = "'#{Digest::SHA1.hexdigest("--#{Time.now.to_s.split(//).sort_by { rand }.join}").split("").shuffle.join[0, 6]}'@'#{ip_address}'"

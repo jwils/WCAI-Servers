@@ -53,4 +53,8 @@ class Timesheet < ActiveRecord::Base
       entry.mark_for_destruction if entry.hours_spent <= 0
     end
   end
+
+  def to_param
+    "#{id} #{user.name} #{start_date}".parameterize
+  end
 end
