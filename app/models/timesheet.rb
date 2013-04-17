@@ -36,7 +36,7 @@ class Timesheet < ActiveRecord::Base
   end
 
   def self.last_printed_date
-    minimum(:last_printed)
+    maximum(:last_printed)
   end
 
   def check_for_time
