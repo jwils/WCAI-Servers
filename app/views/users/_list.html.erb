@@ -1,26 +1,26 @@
 <table class="table table-striped">
   <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Institution</th>
-      <% if can? :toggle_lock, User %>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>Institution</th>
+    <% if can? :toggle_lock, User %>
         <th>Toggle Lock</th>
-      <% end %>
-    </tr>
+    <% end %>
+  </tr>
   </thead>
- <tbody>
+  <tbody>
   <% @users.each do |user| %>
-    <tr>
-      <td><%= can?(:read, User) ? link_to(user.name, user) : user.name %></td>
-      <td><%= user.email %></td>
-      <td><%= user.institution %></td>
-      <% if can? :toggle_lock, user %>
-          <td id="lock_<%=user.id%>"><%= render 'users/lock_unlock_form', :user => user %></td>
-      <% elsif can? :toggle_lock, User %>
-        <td></td>
-      <% end %>
-    </tr>
-   <% end %>
-</tbody>
+      <tr>
+        <td><%= can?(:read, User) ? link_to(user.name, user) : user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.institution %></td>
+        <% if can? :toggle_lock, user %>
+            <td id="lock_<%= user.id %>"><%= render 'users/lock_unlock_form', :user => user %></td>
+        <% elsif can? :toggle_lock, User %>
+            <td></td>
+        <% end %>
+      </tr>
+  <% end %>
+  </tbody>
 </table>

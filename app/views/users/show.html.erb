@@ -2,25 +2,25 @@
 <div class="page-header">
   <h1><%= @user.name %></h1>
 </div>
-<%= simple_form_for @user  do |f| %>
-<dl class="dl-horizontal">
-  <dt><strong>Email:</strong></dt>
-  <dd><%= @user.email %></dd>
-  <dt><strong>Institution:</strong></dt>
-  <dd><%= @user.institution %></dd>
+<%= simple_form_for @user do |f| %>
+    <dl class="dl-horizontal">
+      <dt><strong>Email:</strong></dt>
+      <dd><%= @user.email %></dd>
+      <dt><strong>Institution:</strong></dt>
+      <dd><%= @user.institution %></dd>
 
-  <dt><strong>Abilities:</strong></dt>
-</dl>
-    <div class="roles"><%=  f.association :roles, as: :check_boxes, label: false %></div>
+      <dt><strong>Abilities:</strong></dt>
+    </dl>
+    <div class="roles"><%= f.association :roles, as: :check_boxes, label: false %></div>
 
-<div class="form-actions">
-  <%= link_to t('.back', :default => t("helpers.links.back")),
-              users_path, :class => 'btn'  %>
-  <%= f.submit "Update Abilities", :class => 'btn btn-primary' %>
+    <div class="form-actions">
+      <%= link_to t('.back', :default => t("helpers.links.back")),
+                  users_path, :class => 'btn' %>
+      <%= f.submit "Update Abilities", :class => 'btn btn-primary' %>
 
-</div>
+    </div>
 <% end %>
 
-  <% if can? :toggle_lock, @user %>
-FIX POS: Also does not refresh on click.	<%= render 'lock_unlock_form', :user => @user %>
-  <% end %>
+<% if can? :toggle_lock, @user %>
+    FIX POS: Also does not refresh on click.    <%= render 'lock_unlock_form', :user => @user %>
+<% end %>

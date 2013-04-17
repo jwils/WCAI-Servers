@@ -1,9 +1,10 @@
-<%= simple_form_for @server, :html => { :class => 'form-horizontal' } do |f| %>
+<%= simple_form_for @server, :html => {:class => 'form-horizontal'} do |f| %>
     <div class="control-group">
       <%= f.association :project, :label => "Project", :collection => Project.all %>
     </div>
     <div class="control-group">
       <label class="select optional control-label" for="server_project_id">Schema Name</label>
+
       <div class="controls">
         <%= text_field_tag 'schema_name' %>
       </div>

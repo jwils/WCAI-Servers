@@ -1,6 +1,6 @@
 <html>
 <head>
-  <%= wicked_pdf_stylesheet_link_tag  "application" %>
+  <%= wicked_pdf_stylesheet_link_tag "application" %>
   <%= wicked_pdf_javascript_include_tag "application" %>
   <style>
       h4 {
@@ -12,7 +12,13 @@
           background-color: #4777ff;
           text-align: center;
       }
-      .page-break { display:block; clear:both; page-break-after:always; }
+
+      .page-break {
+          display: block;
+          clear: both;
+          page-break-after: always;
+      }
+
       h2 {
           text-align: center;
       }

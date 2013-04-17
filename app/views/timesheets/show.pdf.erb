@@ -1,9 +1,11 @@
 <h4>University of Pennsylvania</h4>
-<h6>Time Report Form<br />To Be Used by Temporary Hourly Employees</h6>
+<h6>Time Report Form<br/>To Be Used by Temporary Hourly Employees</h6>
 
 <dl class="dl-horizontal">
   <p>Timesheet for <%= @timesheet.user.name %></p>
+
   <p>Week ending <%= (@timesheet.start_date + 6.days).strftime('%m/%d/%Y') %></p>
+
   <p> <%= @timesheet.approver.nil? ? 'Not approved' : "Approved by #{@timesheet.approver.name}" %></p>
 </dl>
 <table class="table table-striped table-bordered">
@@ -19,8 +21,8 @@
   <% current = 0 %>
   <% @timesheet.time_entries.each do |time_entry| %>
       <% (time_entry.day - current).times do %>
-        <%= "<tr><td>#{(@timesheet.start_date + current.days).strftime('%m/%d/%Y')}</td><td>0</td><td></td><td></td></tr>".html_safe %>
-        <% current += 1 %>
+          <%= "<tr><td>#{(@timesheet.start_date + current.days).strftime('%m/%d/%Y')}</td><td>0</td><td></td><td></td></tr>".html_safe %>
+          <% current += 1 %>
       <% end %>
       <tr>
         <td><%= (@timesheet.start_date + time_entry.day.days).strftime('%m/%d/%Y') %></td>
@@ -34,6 +36,9 @@
       <%= "<tr><td>#{(@timesheet.start_date + current.days).strftime('%m/%d/%Y')}</td><td>0</td><td></td><td></td></tr>".html_safe %>
       <% current += 1 %>
   <% end %>
-  <tr class="success"><th>Total hours:</th><td><strong><%= @timesheet.hours %></strong></td></tr>
+  <tr class="success">
+    <th>Total hours:</th>
+    <td><strong><%= @timesheet.hours %></strong></td>
+  </tr>
   </tbody>
 </table>

@@ -1,12 +1,12 @@
-<br />
-<br />
-<br />
+<br/>
+<br/>
+<br/>
 <h2>University of Pennsylvania</h2>
 <h4>Timesheets printed on <%= Time.now.to_s %></h4>
 
 <% @timesheets.each do |timesheet| %>
     <%- @timesheet = timesheet %>
-    <div class="page-break"> </div>
-    <%= render :file => 'timesheets/show'%>
+    <div class="page-break"></div>
+    <%= render :file => 'timesheets/show' %>
 
 <% end %>

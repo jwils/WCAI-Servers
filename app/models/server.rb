@@ -3,7 +3,7 @@ class Server < ActiveRecord::Base
   attr_accessor :instance
   belongs_to :project
   has_many :connections
-  
+
   after_find :get_instance_object
   before_destroy :delete_instance
 
@@ -22,12 +22,12 @@ class Server < ActiveRecord::Base
   end
 
   def ready?
-   self.instance.ready? 
+    self.instance.ready?
   end
 
   def wait_for_ready
     self.instance.wait_for { ready? }
-    self.instance.wait_for { !public_ip_address.nil?}
+    self.instance.wait_for { !public_ip_address.nil? }
     sleep(5)
   end
 
@@ -55,7 +55,7 @@ class Server < ActiveRecord::Base
 
   def connection_info
     "ip address: " + self.instance.public_ip_address + " port: " + "12345" +
-    "db username: db password"
+        "db username: db password"
   end
 
   def ssh(commands)
@@ -75,7 +75,7 @@ class Server < ActiveRecord::Base
   end
 
   def download_file(file_path)
-    cmd = "scp -oStrictHostKeyChecking=no -i#{Settings.keypair_path}fog ubuntu@#{instance.public_ip_address}:#{file_path} #{Rails.root.join("public","ec2_files")}"
+    cmd = "scp -oStrictHostKeyChecking=no -i#{Settings.keypair_path}fog ubuntu@#{instance.public_ip_address}:#{file_path} #{Rails.root.join("public", "ec2_files")}"
     system(cmd)
   end
 
@@ -88,11 +88,11 @@ class Server < ActiveRecord::Base
 
   def create_aws_instance
     self.instance = FOG_CONNECTION.servers.bootstrap(
-                    :image_id => "ami-c0ccaaa9", #"ami-7539b41c",
-                    :flavor_id => "m1.large",
-                    :private_key_path =>Settings.keypair_path + 'fog',
-                    :public_key_path => Settings.keypair_path + 'fog.pub',
-                    :username => 'ubuntu')
+        :image_id => "ami-c0ccaaa9", #"ami-7539b41c",
+        :flavor_id => "m1.large",
+        :private_key_path => Settings.keypair_path + 'fog',
+        :public_key_path => Settings.keypair_path + 'fog.pub',
+        :username => 'ubuntu')
 
     self.instance_id = self.instance.id
     self.save
@@ -109,7 +109,7 @@ class Server < ActiveRecord::Base
   def check_uptime
     unless stopped?
       if open_connections.length == 0
-        UserMailer.send_email_to_list(nil, User.with_role(:admin),"Server on without any connections",
+        UserMailer.send_email_to_list(nil, User.with_role(:admin), "Server on without any connections",
                                       "There appears to be a server turned on without any open connections. Please shut it down manually.").deliver
       end
       open_connections.each do |connection|
@@ -130,7 +130,7 @@ class Server < ActiveRecord::Base
 
   def get_instance_object
     self.instance = FOG_CONNECTION.servers.get(self.instance_id)
-    
+
     unless self.instance.nil?
       self.instance.private_key_path = Settings.keypair_path + 'fog'
       self.instance.public_key_path = Settings.keypair_path + 'fog.pub'

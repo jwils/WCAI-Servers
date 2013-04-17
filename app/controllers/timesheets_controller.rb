@@ -7,7 +7,7 @@ class TimesheetsController < ApplicationController
     if params[:format] == 'pdf'
       if params[:type] == "Not Printed"
         @timesheets = Timesheet.not_printed
-        @timesheets.each {|timesheet| timesheet.printing }
+        @timesheets.each { |timesheet| timesheet.printing }
       else
         @timesheets = Timesheet.approved
       end
@@ -20,7 +20,7 @@ class TimesheetsController < ApplicationController
     respond_to do |format|
       format.html # index.html.erb
       format.pdf do
-        render :pdf => "index.pdf.erb", :header => { :right => '[page] of [topage]' },
+        render :pdf => "index.pdf.erb", :header => {:right => '[page] of [topage]'},
                :layout => 'pdf', :orientation => 'Landscape'
       end
       format.json { render json: @timesheets }
@@ -33,7 +33,7 @@ class TimesheetsController < ApplicationController
     respond_to do |format|
       format.html # show.html.erb
       format.pdf do
-        render :pdf => "show.pdf.erb", :header => { :right => '[page] of [topage]' },
+        render :pdf => "show.pdf.erb", :header => {:right => '[page] of [topage]'},
                :layout => 'pdf', :orientation => 'Landscape'
       end
       format.json { render json: @timesheet }
@@ -51,7 +51,7 @@ class TimesheetsController < ApplicationController
       @user_change_disabled = true
     end
 
-    7.times {@timesheet.time_entries.build}
+    7.times { @timesheet.time_entries.build }
     @time_entries = @timesheet.time_entries
 
 
@@ -68,7 +68,7 @@ class TimesheetsController < ApplicationController
   # GET /timesheets/1/edit
   def edit
     @time_entries = @timesheet.time_entries.order(:day)
-    @user_change_disabled = true  #### based of if current user is a ra or admin.
+    @user_change_disabled = true #### based of if current user is a ra or admin.
     output = []
     k = 0
     (0..6).each do |i|
@@ -76,9 +76,9 @@ class TimesheetsController < ApplicationController
         output << @time_entries[k]
         k += 1
       else
-         b = @time_entries.build
-         b.day = i
-         output << b
+        b = @time_entries.build
+        b.day = i
+        output << b
       end
     end
     @time_entries = output

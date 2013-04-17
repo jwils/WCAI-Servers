@@ -22,7 +22,7 @@ class Message
     if project.nil?
       UserMailer.send_email_to_list(from_user,
                                     User.with_role(:admin),
-                                    "WCAI contact form for site design" ,
+                                    "WCAI contact form for site design",
                                     content).deliver
     else
       UserMailer.send_email_to_list(from_user,

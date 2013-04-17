@@ -1,4 +1,4 @@
-<%= simple_form_for :invitations, {:url =>batch_invite_users_path }  do |f| %>
+<%= simple_form_for :invitations, {:url => batch_invite_users_path} do |f| %>
     <%= f.input :role do %>
         <%= f.select :role, @roles, :include_blank => false %>
     <% end %>

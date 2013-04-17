@@ -1,10 +1,10 @@
 <%= simple_form_for [@project, @project_aws_file], :html => {:multipart => true} do |f| %>
 
-  <div class="form-inputs">
-    <%= f.file_field :file %>
-  </div>
+    <div class="form-inputs">
+      <%= f.file_field :file %>
+    </div>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+    <div class="form-actions">
+      <%= f.button :submit %>
+    </div>
 <% end %>

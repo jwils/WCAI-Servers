@@ -3,22 +3,22 @@ class S3File < WCAIFile
 
   def self.find_by_project_name(name)
     project_files = self.files.all({:prefix => name})
-    file_lookup = Hash.new 
+    file_lookup = Hash.new
     root = nil
 
     project_files.each do |project_file|
       file_lookup[project_file.key] = convert(project_file)
     end
 
-     file_lookup.values.each do |project_file|
+    file_lookup.values.each do |project_file|
       if project_file.parent_name.nil?
         root = project_file
       else
         parent = file_lookup[project_file.parent_name]
         parent.children ||= []
-        parent.children  << project_file
+        parent.children << project_file
       end
-     end
+    end
     return root
   end
 

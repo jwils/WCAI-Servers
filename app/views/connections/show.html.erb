@@ -1,6 +1,6 @@
 <%- model_class = Connection -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+  <h1><%= t '.title', :default => model_class.model_name.human %></h1>
 </div>
 
 <dl class="dl-horizontal">
@@ -20,5 +20,5 @@
 
 <div class="form-actions">
   <%= link_to t('.back', :default => t("helpers.links.back")),
-              server_connections_path(@connection.server), :class => 'btn'  %>
+              server_connections_path(@connection.server), :class => 'btn' %>
 </div>

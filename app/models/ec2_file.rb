@@ -1,5 +1,6 @@
 class Ec2File < WCAIFile
   attr_accessor :directory
+
   def self.create(parent, cmd_line_string)
     parts = cmd_line_string.split(' ')
     file = Ec2File.new

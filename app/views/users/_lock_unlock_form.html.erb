@@ -1,11 +1,11 @@
 <% if user.access_locked? %>
-    <%= form_for  user, :url => toggle_lock_user_url(user),
+    <%= form_for user, :url => toggle_lock_user_url(user),
                  :remote => true do |f| %>
         <%= f.submit "Unlock User", :class => 'btn btn-mini' %>
     <% end %>
 <% else %>
-    <%= form_for  user, :url => toggle_lock_user_url(user),
-                  :remote => true do |f| %>
+    <%= form_for user, :url => toggle_lock_user_url(user),
+                 :remote => true do |f| %>
         <%= f.submit "Lock User", :class => 'btn btn-mini btn-danger' %>
     <% end %>
 <% end %>

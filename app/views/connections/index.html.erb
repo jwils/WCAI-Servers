@@ -1,26 +1,26 @@
 <%- model_class = Connection -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human.pluralize %></h1>
+  <h1><%= t '.title', :default => model_class.model_name.human.pluralize %></h1>
 </div>
 <table class="table table-striped">
   <thead>
-    <tr>
-      <th>Username</th>
-      <th>Password</th>
-      <th>For</th>
-      <th>On server</th>
-      <th>Opened On</th>
-      <th>Closed On</th>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
+  <tr>
+    <th>Username</th>
+    <th>Password</th>
+    <th>For</th>
+    <th>On server</th>
+    <th>Opened On</th>
+    <th>Closed On</th>
+    <th><%= t '.actions', :default => t("helpers.actions") %></th>
+  </tr>
   </thead>
   <tbody>
-    <% @connections.each do |connection| %>
+  <% @connections.each do |connection| %>
       <tr>
-        <td><%= link_to connection.username, server_connection_path(connection.server,connection)  %></td>
+        <td><%= link_to connection.username, server_connection_path(connection.server, connection) %></td>
         <td><%= connection.sql_password %></td>
         <td><%= connection.user.name %></td>
-        <td><%= link_to connection.server_id, server_path(connection.server_id)%></td>
+        <td><%= link_to connection.server_id, server_path(connection.server_id) %></td>
         <td><%= connection.connection_open_str %></td>
         <td><%= connection.connection_closed_str %></td>
         <td>
@@ -30,7 +30,7 @@
                       :class => 'btn btn-mini btn-danger' %>
         </td>
       </tr>
-    <% end %>
+  <% end %>
   </tbody>
 </table>
 

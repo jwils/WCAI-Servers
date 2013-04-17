@@ -1,13 +1,13 @@
 <%- model_class = Project -%>
 <div class="page-header">
-  <h1><%=t '.title', :default => model_class.model_name.human %></h1>
+  <h1><%= t '.title', :default => model_class.model_name.human %></h1>
 </div>
 
 <dl class="dl-horizontal">
   <dt><strong>Product Manager:</strong></dt>
   <dd><%= @project.user.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:company_id) %>:</strong></dt>
-  <dd><%= @project.company.name%></dd>
+  <dd><%= @project.company.name %></dd>
   <dt><strong><%= model_class.human_attribute_name(:start_date) %>:</strong></dt>
   <dd><%= @project.start_date %></dd>
   <dt><strong><%= model_class.human_attribute_name(:current_state) %>:</strong></dt>
@@ -16,38 +16,39 @@
   <dd><%= @project.description %></dd>
   <dt><strong><%= model_class.human_attribute_name(:server_id) %>:</strong></dt>
   <% if can? :create, Connection %>
-    <% unless @project.server.nil? %>
-      <dd><%= link_to @project.server.state, @project.server %></dd>
-      <dt><strong>SQL Connection:</strong><dt>
-      <dd><%= link_to 'Open Connection',
-                      new_server_connection_path(@project.server), :class => 'btn btn-mini' %>
-        <%= link_to 'View Open Connections',
-                    server_connections_path(@project.server), :class => 'btn btn-mini btn-primary' unless @project.server.stopped?%></dd>
-    <% else %>
-      <dd>No Server</dd>
-    <% end %>
+      <% unless @project.server.nil? %>
+          <dd><%= link_to @project.server.state, @project.server %></dd>
+          <dt><strong>SQL Connection:</strong>
+          <dt>
+          <dd><%= link_to 'Open Connection',
+                          new_server_connection_path(@project.server), :class => 'btn btn-mini' %>
+            <%= link_to 'View Open Connections',
+                        server_connections_path(@project.server), :class => 'btn btn-mini btn-primary' unless @project.server.stopped? %></dd>
+      <% else %>
+          <dd>No Server</dd>
+      <% end %>
   <% end %>
-  </dl>
+</dl>
 
-  <div class="form-actions">
+<div class="form-actions">
 
-    <%= link_to t('.back', :default => t("helpers.links.back")),
-                projects_path, :class => 'btn'  %>
-    <% if can? :update, Project %>
-        <%= link_to t('.edit', :default => t("helpers.links.edit")),
-                    edit_project_path(@project), :class => 'btn' %>
-    <%end%>
+  <%= link_to t('.back', :default => t("helpers.links.back")),
+              projects_path, :class => 'btn' %>
+  <% if can? :update, Project %>
+      <%= link_to t('.edit', :default => t("helpers.links.edit")),
+                  edit_project_path(@project), :class => 'btn' %>
+  <% end %>
 
-    <% if can? :destroy, Project %>
-        <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
-                    project_path(@project),
-                    :method => 'delete',
-                    :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
-                    :class => 'btn btn-danger' %>
-    <%end%>
+  <% if can? :destroy, Project %>
+      <%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+                  project_path(@project),
+                  :method => 'delete',
+                  :data => {:confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?'))},
+                  :class => 'btn btn-danger' %>
+  <% end %>
 
-    <%= link_to "File List", project_s3_files_path(@project), :class => 'btn btn-info' if can? :read, S3File %>
+  <%= link_to "File List", project_s3_files_path(@project), :class => 'btn btn-info' if can? :read, S3File %>
 </div>
 
 <h1>Project Members</h1>
-<%=  render 'users/list', :users => @users %>
+<%= render 'users/list', :users => @users %>

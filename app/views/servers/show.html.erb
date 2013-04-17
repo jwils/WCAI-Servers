@@ -11,25 +11,26 @@
   <dt><strong>Project:</strong></dt>
   <dd><%= link_to @server.project.company.name, project_path(@server.project) %></dd>
 
-  	<% unless @server.stopped? %>
-  <dt><strong>Ip address:</strong></dt>
-  <dd><%= @server.ip_address %></dd>
+  <% unless @server.stopped? %>
+      <dt><strong>Ip address:</strong></dt>
+      <dd><%= @server.ip_address %></dd>
   <% end %>
 </dl>
 
-<p>Please do not start and stop server by hand unless there is some issue with connections. Click on open connections and
-close them all. This will automatically shut the server down.</p>
+<p>Please do not start and stop server by hand unless there is some issue with connections. Click on open connections
+  and
+  close them all. This will automatically shut the server down.</p>
 <div class="form-actions">
   <%= link_to 'View Servers', servers_path, :class => 'btn btn-mini' %>
   <% if @server.stopped? %>
-	<%= link_to 'Start Sever', start_server_url(:id=> @server.id), :class => 'btn btn-mini btn-success', :remote => true if can? :start, Server %>
+      <%= link_to 'Start Sever', start_server_url(:id => @server.id), :class => 'btn btn-mini btn-success', :remote => true if can? :start, Server %>
   <% else %>
       <% if can? :stop, @server %>
- 	    <%= link_to 'Stop Sever', stop_server_url(:id => @server.id),
-                 :class => 'btn btn-mini btn-danger', :remote => true,
-                 :data => { :confirm => 'Are you sure? Please remember the recommended way to shut down the computer is by closing the connection' } %>
+          <%= link_to 'Stop Sever', stop_server_url(:id => @server.id),
+                      :class => 'btn btn-mini btn-danger', :remote => true,
+                      :data => {:confirm => 'Are you sure? Please remember the recommended way to shut down the computer is by closing the connection'} %>
       <% end %>
-         <%=  link_to 'View Open Connections', server_connections_path(@server), :class => 'btn btn-mini btn-info' if can? :read, Connection %>
-        <%=  link_to 'View Local Files', project_ec2_files_path(@server.project), :class => 'btn btn-mini btn-primary' if can? :read, Ec2File %>
-    <% end %>
+      <%= link_to 'View Open Connections', server_connections_path(@server), :class => 'btn btn-mini btn-info' if can? :read, Connection %>
+      <%= link_to 'View Local Files', project_ec2_files_path(@server.project), :class => 'btn btn-mini btn-primary' if can? :read, Ec2File %>
+  <% end %>
 </div>

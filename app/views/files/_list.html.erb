@@ -1,15 +1,15 @@
 <li class="page">
   <%= file.file_name %>
   <ul class="file_list">
-  <% file.children.each do |child| %>
-    <% if child.is_directory? %>
-        <%= render 'files/list', :file => child, :project => project %>
-    <% else %>
-        <li class="<%= "page #{child.extension_css}  #{"large_file" if child.size > 1024 * 1024 * 1024}" %>">
-          <% path = child.local? ? project_ec2_file_path(project, child.encode) : project_s3_file_path(project, child.encode)%>
-          <%=  link_to child.file_name + " (#{child.str_size})", path, :target => '_blank' %>
-        </li>
+    <% file.children.each do |child| %>
+        <% if child.is_directory? %>
+            <%= render 'files/list', :file => child, :project => project %>
+        <% else %>
+            <li class="<%= "page #{child.extension_css}  #{"large_file" if child.size > 1024 * 1024 * 1024}" %>">
+              <% path = child.local? ? project_ec2_file_path(project, child.encode) : project_s3_file_path(project, child.encode) %>
+              <%= link_to child.file_name + " (#{child.str_size})", path, :target => '_blank' %>
+            </li>
+        <% end %>
     <% end %>
-  <% end %>
   </ul>
 </li>

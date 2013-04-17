@@ -66,7 +66,7 @@ class ServersController < ApplicationController
   def start
     @server.start
     respond_to do |format|
-      format.html { redirect_to  @server }
+      format.html { redirect_to @server }
       format.json { head :no_content }
     end
   end
@@ -74,7 +74,7 @@ class ServersController < ApplicationController
   def stop
     @server.stop
     respond_to do |format|
-      format.html { redirect_to  @server }
+      format.html { redirect_to @server }
       format.json { head :no_content }
     end
   end

@@ -1,37 +1,37 @@
 <div class="page-header">
-  <h1><%=t '.title', :default => "Projects" %></h1>
+  <h1><%= t '.title', :default => "Projects" %></h1>
 </div>
 <table class="table table-striped">
   <thead>
-    <tr>
-      <th>Company</th>
-      <th>Start Date</th>
-      <th>Current State</th>
-      <th>Description</th>
-      <% if can? :read, Server %>
-       <th>Server Status</th>
-      <% end %>
-      <th><%=t '.actions', :default => t("helpers.actions") %></th>
-    </tr>
+  <tr>
+    <th>Company</th>
+    <th>Start Date</th>
+    <th>Current State</th>
+    <th>Description</th>
+    <% if can? :read, Server %>
+        <th>Server Status</th>
+    <% end %>
+    <th><%= t '.actions', :default => t("helpers.actions") %></th>
+  </tr>
   </thead>
   <tbody>
-    <% @projects.each do |project| %>
+  <% @projects.each do |project| %>
       <tr>
-        <td><%= link_to project.company.name, project_path(project)%></td>
+        <td><%= link_to project.company.name, project_path(project) %></td>
         <td><%= project.start_date %></td>
         <td><%= project.current_state %></td>
         <td><%= project.description %></td>
-	<% if can? :read, Server %>
-        <% if project.server.nil? %>
-            <td>No server setup</td>
-        <% else %>
-            <td><%= link_to project.server.status, server_path(project.server) if can? :read, project.server %></td>
-         <% end %>
-	<% end %>
+        <% if can? :read, Server %>
+            <% if project.server.nil? %>
+                <td>No server setup</td>
+            <% else %>
+                <td><%= link_to project.server.status, server_path(project.server) if can? :read, project.server %></td>
+            <% end %>
+        <% end %>
         <td>
-          <%= link_to  "Project Files", project_s3_files_path(project),  :class => 'btn btn-mini' if can? :read, S3File %>
+          <%= link_to "Project Files", project_s3_files_path(project), :class => 'btn btn-mini' if can? :read, S3File %>
         </td>
       </tr>
-    <% end %>
+  <% end %>
   </tbody>
 </table>
