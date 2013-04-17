@@ -30,8 +30,6 @@ class TimesheetsController < ApplicationController
   # GET /timesheets/1
   # GET /timesheets/1.json
   def show
-    @timesheet = Timesheet.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.pdf do
@@ -45,7 +43,6 @@ class TimesheetsController < ApplicationController
   # GET /timesheets/new
   # GET /timesheets/new.json
   def new
-    @timesheet = Timesheet.new
     @timesheet.start_date = Date.parse('Monday')
     if current_user.is? :admin
       @user_change_disabled = false
@@ -70,7 +67,6 @@ class TimesheetsController < ApplicationController
 
   # GET /timesheets/1/edit
   def edit
-    @timesheet = Timesheet.find(params[:id])
     @time_entries = @timesheet.time_entries.order(:day)
     @user_change_disabled = true  #### based of if current user is a ra or admin.
     output = []
@@ -109,7 +105,6 @@ class TimesheetsController < ApplicationController
   # PUT /timesheets/1
   # PUT /timesheets/1.json
   def update
-    @timesheet = Timesheet.find(params[:id])
     @timesheet.submitted = params[:draft].nil?
     respond_to do |format|
       if @timesheet.update_attributes(params[:timesheet])
@@ -125,7 +120,6 @@ class TimesheetsController < ApplicationController
   # DELETE /timesheets/1
   # DELETE /timesheets/1.json
   def destroy
-    @timesheet = Timesheet.find(params[:id])
     @timesheet.destroy
 
     respond_to do |format|
@@ -135,7 +129,6 @@ class TimesheetsController < ApplicationController
   end
 
   def approve
-    @timesheet = Timesheet.find(params[:id])
     @timesheet.approver= current_user
     @timesheet.save
     redirect_to timesheets_path

@@ -4,8 +4,6 @@ class ServersController < ApplicationController
   # GET /servers
   # GET /servers.json
   def index
-    @servers = Server.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @servers }
@@ -15,8 +13,6 @@ class ServersController < ApplicationController
   # GET /servers/1
   # GET /servers/1.json
   def show
-    @server = Server.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @server }
@@ -26,8 +22,6 @@ class ServersController < ApplicationController
   # GET /servers/new
   # GET /servers/new.json
   def new
-    @server = Server.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @server }
@@ -36,7 +30,6 @@ class ServersController < ApplicationController
 
   # GET /servers/1/edit
   def edit
-    @server = Server.find(params[:id])
   end
 
   # POST /servers
@@ -59,8 +52,6 @@ class ServersController < ApplicationController
   # PUT /servers/1
   # PUT /servers/1.json
   def update
-    @server = Server.find(params[:id])
-
     respond_to do |format|
       if @server.update_attributes(params[:server])
         format.html { redirect_to @server, notice: 'Server was successfully updated.' }
@@ -73,7 +64,6 @@ class ServersController < ApplicationController
   end
 
   def start
-    @server = Server.find(params[:id])
     @server.start
     respond_to do |format|
       format.html { redirect_to  @server }
@@ -82,7 +72,6 @@ class ServersController < ApplicationController
   end
 
   def stop
-    @server = Server.find(params[:id])
     @server.stop
     respond_to do |format|
       format.html { redirect_to  @server }
@@ -93,7 +82,6 @@ class ServersController < ApplicationController
   # DELETE /servers/1
   # DELETE /servers/1.json
   def destroy
-    @server = Server.find(params[:id])
     @server.destroy
     respond_to do |format|
       format.html { redirect_to servers_url }
