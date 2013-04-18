@@ -1,22 +1,24 @@
 class Timesheet < ActiveRecord::Base
-  resourcify
+  default_scope :include => :time_entries
+
+  attr_accessible :start_date, :submitted, :user, :time_entries_attributes, :user_id
+
   belongs_to :user
   belongs_to :approver, :class_name => 'User', :foreign_key => 'approver_id'
-  has_many :time_entries, :dependent => :destroy, :order => 'day'
-  accepts_nested_attributes_for :time_entries, :reject_if => lambda { |a| a[:hours_spent].blank? or a[:hours_spent] == 0 }, :allow_destroy => true
 
-  default_scope :include => :time_entries
-  attr_accessible :start_date, :submitted, :user, :time_entries_attributes, :user_id
+  has_many :time_entries, :dependent => :destroy, :order => 'day'
+
   before_save :check_for_time
   before_save :mark_entries_for_removal
 
+  accepts_nested_attributes_for :time_entries, :reject_if => lambda { |a| a[:hours_spent].blank? or a[:hours_spent] == 0 }, :allow_destroy => true
+
   scope :submitted, where(:submitted => true)
-
   scope :not_submitted, where(:submitted => false)
-
   scope :approved, where('approver_id IS NOT NULL')
-
   scope :not_printed, where(:last_printed => nil).where('approver_id IS NOT NULL')
+
+  resourcify
 
   def status_string
     if approver.nil?

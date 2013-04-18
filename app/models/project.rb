@@ -1,11 +1,14 @@
 class Project < ActiveRecord::Base
-  resourcify
+  attr_accessible :current_state, :description, :start_date, :user_id, :folder_name, :company
+
   belongs_to :user
   belongs_to :company
+
   has_one :server
-  attr_accessible :current_state, :description, :start_date, :user_id, :folder_name, :company
   has_many :connections, :through => :server
   has_many :s3_files
+
+  resourcify
 
   def name
     self.company.name unless company.nil?

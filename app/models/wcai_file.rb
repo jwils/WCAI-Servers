@@ -1,32 +1,15 @@
 class WCAIFile
   attr_accessor :children, :size, :path
 
-  EXT_MAP = {
-      'xls' => :xls,
-      'xlsx' => :xls,
-      'doc' => :doc,
-      'docx' => :doc,
-      'zip' => :zip,
-      'txt' => :txt,
-      'pdf' => :pdf,
-      'sql' => :sql,
-  }
-
   def extension
-    unless path.rindex(/\./).nil?
-      ext = self.path[path.rindex(/\./) + 1..-1]
-      EXT_MAP[ext]
-    else
-      "default"
-    end
+    return :default if path.rindex(/\./).nil?
+
+    ext = self.path[path.rindex(/\./) + 1..-1]
+    ext.to_sym
   end
 
   def extension_css
-    unless extension.nil?
-      extension.to_s
-    else
-      "default"
-    end
+    extension.to_s + " default"
   end
 
   def file_name
@@ -48,7 +31,7 @@ class WCAIFile
   end
 
   def is_directory?
-    not children.nil?
+    path[-1] == '/'
   end
 
   def str_size

@@ -3,7 +3,6 @@ class Message
   include ActiveModel::Conversion
   extend ActiveModel::Naming
 
-
   attr_accessor :from_user, :content, :project_id
 
   def initialize(attributes = {})

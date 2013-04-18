@@ -1,6 +1,7 @@
 class Server < ActiveRecord::Base
-  attr_accessible :instance_id, :project_id
   attr_accessor :instance
+  attr_accessible :instance_id, :project_id
+
   belongs_to :project
   has_many :connections
 

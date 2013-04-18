@@ -1,7 +1,8 @@
 class Connection < ActiveRecord::Base
+  default_scope { where(:connection_closed => nil) }
+
   belongs_to :user
   belongs_to :server
-  default_scope { where(:connection_closed => nil) }
 
   attr_accessible :user_id, :server_id
   attr_protected :sql_password, :sql_user, :connection_closed, :connection_open

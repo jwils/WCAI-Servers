@@ -1,17 +1,16 @@
 class User < ActiveRecord::Base
   ROLES = %w[admin research_assistant researcher phd_student]
 
-  rolify
-
-  devise :invitable, :database_authenticatable, :lockable, #:registerable,
-         :recoverable, :rememberable, :trackable, :validatable
-
-  # Setup accessible (or protected) attributes for your model
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :institution, :role_ids
   # attr_accessible :title, :body
+
   has_many :connections
   has_many :timesheets
   has_many :time_entries, :through => 'timesheets'
+
+  rolify
+  devise :invitable, :database_authenticatable, :lockable, #:registerable,
+         :recoverable, :rememberable, :trackable, :validatable
 
   def is?(role)
     has_role? role
