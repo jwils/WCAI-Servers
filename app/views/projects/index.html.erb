@@ -17,15 +17,17 @@
   <tbody>
   <% @projects.each do |project| %>
       <tr>
-        <td><%= link_to project.company.name, project_path(project) %></td>
+        <td><%= link_to project.name, project_path(project) %></td>
         <td><%= project.start_date %></td>
         <td><%= project.current_state %></td>
         <td><%= project.description %></td>
-        <% if can? :read, Server %>
+        <% if can? :read, Project %>
             <% if project.server.nil? %>
                 <td>No server setup</td>
-            <% else %>
+            <% elsif can? :read, project.server %>
                 <td><%= link_to project.server.status, server_path(project.server) if can? :read, project.server %></td>
+            <% else %>
+                <td>Not authorized</td>
             <% end %>
         <% end %>
         <td>

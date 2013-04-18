@@ -77,8 +77,8 @@ class Server < ActiveRecord::Base
   end
 
   def download_file(file_path)
-     cmd = "scp -oStrictHostKeyChecking=no -i#{Settings.keypair_path}fog ubuntu@#{instance.public_ip_address}:#{file_path} #{Rails.root.join("public", "ec2_files")}"
-     system(cmd)
+    cmd = "scp -oStrictHostKeyChecking=no -i#{Settings.keypair_path}fog ubuntu@#{instance.public_ip_address}:#{file_path} #{Rails.root.join("public", "ec2_files")}"
+    system(cmd)
   end
 
   def get_directory(directory)

@@ -62,6 +62,6 @@ class UsersController < ApplicationController
   protected
 
   def prepare_roles
-    @roles = User.get_all_roles
+    @roles = User::ROLES.zip(0..User::ROLES.length)
   end
 end

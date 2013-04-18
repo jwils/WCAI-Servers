@@ -40,10 +40,6 @@ class User < ActiveRecord::Base
     end
   end
 
-  def self.get_all_roles
-    [["admin", 1], ["research_assistant", 2], ["researcher", 3], ["phd_student", 4]]
-  end
-
   def to_param
     "#{id} #{name}".parameterize
   end

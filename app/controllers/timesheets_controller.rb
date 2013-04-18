@@ -41,7 +41,7 @@ class TimesheetsController < ApplicationController
   # GET /timesheets/new
   def new
     @timesheet.start_date = Date.parse('Monday')
-    @user_change_disabled = (not current_user.is? :admin )
+    @user_change_disabled = (not current_user.is? :admin)
 
     if @user_change_disabled
       @timesheet.user = current_user
