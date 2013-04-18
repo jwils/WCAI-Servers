@@ -8,19 +8,18 @@
       <dd><%= @user.email %></dd>
       <dt><strong>Institution:</strong></dt>
       <dd><%= @user.institution %></dd>
+      <% if can? :update, @user %>
+          <dt><strong>Abilities:</strong></dt>
+          </dl>
+          <div class="roles"><%= f.association :roles, as: :check_boxes, label: false %></div>
+      <% end %>
+      <div class="form-actions">
+        <%= link_to t('.back', :default => t("helpers.links.back")),
+                    users_path, :class => 'btn' %>
+        <%= f.submit "Update Abilities", :class => 'btn btn-primary' if can? :update, @user %>
 
-      <dt><strong>Abilities:</strong></dt>
-    </dl>
-    <div class="roles"><%= f.association :roles, as: :check_boxes, label: false %></div>
-
-    <div class="form-actions">
-      <%= link_to t('.back', :default => t("helpers.links.back")),
-                  users_path, :class => 'btn' %>
-      <%= f.submit "Update Abilities", :class => 'btn btn-primary' %>
-
-    </div>
+      </div>
 <% end %>
 
-<% if can? :toggle_lock, @user %>
-    FIX POS: Also does not refresh on click.    <%= render 'lock_unlock_form', :user => @user %>
-<% end %>
+<%= render 'lock_unlock_form', :user => @user if can? :toggle_lock, @user %>
+
