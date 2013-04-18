@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
 
   #  If a user tries to go to a url where they do not have permission a exception is thrown. This catches the exception
   #  redirects them to the root url and alerts them.
-
+  #
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
   end

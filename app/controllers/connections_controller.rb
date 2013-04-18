@@ -1,6 +1,7 @@
 class ConnectionsController < ApplicationController
   load_and_authorize_resource :server
   load_and_authorize_resource :connection, :through => :server
+
   # GET /connections
   # GET /connections.json
   def index
@@ -19,6 +20,8 @@ class ConnectionsController < ApplicationController
     end
   end
 
+  #
+  #
   def destroy
     @connection.close_connection
     respond_to do |format|

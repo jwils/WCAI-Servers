@@ -1,6 +1,7 @@
 class MessagesController < ApplicationController
   load_and_authorize_resource
 
+
   def new
     @message = Message.new
     if current_user.has_role? :admin

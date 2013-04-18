@@ -18,6 +18,7 @@ class Ability
       can :manage, Server
       can :manage, Project
       can :manage, S3File
+      can :manage, Ec2File
       can :manage, Message
       can :read, User
     else

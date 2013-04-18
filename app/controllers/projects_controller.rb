@@ -1,48 +1,30 @@
 class ProjectsController < ApplicationController
-  # GET /projects
-  # GET /projects.json
   load_and_authorize_resource
 
-
-  def index
-    # @products automatically set to by cancan
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @projects }
-    end
-  end
+  # Definition is implicit of many methods. Cancan handles resources and access.
+  # Below are the defined paths and routes:
+  #
+  # GET /projects
+  # def index
+  #
+  # GET /projects/new
+  # def new
+  #
+  # GET /projects/1/edit
+  # def edit
+  #
+  #
 
   # GET /projects/1
-  # GET /projects/1.json
   def show
-    #@project = Project.find(params[:id]) set by cancan
     @users = User.with_role(:researcher, @project)
-
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @project }
-    end
   end
 
-  # GET /projects/new
-  # GET /projects/new.json
-  def new
-    @project = Project.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @project }
-    end
-  end
 
-  # GET /projects/1/edit
-  def edit
-    #@project = Project.find(params[:id])
-  end
+
 
   # POST /projects
-  # POST /projects.json
   def create
     @project = Project.new(params[:project])
 
@@ -58,7 +40,6 @@ class ProjectsController < ApplicationController
   end
 
   # PUT /projects/1
-  # PUT /projects/1.json
   def update
     respond_to do |format|
       if @project.update_attributes(params[:project])
@@ -72,7 +53,6 @@ class ProjectsController < ApplicationController
   end
 
   # DELETE /projects/1
-  # DELETE /projects/1.json
   def destroy
     if @project.server
       #@project.server.destroy
