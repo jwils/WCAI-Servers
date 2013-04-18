@@ -12,11 +12,9 @@ class Ability
       cannot :toggle_lock, user
     elsif user.has_role? :research_assistant
       can :manage, Timesheet, :user_id => user.id
-      can :create, Timesheet
       cannot :approve, Timesheet
       cannot :edit, Timesheet, :submitted => true
       can :manage, Connection, :user_id => user.id
-      can :create, Connection
       can :manage, Server
       can :manage, Project
       can :manage, S3File
@@ -29,8 +27,8 @@ class Ability
       can :read, S3File
       if authorized_phd_projects.any?
         can :manage, Connection, :user_id => user.id
-        can :create, Connection
         can :manage, Server, :project_id => authorized_phd_projects.map { |project| project.id }
+        cannot :create, Server
         can :manage, Ec2File
       end
     end
