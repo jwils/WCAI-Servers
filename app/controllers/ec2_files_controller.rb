@@ -7,7 +7,7 @@ class Ec2FilesController < ApplicationController
 
   # GET /servers/:server_id/ec2_files/:file
   def show
-    raise CanCan::AccessDenied unless can? :read, @file
+    raise CanCan::AccessDenied unless can? :read, Ec2File #@file
 
     @file = Ec2File.decode(params[:file])
 
