@@ -47,6 +47,7 @@ WCAI::Application.routes.draw do
 
   match 'home/index' => 'home#index', :as => :home_page
   match 'home/about' => 'home#about', :as => :about
+
   match 'contact' => 'messages#new', :as => 'contact_us', :via => :get
   match 'contact' => 'messages#create', :as => 'contact_us', :via => :post
 

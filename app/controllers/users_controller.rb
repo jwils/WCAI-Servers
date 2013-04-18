@@ -2,15 +2,19 @@ class UsersController < ApplicationController
   load_and_authorize_resource
   before_filter :prepare_roles
 
+  # Definition is implicit of many methods. Cancan handles resources and access.
+  # Below are the defined paths and routes:
+  #
+  # GET /users
+  # def index
+  #
+  # GET /users/1
+  # def show
+  #
+
+  # Probably won't need this but leaving it just in case.
   def new
     raise CanCan::AccessDenied
-  end
-
-  def index
-    #@users = User.all
-    respond_to do |format|
-      format.html
-    end
   end
 
   def new_batch
@@ -42,10 +46,6 @@ class UsersController < ApplicationController
       User.create_or_add_roles(email, @role, @project)
     end
     redirect_to root_path, :notice => 'Email invitations sent'
-  end
-
-  def show
-    #@user = User.find(params[:id])
   end
 
   def toggle_lock

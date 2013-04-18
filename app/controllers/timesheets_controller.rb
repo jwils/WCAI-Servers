@@ -2,7 +2,7 @@ class TimesheetsController < ApplicationController
   load_and_authorize_resource
 
   # GET /timesheets
-  # GET /timesheets.json
+  # GET /timesheets.pdf
   def index
     if params[:format] == 'pdf'
       if params[:type] == "Not Printed"
@@ -23,12 +23,11 @@ class TimesheetsController < ApplicationController
         render :pdf => "index.pdf.erb", :header => {:right => '[page] of [topage]'},
                :layout => 'pdf', :orientation => 'Landscape'
       end
-      format.json { render json: @timesheets }
     end
   end
 
   # GET /timesheets/1
-  # GET /timesheets/1.json
+  # GET /timesheets/1.pdf
   def show
     respond_to do |format|
       format.html # show.html.erb
@@ -36,19 +35,16 @@ class TimesheetsController < ApplicationController
         render :pdf => "show.pdf.erb", :header => {:right => '[page] of [topage]'},
                :layout => 'pdf', :orientation => 'Landscape'
       end
-      format.json { render json: @timesheet }
     end
   end
 
   # GET /timesheets/new
-  # GET /timesheets/new.json
   def new
     @timesheet.start_date = Date.parse('Monday')
-    if current_user.is? :admin
-      @user_change_disabled = false
-    else
+    @user_change_disabled = (not current_user.is? :admin )
+
+    if @user_change_disabled
       @timesheet.user = current_user
-      @user_change_disabled = true
     end
 
     7.times { @timesheet.time_entries.build }
@@ -61,7 +57,6 @@ class TimesheetsController < ApplicationController
 
     respond_to do |format|
       format.html # new.html.erb
-      format.json { render json: @timesheet }
     end
   end
 
@@ -87,7 +82,7 @@ class TimesheetsController < ApplicationController
   # POST /timesheets
   # POST /timesheets.json
   def create
-    #@timesheet = Timesheet.new(params[:timesheet])
+    @timesheet = Timesheet.new(params[:timesheet])
     @timesheet.submitted = params[:draft].nil?
     @timesheet.user ||= current_user
 
@@ -103,22 +98,16 @@ class TimesheetsController < ApplicationController
   end
 
   # PUT /timesheets/1
-  # PUT /timesheets/1.json
   def update
     @timesheet.submitted = params[:draft].nil?
-    respond_to do |format|
-      if @timesheet.update_attributes(params[:timesheet])
-        format.html { redirect_to @timesheet, notice: 'Timesheet was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @timesheet.errors, status: :unprocessable_entity }
-      end
+    if @timesheet.update_attributes(params[:timesheet])
+      format.html { redirect_to @timesheet, notice: 'Timesheet was successfully updated.' }
+    else
+      format.html { render action: "edit" }
     end
   end
 
   # DELETE /timesheets/1
-  # DELETE /timesheets/1.json
   def destroy
     @timesheet.destroy
 

@@ -1,91 +1,55 @@
 class ServersController < ApplicationController
   load_and_authorize_resource
 
+  # Definition is implicit of many methods. Cancan handles resources and access.
+  # Below are the defined paths and routes:
+  #
   # GET /servers
-  # GET /servers.json
-  def index
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @servers }
-    end
-  end
-
-  # GET /servers/1
-  # GET /servers/1.json
-  def show
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @server }
-    end
-  end
-
+  # def index
+  #
   # GET /servers/new
-  # GET /servers/new.json
-  def new
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @server }
-    end
-  end
-
+  # def new
+  #
   # GET /servers/1/edit
-  def edit
-  end
+  # def edit
+  #
 
   # POST /servers
-  # POST /servers.json
   def create
     @server = Server.new(params[:server])
     @server.configure(params[:schema_name])
 
-    respond_to do |format|
-      if @server.save
-        format.html { redirect_to @server, notice: 'Server was successfully created.' }
-        format.json { render json: @server, status: :created, location: @server }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @server.errors, status: :unprocessable_entity }
-      end
+    if @server.save
+      redirect_to @server, notice: 'Server was successfully created.'
+    else
+      render action: "new"
     end
   end
 
   # PUT /servers/1
-  # PUT /servers/1.json
   def update
-    respond_to do |format|
-      if @server.update_attributes(params[:server])
-        format.html { redirect_to @server, notice: 'Server was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @server.errors, status: :unprocessable_entity }
-      end
+    if @server.update_attributes(params[:server])
+      redirect_to @server, notice: 'Server was successfully updated.'
+    else
+      render json: @server.errors, status: :unprocessable_entity
     end
   end
 
+# GET /servers/start
   def start
     @server.start
-    respond_to do |format|
-      format.html { redirect_to @server }
-      format.json { head :no_content }
-    end
+    redirect_to @server
   end
 
+  # GET /servers/stop
   def stop
     @server.stop
-    respond_to do |format|
-      format.html { redirect_to @server }
-      format.json { head :no_content }
-    end
+    redirect_to @server
   end
 
   # DELETE /servers/1
-  # DELETE /servers/1.json
   def destroy
     @server.destroy
-    respond_to do |format|
-      format.html { redirect_to servers_url }
-      format.json { head :no_content }
-    end
+    redirect_to servers_url
   end
 end

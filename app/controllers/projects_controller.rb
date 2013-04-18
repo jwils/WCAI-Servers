@@ -13,16 +13,11 @@ class ProjectsController < ApplicationController
   # GET /projects/1/edit
   # def edit
   #
-  #
 
   # GET /projects/1
   def show
     @users = User.with_role(:researcher, @project)
   end
-
-
-
-
 
   # POST /projects
   def create
@@ -59,10 +54,6 @@ class ProjectsController < ApplicationController
     end
 
     @project.destroy
-
-    respond_to do |format|
-      format.html { redirect_to projects_url }
-      format.json { head :no_content }
-    end
+    redirect_to projects_url
   end
 end
