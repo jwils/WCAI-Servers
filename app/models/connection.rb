@@ -10,7 +10,6 @@ class Connection < ActiveRecord::Base
   def generate_user_password(ip_address)
     self.sql_user = "'#{Digest::SHA1.hexdigest("--#{Time.now.to_s.split(//).sort_by { rand }.join}").split("").shuffle.join[0, 6]}'@'#{ip_address}'"
     self.sql_password = Digest::SHA1.hexdigest("--#{Time.now.to_s}#{ip_address}").split("").shuffle.join[0, 6]
-
   end
 
   def access_cmd
@@ -32,8 +31,8 @@ class Connection < ActiveRecord::Base
 
   def connection_open_str
     time = connection_open
-    if time == Date.today
-      time.to_s(:time)
+    if time.day == Date.today
+      time.to_s(:clock_time)
     else
       time
     end
@@ -43,8 +42,8 @@ class Connection < ActiveRecord::Base
     time = connection_closed
     if time.nil?
       "Connection is Open"
-    elsif time == Date.today
-      time.to_s(:time)
+    elsif time.day == Date.today
+      time.to_s(:clock_time)
     else
       time
     end
