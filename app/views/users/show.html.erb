@@ -11,7 +11,7 @@
       <% if can? :update, @user %>
           <dt><strong>Abilities:</strong></dt>
           </dl>
-          <div class="roles"><%= f.association :roles, as: :check_boxes, label_method: :readable %></div>
+          <div class="roles"><%= f.association :roles, as: :check_boxes, label_method: :readable, label:false %></div>
       <% end %>
       <div class="form-actions">
         <%= link_to t('.back', :default => t("helpers.links.back")),

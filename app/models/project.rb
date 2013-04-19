@@ -8,6 +8,8 @@ class Project < ActiveRecord::Base
   has_many :connections, :through => :server
   has_many :s3_files
 
+  after_create :create_roles
+
   resourcify
 
 
@@ -43,5 +45,10 @@ class Project < ActiveRecord::Base
   # Looks a bit nicer for users.
   def to_param
     "#{id} #{company.name}".parameterize
+  end
+
+  protected
+  def create_roles
+    Role.create_roles(self)
   end
 end
