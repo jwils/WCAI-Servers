@@ -52,7 +52,7 @@ class Server < ActiveRecord::Base
   alias :status :state
 
   def open_connections
-    self.connections.only_open
+    self.connections
   end
 
   def ip_address
