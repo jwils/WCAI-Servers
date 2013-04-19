@@ -27,7 +27,7 @@ class User < ActiveRecord::Base
       u.save
       email.inspect
     else
-      if role == "researcher"
+      if role.to_s == "researcher" or role.to_s == "phd_student"
         UserMailer.added_to_project(u, project).deliver
       end
     end
