@@ -1,4 +1,4 @@
-class InstanceReportMailer
+class InstanceReportMailer < ActionMailer::Base
   default from: "wcai-research@wharton.upenn.edu"
 
   def uptime_report(users, instance)
