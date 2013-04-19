@@ -1,17 +1,16 @@
+# Definition is implicit of many methods. Cancan handles resources and access.
+# Below are the defined paths and routes:
+#
+# GET /servers/:server_id/connections
+# def index
+#
+#
+# GET /servers/:server_id/connections/1
+# def show
+#
 class ConnectionsController < ApplicationController
   load_and_authorize_resource :server
   load_and_authorize_resource :connection, :through => :server
-
-  # Definition is implicit of many methods. Cancan handles resources and access.
-  # Below are the defined paths and routes:
-  #
-  # GET /servers/:server_id/connections
-  # def index
-  #
-  #
-  # GET /servers/:server_id/connections/1
-  # def show
-  #
 
   # DELETE /servers/:server_id/connections/1
   def destroy

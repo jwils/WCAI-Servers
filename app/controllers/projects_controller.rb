@@ -1,18 +1,17 @@
+# Definition is implicit of many methods. Cancan handles resources and access.
+# Below are the defined paths and routes:
+#
+# GET /projects
+# def index
+#
+# GET /projects/new
+# def new
+#
+# GET /projects/1/edit
+# def edit
+#
 class ProjectsController < ApplicationController
   load_and_authorize_resource
-
-  # Definition is implicit of many methods. Cancan handles resources and access.
-  # Below are the defined paths and routes:
-  #
-  # GET /projects
-  # def index
-  #
-  # GET /projects/new
-  # def new
-  #
-  # GET /projects/1/edit
-  # def edit
-  #
 
   # GET /projects/1
   def show
