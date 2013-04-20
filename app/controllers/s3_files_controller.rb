@@ -1,8 +1,11 @@
+# Links to an s3 bucket folder.
+#
+# @project is defined and authorized for users by cancan
+#
+# Handles but not shown: GET /projects/:project_id/project_files
 class S3FilesController < ApplicationController
   load_and_authorize_resource :project
   load_and_authorize_resource
-
-  # GET /projects/:project_id/project_files
 
   # GET /projects/:project_id/project_files/1
   def show

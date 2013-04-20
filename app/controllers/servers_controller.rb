@@ -1,18 +1,22 @@
+# Definition is implicit of many methods. Cancan handles resources and access.
+# Below are the defined paths and routes:
+#
+# GET /servers
+#
+# def index
+#
+#
+# GET /servers/new
+#
+# def new
+#
+#
+# GET /servers/1/edit
+#
+# def edit
+#
 class ServersController < ApplicationController
   load_and_authorize_resource
-
-  # Definition is implicit of many methods. Cancan handles resources and access.
-  # Below are the defined paths and routes:
-  #
-  # GET /servers
-  # def index
-  #
-  # GET /servers/new
-  # def new
-  #
-  # GET /servers/1/edit
-  # def edit
-  #
 
   # POST /servers
   def create

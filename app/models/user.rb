@@ -1,4 +1,6 @@
 class User < ActiveRecord::Base
+  # List all roles a user can have.
+  # May want to destinguish between universal and project specific roles.
   ROLES = %w[admin research_assistant researcher phd_student]
 
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name, :institution, :role_ids
@@ -7,6 +9,7 @@ class User < ActiveRecord::Base
   has_many :connections
   has_many :timesheets
   has_many :time_entries, :through => 'timesheets'
+  has_many :downloads_trackers
 
   rolify
   devise :invitable, :database_authenticatable, :lockable, #:registerable,
@@ -41,5 +44,9 @@ class User < ActiveRecord::Base
 
   def to_param
     "#{id} #{name}".parameterize
+  end
+
+  def total_downloads_size
+    downloads_trackers.sum(:file_size)
   end
 end

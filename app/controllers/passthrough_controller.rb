@@ -1,9 +1,8 @@
+# This is probably not needed anymore. Will keep for now in case there is a reason
+# to redirect people based on their roles
 class PassthroughController < ApplicationController
   skip_authorization_check
 
-  # This is probably not needed anymore. Will keep for now in case there is a reason
-  # to redirect people based on their roles
-  #
   # root_url
   #
   # GET /

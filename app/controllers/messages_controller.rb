@@ -1,3 +1,5 @@
+# Controllers /contact.
+# Users can select what it is regrading and the body of their message.
 class MessagesController < ApplicationController
   load_and_authorize_resource
 

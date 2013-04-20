@@ -1,3 +1,4 @@
+# RA timesheet controller.
 class TimesheetsController < ApplicationController
   load_and_authorize_resource
 

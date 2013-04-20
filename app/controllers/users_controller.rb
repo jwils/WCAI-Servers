@@ -1,16 +1,15 @@
+# Definition is implicit of many methods. Cancan handles resources and access.
+# Below are the defined paths and routes:
+#
+# GET /users
+# def index
+#
+# GET /users/1
+# def show
+#
 class UsersController < ApplicationController
   load_and_authorize_resource
   before_filter :prepare_roles
-
-  # Definition is implicit of many methods. Cancan handles resources and access.
-  # Below are the defined paths and routes:
-  #
-  # GET /users
-  # def index
-  #
-  # GET /users/1
-  # def show
-  #
 
   # Probably won't need this but leaving it just in case.
   def new
@@ -30,7 +29,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if @user.update_attributes(params[:user])
-        format.html { redirect_to @user, notice: 'Server was successfully updated.' }
+        format.html { redirect_to @user, notice: 'User abilities were successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
