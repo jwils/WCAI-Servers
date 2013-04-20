@@ -16,6 +16,7 @@ class Ability
       cannot :edit, Timesheet, :submitted => true
       can :manage, Connection, :user_id => user.id
       can :manage, Server
+      cannot :create, Server
       can :manage, Project
       can :manage, S3File
       can :manage, Ec2File
