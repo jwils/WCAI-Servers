@@ -34,7 +34,7 @@ class Server < ActiveRecord::Base
   end
 
   def stopped?
-    self.instance.state == 'stopped' || self.instance.state == 'terminated'
+    self.instance.nil? || self.instance.state == 'stopped' || self.instance.state == 'terminated'
   end
 
   def state
