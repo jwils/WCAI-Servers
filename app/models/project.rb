@@ -48,6 +48,7 @@ class Project < ActiveRecord::Base
   end
 
   protected
+  # Creates roles for the project so they list on the users/show checkboxes.
   def create_roles
     Role.create_roles(self)
   end

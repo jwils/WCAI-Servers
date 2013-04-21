@@ -7,11 +7,6 @@ class Connection < ActiveRecord::Base
   attr_accessible :user_id, :server_id
   attr_protected :sql_password, :sql_user, :connection_closed, :connection_open
 
-  def generate_user_password(ip_address)
-    self.sql_user = "'#{Digest::SHA1.hexdigest("--#{Time.now.to_s.split(//).sort_by { rand }.join}").split("").shuffle.join[0, 6]}'@'#{ip_address}'"
-    self.sql_password = Digest::SHA1.hexdigest("--#{Time.now.to_s}#{ip_address}").split("").shuffle.join[0, 6]
-  end
-
   def access_cmd
     "mysql --host=#{server.ip_address} -u#{self.sql_user.split("'")[1]} -p#{sql_password}"
   end
@@ -24,7 +19,7 @@ class Connection < ActiveRecord::Base
     self.server.exec_sql("DROP USER #{self.sql_user};") #add save full user object
     self.connection_closed = DateTime.now
     self.save
-    if self.server.open_connections.length == 0
+    if self.server.connections.length == 0
       self.server.stop
     end
   end
@@ -47,5 +42,19 @@ class Connection < ActiveRecord::Base
     else
       time
     end
+  end
+
+  def sql_user_creation_cmd(ip_address)
+    connection.connection_open = DateTime.now
+    generate_user_password(ip_address)
+    privileges = "ALL PRIVILEGES" #options (CREATE DROP DELETE INSERT SELECT UPDATE)
+    "GRANT #{privileges} ON *.* TO #{connection.sql_user}  IDENTIFIED BY '#{connection.sql_password}';"
+  end
+
+  protected
+
+  def generate_user_password(ip_address)
+    self.sql_user = "'#{Digest::SHA1.hexdigest("--#{Time.now.to_s.split(//).sort_by { rand }.join}").split("").shuffle.join[0, 6]}'@'#{ip_address}'"
+    self.sql_password = Digest::SHA1.hexdigest("--#{Time.now.to_s}#{ip_address}").split("").shuffle.join[0, 6]
   end
 end

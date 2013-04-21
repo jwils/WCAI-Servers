@@ -1,4 +1,8 @@
 class Server < ActiveRecord::Base
+  MYSQL_CMD_PREFIX = "mysql -uroot -p#{Settings.mysql_root_password} -e"
+  CMD_ON_SERVER_START = "sudo apt-get update && sudo apt-get upgrade -y"
+  SCP_CMD = "scp -oStrictHostKeyChecking=no -i#{Settings.keypair_path}fog"
+
   attr_accessor :instance
   attr_accessible :instance_id, :project_id
 
@@ -34,12 +38,12 @@ class Server < ActiveRecord::Base
   end
 
   def stopped?
-    self.instance.nil? || self.instance.state == 'stopped' || self.instance.state == 'terminated'
+    self.state == 'stopped' || self.state == 'terminated'
   end
 
   def state
     if self.instance.nil?
-      'Terminated'
+      'terminated'
     else
       self.instance.state
     end
@@ -50,10 +54,6 @@ class Server < ActiveRecord::Base
   end
 
   alias :status :state
-
-  def open_connections
-    self.connections
-  end
 
   def ip_address
     self.instance.public_ip_address
@@ -78,7 +78,7 @@ class Server < ActiveRecord::Base
   end
 
   def download_file(file_path)
-    cmd = "scp -oStrictHostKeyChecking=no -i#{Settings.keypair_path}fog ubuntu@#{instance.public_ip_address}:#{file_path} #{Rails.root.join("public", "ec2_files")}"
+    cmd = SCP_CMD + "ubuntu@#{instance.public_ip_address}:#{file_path} #{Rails.root.join("public", "ec2_files")}"
     system(cmd)
   end
 
@@ -95,7 +95,7 @@ class Server < ActiveRecord::Base
 
   def create_aws_instance
     self.instance = FOG_CONNECTION.servers.bootstrap(
-        :image_id => "ami-c0ccaaa9", #"ami-7539b41c",
+        :image_id => Settings.image_id, #"ami-7539b41c",
         :flavor_id => "m1.large",
         :private_key_path => Settings.keypair_path + 'fog',
         :public_key_path => Settings.keypair_path + 'fog.pub',
@@ -104,24 +104,24 @@ class Server < ActiveRecord::Base
     self.instance_id = self.instance.id
     self.save
 
-    self.ssh("sudo apt-get update && sudo apt-get upgrade -y")
+    self.ssh(CMD_ON_SERVER_START)
   end
 
   def open_connection(user, ip_address)
     connection = Connection.new
     connection.user_id = user.id
     connection.server_id = id
+    exec_sql(connection.sql_user_creation_cmd(ip_address))
     connection.save
-    create_sql_user(connection, ip_address)
   end
 
   def check_uptime
     unless stopped?
-      if open_connections.length == 0
+      if connections.length == 0
         UserMailer.send_email_to_list(nil, User.with_role(:admin), "Server on without any connections",
                                       "There appears to be a server turned on without any open connections. Please shut it down manually.").deliver
       end
-      open_connections.each do |connection|
+      connections.each do |connection|
         if connection.connection_open + 3.hours < DateTime.now
           InstanceReportMailer.uptime_report(User.with_role(:admin), self).deliver
         end
@@ -130,7 +130,7 @@ class Server < ActiveRecord::Base
   end
 
   def exec_sql(cmd)
-    ssh("mysql -uroot -p#{Settings.mysql_root_password} -e \"#{cmd}\"")
+    ssh(MYSQL_CMD_PREFIX + "\"#{cmd}\"")
   end
 
   private
@@ -170,15 +170,6 @@ class Server < ActiveRecord::Base
   def create_mysql_connection
     client = Mysql2::Client.new(:host => ip_address, :username => "root", :password => Settings.mysql_root_password)
     client.query("")
-  end
-
-  def create_sql_user(connection, ip_address)
-    connection.generate_user_password(ip_address)
-    privileges = "ALL PRIVILEGES" #options (CREATE DROP DELETE INSERT SELECT UPDATE)
-    cmd = "GRANT #{privileges} ON *.* TO #{connection.sql_user}  IDENTIFIED BY '#{connection.sql_password}';"
-    exec_sql(cmd)
-    connection.connection_open = DateTime.now
-    connection
   end
 end
 
