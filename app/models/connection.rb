@@ -31,7 +31,7 @@ class Connection < ActiveRecord::Base
 
   def connection_open_str
     time = connection_open
-    if time.day == Date.today
+    if time.today?
       time.to_s(:clock_time)
     else
       time
@@ -42,7 +42,7 @@ class Connection < ActiveRecord::Base
     time = connection_closed
     if time.nil?
       "Connection is Open"
-    elsif time.day == Date.today
+    elsif time.today?
       time.to_s(:clock_time)
     else
       time
