@@ -19,7 +19,7 @@ class Role < ActiveRecord::Base
 
   # Creates a role associated with a given project.
   def self.create_role(type, project)
-    r =  Role.find_by_name_and_resource_id(type, project)
+    r = Role.find_by_name_and_resource_id(type, project)
     if r.nil?
       r = Role.new
       r.name = type

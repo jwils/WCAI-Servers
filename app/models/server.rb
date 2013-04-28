@@ -1,7 +1,6 @@
 class Server < ActiveRecord::Base
   MYSQL_CMD_PREFIX = "mysql -uroot -p#{Settings.mysql_root_password} -e"
   CMD_ON_SERVER_START = "sudo apt-get update && sudo apt-get upgrade -y"
-  SCP_CMD = "scp -oStrictHostKeyChecking=no -i#{Settings.keypair_path}fog"
 
   attr_accessor :instance
   attr_accessible :instance_id, :project_id
@@ -12,23 +11,25 @@ class Server < ActiveRecord::Base
   after_find :get_instance_object
   before_destroy :delete_instance
 
-  def start
-    self.instance.start
-  end
-
   def configure(schema_name)
     create_aws_instance
     exec_sql("create SCHEMA #{schema_name};")
     stop
   end
 
-  def stop
-    self.ssh("sudo rm -rf /var/files/*")
-    self.instance.stop
-  end
+  # == Instance status commands
 
   def ready?
     self.instance.ready?
+  end
+
+  def start
+    self.instance.start
+  end
+
+  def stop
+    self.ssh("sudo rm -rf /var/files/*")
+    self.instance.stop
   end
 
   def wait_for_ready
@@ -78,8 +79,10 @@ class Server < ActiveRecord::Base
   end
 
   def download_file(file_path)
-    cmd = SCP_CMD + "ubuntu@#{instance.public_ip_address}:#{file_path} #{Rails.root.join("public", "ec2_files")}"
-    system(cmd)
+    #SCP_CMD = "scp -oStrictHostKeyChecking=no -i#{Settings.keypair_path}"
+    #cmd = SCP_CMD + "ubuntu@#{instance.public_ip_address}:#{file_path} #{Rails.root.join("public", "ec2_files")}"
+    #system(cmd)
+    self.instance.scp(file_path, Rails.root.join("public", "ec2_files"))
   end
 
   def get_directory(directory)
@@ -97,8 +100,8 @@ class Server < ActiveRecord::Base
     self.instance = FOG_CONNECTION.servers.bootstrap(
         :image_id => Settings.image_id, #"ami-7539b41c",
         :flavor_id => "m1.large",
-        :private_key_path => Settings.keypair_path + 'fog',
-        :public_key_path => Settings.keypair_path + 'fog.pub',
+        :private_key_path => Settings.keypair_path,
+        :public_key_path => Settings.keypair_path + '.pub',
         :username => 'ubuntu')
 
     self.instance_id = self.instance.id
@@ -145,8 +148,8 @@ class Server < ActiveRecord::Base
     self.instance = FOG_CONNECTION.servers.get(self.instance_id)
 
     unless self.instance.nil?
-      self.instance.private_key_path = Settings.keypair_path + 'fog'
-      self.instance.public_key_path = Settings.keypair_path + 'fog.pub'
+      self.instance.private_key_path = Settings.keypair_path
+      self.instance.public_key_path = Settings.keypair_path + '.pub'
       self.instance.username = 'ubuntu'
     end
   end
