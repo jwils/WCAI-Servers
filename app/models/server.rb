@@ -37,9 +37,6 @@ class Server < ActiveRecord::Base
   end
 
   def download_file(file_path)
-    #SCP_CMD = "scp -oStrictHostKeyChecking=no -i#{Settings.keypair_path}"
-    #cmd = SCP_CMD + "ubuntu@#{instance.public_ip_address}:#{file_path} #{Rails.root.join("public", "ec2_files")}"
-    #system(cmd)
     self.instance.scp_download(file_path, Rails.root.join("public", "ec2_files"))
   end
 
@@ -83,10 +80,8 @@ class Server < ActiveRecord::Base
         UserMailer.send_email_to_list(nil, User.with_role(:admin), "Server on without any connections",
                                       "There appears to be a server turned on without any open connections. Please shut it down manually.").deliver
       end
-      connections.each do |connection|
-        if connection.connection_open + 3.hours < DateTime.now
-          InstanceReportMailer.uptime_report(User.with_role(:admin), self).deliver
-        end
+      if connections.any? { |connection| connection.connection_open + 3.hours < DateTime.now }
+        InstanceReportMailer.uptime_report(User.with_role(:admin), self).deliver
       end
     end
   end
