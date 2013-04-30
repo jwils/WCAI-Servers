@@ -1,5 +1,5 @@
 class Server < ActiveRecord::Base
-  MYSQL_CMD_PREFIX = "mysql -uroot -p#{Settings.mysql_root_password} -e"
+  MYSQL_CMD_PREFIX = "mysql -uroot -p#{Settings.mysql_root_password} -e "
   CMD_ON_SERVER_START = "sudo apt-get update && sudo apt-get upgrade -y"
 
   attr_accessor :instance
@@ -31,7 +31,8 @@ class Server < ActiveRecord::Base
       retry_count += 1
       logger.info "Connection failed retrying #{5 - retry_count} more times"
       retry if retry_count < 5
-      logger.error "Failed to connect to server after five attempts. Backtrace:\n", error.backtrace
+      logger.error "Failed to connect to server after five attempts. Backtrace:\n"
+      logger.error error.backtrace
     end
 
   end
