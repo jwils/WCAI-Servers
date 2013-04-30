@@ -46,10 +46,10 @@ class Connection < ActiveRecord::Base
   end
 
   def sql_user_creation_cmd(ip_address)
-    connection.connection_open = DateTime.now
+    connection_open = DateTime.now
     generate_user_password(ip_address)
     privileges = "ALL PRIVILEGES" #options (CREATE DROP DELETE INSERT SELECT UPDATE)
-    "GRANT #{privileges} ON *.* TO #{connection.sql_user}  IDENTIFIED BY '#{connection.sql_password}';"
+    "GRANT #{privileges} ON *.* TO #{sql_user}  IDENTIFIED BY '#{sql_password}';"
   end
 
   protected
