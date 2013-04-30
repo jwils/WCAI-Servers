@@ -96,7 +96,7 @@ class Server < ActiveRecord::Base
   end
 
   def has_open_connections?
-    connections.length == 0
+    connections.length != 0
   end
 
   # == Instance status commands
