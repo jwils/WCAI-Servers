@@ -19,10 +19,13 @@ class User < ActiveRecord::Base
     has_role? role
   end
 
+  # If no name is stored (means user didn't fill it out yet) we call them unregistered.
   def name
     super.nil? ? "Unregistered" : super
   end
 
+  # Create a user from an email address and send them an invite.
+  # or if the user already exists add the role and send an email.
   def self.create_or_add_roles(email, role, project=nil)
     u = User.find_by_email(email)
     if u.nil?
@@ -42,11 +45,14 @@ class User < ActiveRecord::Base
     end
   end
 
-  def to_param
-    "#{id} #{name}".parameterize
-  end
-
+  # Returns the total size of files downloaded. Note this can be an overestimate if users
+  # cancel downloads. We have no way of tracking this case so this estimate will have to do.
   def total_downloads_size
     downloads_trackers.sum(:file_size)
+  end
+
+  # Pretty urls.
+  def to_param
+    "#{id} #{name}".parameterize
   end
 end

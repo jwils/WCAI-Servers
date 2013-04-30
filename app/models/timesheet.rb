@@ -41,21 +41,28 @@ class Timesheet < ActiveRecord::Base
     maximum(:last_printed)
   end
 
+  # If times have not been set and an action was preformed set the times.
+  # We are assuming the first time submitted is the submit date.
+  # - If users are to fix and resubmit timesheets this needs to be changed.
+  #   or rejecting a submit should set submitted_date = nil
   def check_for_time
     self.submitted_date = DateTime.now if submitted and self.submitted_date.nil?
     self.approved_date = DateTime.now if approver and self.approved_date.nil?
   end
 
+  # Total weekly hours.
   def hours
     time_entries.sum(:hours_spent)
   end
 
+  # Delete all time entries when we delete a timesheet.
   def mark_entries_for_removal
     time_entries.each do |entry|
       entry.mark_for_destruction if entry.hours_spent <= 0
     end
   end
 
+  #Pretty urls.
   def to_param
     "#{id} #{user.name} #{start_date}".parameterize
   end

@@ -1,6 +1,11 @@
 class Ability
   include CanCan::Ability
 
+  # Defines abilities for the 4 types of users:
+  # - Admin
+  # - Research Assistant
+  # - Researcher (on project)
+  # - PhD Student (on project)
   def initialize(user)
     user ||= User.new
     can :manage, Message

@@ -17,49 +17,6 @@ class Server < ActiveRecord::Base
     stop
   end
 
-  # == Instance status commands
-
-  def ready?
-    self.instance.ready?
-  end
-
-  def start
-    self.instance.start
-  end
-
-  def stop
-    self.ssh("sudo rm -rf /var/files/*")
-    self.instance.stop
-  end
-
-  def wait_for_ready
-    self.instance.wait_for { ready? }
-    self.instance.wait_for { !public_ip_address.nil? }
-    sleep(5)
-  end
-
-  def stopped?
-    self.state == 'stopped' || self.state == 'terminated'
-  end
-
-  def state
-    if self.instance.nil?
-      'terminated'
-    else
-      self.instance.state
-    end
-  end
-
-  def to_param
-    "#{id} #{project.name}".parameterize
-  end
-
-  alias :status :state
-
-  def ip_address
-    self.instance.public_ip_address
-  end
-
   def ssh(commands)
     start
     wait_for_ready
@@ -136,6 +93,54 @@ class Server < ActiveRecord::Base
     ssh(MYSQL_CMD_PREFIX + "\"#{cmd}\"")
   end
 
+  def has_open_connections?
+    connections.length == 0
+  end
+
+  # == Instance status commands
+
+  def ready?
+    self.instance.ready?
+  end
+
+  def start
+    self.instance.start
+  end
+
+  def stop
+    self.ssh("sudo rm -rf /var/files/*")
+    self.instance.stop
+  end
+
+  def wait_for_ready
+    self.instance.wait_for { ready? }
+    self.instance.wait_for { !public_ip_address.nil? }
+    sleep(5)
+  end
+
+  def stopped?
+    self.state == 'stopped' || self.state == 'terminated'
+  end
+
+  def state
+    if self.instance.nil?
+      'terminated'
+    else
+      self.instance.state
+    end
+  end
+
+  alias :status :state
+
+  def ip_address
+    self.instance.public_ip_address
+  end
+
+  # nicer URLs
+  def to_param
+    "#{id} #{project.name}".parameterize
+  end
+
   private
 
   def delete_instance
@@ -168,7 +173,7 @@ class Server < ActiveRecord::Base
 
   #
   # This function is not currently used, but it might be useful to create users through
-  # a remote mysql connection instead of sshing onto the database.
+  # a remote mysql connection instead of sshing into the instance.
   #
   def create_mysql_connection
     client = Mysql2::Client.new(:host => ip_address, :username => "root", :password => Settings.mysql_root_password)

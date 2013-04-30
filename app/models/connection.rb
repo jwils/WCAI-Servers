@@ -16,10 +16,11 @@ class Connection < ActiveRecord::Base
   end
 
   def close_connection
-    self.server.exec_sql("DROP USER #{self.sql_user};") #add save full user object
+    self.server.exec_sql("DROP USER #{self.sql_user};")
     self.connection_closed = DateTime.now
     self.save
-    if self.server.connections.length == 0
+
+    unless self.server.has_open_connections?
       self.server.stop
     end
   end

@@ -1,4 +1,6 @@
 class TimesheetMailer < ActionMailer::Base
+
+  #To be used when timesheets are handled through the application.
   def timesheet_reminder(from)
     to_users = User.with_role(:research_assistant).map { |u| "#{u.name} <#{u.email}>" }.join(', ')
     from_user = "#{from.name} <#{from.email}>"

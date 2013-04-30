@@ -6,6 +6,9 @@ class TimeEntry < ActiveRecord::Base
   belongs_to :timesheet
   belongs_to :project
 
+  # Returns the string name of the day of week attribute.
+  # TODO: I believe DAYS can be accessed through locales some how.
+  #       check for how to do this.
   def day_of_week
     DAYS[self.day]
   end
