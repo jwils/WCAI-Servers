@@ -75,6 +75,7 @@ class Server < ActiveRecord::Base
     connection.server_id = id
     exec_sql(connection.sql_user_creation_cmd(ip_address))
     connection.save
+    connection
   end
 
   def check_uptime
