@@ -40,7 +40,7 @@ class Server < ActiveRecord::Base
     #SCP_CMD = "scp -oStrictHostKeyChecking=no -i#{Settings.keypair_path}"
     #cmd = SCP_CMD + "ubuntu@#{instance.public_ip_address}:#{file_path} #{Rails.root.join("public", "ec2_files")}"
     #system(cmd)
-    self.instance.scp_download(file_path, Rails.root.join("public", "ec2_files").to_s)
+    self.instance.scp_download(file_path, Rails.root.join("public", "ec2_files"))
   end
 
   def get_directory(directory)
