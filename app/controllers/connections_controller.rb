@@ -24,6 +24,6 @@ class ConnectionsController < ApplicationController
   # GET /servers/:server_id/connections/new
   def new
     @connection = @server.open_connection(current_user, request.remote_ip)
-    format.html { redirect_to server_connection_url(@connection.server, @connection), notice: 'Connection was successfully created.' }
+    redirect_to server_connection_url(@connection.server, @connection), notice: 'Connection was successfully created.'
   end
 end

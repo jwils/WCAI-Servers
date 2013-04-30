@@ -22,15 +22,16 @@ class Server < ActiveRecord::Base
     wait_for_ready
 
     logger.info "Executing command on server: "
+    logger.error commands
     retry_count = 0
     begin
       logger.info self.instance.ssh(commands)[0].stdout
-    rescue
+    rescue => error
       sleep(5)
       retry_count += 1
       logger.info "Connection failed retrying #{5 - retry_count} more times"
       retry if retry_count < 5
-      logger.error "Failed to connect to server after five attempts"
+      logger.error "Failed to connect to server after five attempts. Backtrace:\n", error.backtrace
     end
 
   end
