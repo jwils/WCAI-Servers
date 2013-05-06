@@ -21,7 +21,6 @@ class Server < ActiveRecord::Base
     start
     wait_for_ready
 
-    logger.info "Executing command on server: "
     retry_count = 0
     begin
       logger.info self.instance.ssh(commands)[0].stdout
