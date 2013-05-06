@@ -5,34 +5,40 @@
   <thead>
   <tr>
     <th>Company</th>
-    <th>Start Date</th>
     <th>Current State</th>
-    <th>Description</th>
+    <th> </th>
     <% if can? :read, Server %>
         <th>Server Status</th>
+        <th>Actions</th>
     <% end %>
-    <th><%= t '.actions', :default => t("helpers.actions") %></th>
   </tr>
   </thead>
   <tbody>
   <% @projects.each do |project| %>
       <tr>
         <td><%= link_to project.name, project_path(project) %></td>
-        <td><%= project.start_date %></td>
         <td><%= project.current_state %></td>
-        <td><%= project.description %></td>
-        <% if can? :read, Project %>
+        <td>
+          <%= link_to "Project Files", project_s3_files_path(project), :class => 'btn btn-mini' if can? :read, S3File %>
+        </td>
+
+        <% if can? :read, Server %>
             <% if project.server.nil? %>
                 <td>No server setup</td>
             <% elsif can? :read, project.server %>
                 <td><%= link_to project.server.status, server_path(project.server) if can? :read, project.server %></td>
+                <td><%= link_to 'Open Connection', new_server_connection_path(project.server),
+                            :class => 'btn btn-mini' %></td>
+                <td><%= link_to 'View Open Connections', server_connections_path(project.server),
+                            :class => 'btn btn-mini btn-primary' unless project.server.stopped? %></td>
+                <td><%= link_to 'Local Server Files', server_ec2_files_path(project.server),
+                            :class => 'btn btn-mini btn-primary' if can? :read, Ec2File and not project.server.stopped? %></td>
+
             <% else %>
                 <td>Not authorized</td>
             <% end %>
         <% end %>
-        <td>
-          <%= link_to "Project Files", project_s3_files_path(project), :class => 'btn btn-mini' if can? :read, S3File %>
-        </td>
+
       </tr>
   <% end %>
   </tbody>
