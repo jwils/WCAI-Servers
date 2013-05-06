@@ -66,11 +66,8 @@ class Server < ActiveRecord::Base
   end
 
   def open_connection(user, ip_address)
-    connection = Connection.new
-    connection.user_id = user.id
-    connection.server_id = id
-    exec_sql(connection.sql_user_creation_cmd(ip_address))
-    connection.save
+    connection = Connection.create(user, self, ip_address)
+    exec_sql(connection.sql_user_creation_cmd)
     connection
   end
 
