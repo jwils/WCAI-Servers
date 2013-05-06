@@ -25,6 +25,9 @@
         <% if can? :read, Server %>
             <% if project.server.nil? %>
                 <td>No server setup</td>
+                <td></td>
+                <td></td>
+                <td></td>
             <% elsif can? :read, project.server %>
                 <td><%= link_to project.server.status, server_path(project.server) if can? :read, project.server %></td>
                 <td><%= link_to 'Open Connection', new_server_connection_path(project.server),
@@ -36,6 +39,9 @@
 
             <% else %>
                 <td>Not authorized</td>
+                <td></td>
+                <td></td>
+                <td></td>
             <% end %>
         <% end %>
 
